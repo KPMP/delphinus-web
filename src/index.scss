@@ -14,6 +14,21 @@
 	padding-bottom: 5px;
 }
 
+.demo-text {
+	line-height: $header-height;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 20px;
+	font-weight: 500;
+	left: 28%;
+	position: relative;
+}
+
+.highlight {
+	color: darkgoldenrod;
+	font-size: 20px;
+	font-weight: 700;
+}
 
 // End temporary classes
 

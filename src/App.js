@@ -55,8 +55,8 @@ class App extends Component {
                         <div>
                             <NavBar/>
                             <Switch>
-                                <Route exact path="/" component={Summary}/>
-                                <Route path="/slides" component={Slides}/>
+                                <Route exact path="/dpr" component={Summary}/>
+                                <Route path="/dpr/slides" component={Slides}/>
                             </Switch>
                         </div>
                     </HashRouter>
