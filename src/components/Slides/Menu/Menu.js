@@ -4,7 +4,6 @@ import SlideListContainer from './SlideListContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import StainInformationContainer from './StainInformationContainer';
 
 class Menu extends Component {
 	
@@ -27,7 +26,6 @@ class Menu extends Component {
 				<BurgerMenu isOpen={ this.state.isOpen } width={ '450px' } noOverlay customBurgerIcon={ <FontAwesomeIcon icon={faBars} /> }
 					customCrossIcon={ false } >
 					<SlideListContainer toggleMenu={this.toggleMenu}/>
-					<StainInformationContainer />
 				</BurgerMenu>
                 <Link id="btn-home" to="/">
                     <FontAwesomeIcon icon={faHome} size="2x"/>

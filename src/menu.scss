@@ -114,15 +114,15 @@ $menu-header-height: 80px;
 	#menu-slide-list {
 		background: white;
 		border-bottom: 1px solid silver;
-		
+
 		.col {
 			padding-left: 0px;
 			padding-right: 0px;
 		}
 
 		#menu-slide-list-slides {
-			max-height: calc(60vh - #{$header-height});
-			min-height: calc(60vh - #{$header-height});
+			max-height: calc(100vh - (#{$header-height} + #{$menu-header-height}));
+			min-height: calc(100vh - (#{$header-height} + #{$menu-header-height}));
 			overflow: auto;
 			
 			.slide-highlighted {
@@ -153,47 +153,5 @@ $menu-header-height: 80px;
 			
 		}
 		
-	}
-	
-	
-	#stain-information {
-		// for some reason, we need to remove a little more height
-		// so that we don't cut the bottom off the stain info box
-		min-height: calc(40vh - (#{$header-height} + 21px));
-		max-height: calc(40vh - (#{$header-height} + 21px) );
-		overflow-x: hidden;
-		overflow: auto;
-		padding-left: 10px;
-
-		.col {
-			padding-left: 0px;
-			padding-right: 10px;
-		}
-		
-		#slide-stain-text {
-			.slide-name-stain-text {
-				padding-top: 10px;
-				padding-bottom: 15px;
-				font-weight: 700;
-				font-size: 14px;
-			}
-			
-			.stain-title {
-				font-weight: 700;
-				font-size: 18px;
-				padding-bottom: 5px;
-			}
-			
-			.stain-description {
-				a:hover {
-					text-decoration: underline;
-					color: $link-blue;
-				}
-				a {
-					text-decoration: none;
-					color: $link-blue;
-				}					
-			}
-		}
 	}
 }
