@@ -24,12 +24,12 @@ class Summary extends Component {
                             How does my biopsy get turned into images?
                         </Row>
                         <Row className="row-summary-process">
-                            <img alt="The biopsy process: Segment, Embed, Affix, and Scan" src="/img/summary/biopsy-process.png" />
+                            <img alt="The biopsy process: Segment, Embed, Affix, and Scan" src="img/summary/biopsy-process.png" />
                         </Row>
                         <Row className="row-summary-info row-summary-steps">
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Step 1, cut the biopsy sample into segments" src="/img/summary/step-1.png" />
+                                    <img alt="Step 1, cut the biopsy sample into segments" src="img/summary/step-1.png" />
                                 </p>
                                 <p className="center">
                                     <b>Step 1: Segment</b>
@@ -40,7 +40,7 @@ class Summary extends Component {
                             </Col>
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Step 2, embed the segments in paraffin" src="/img/summary/step-2.png" />
+                                    <img alt="Step 2, embed the segments in paraffin" src="img/summary/step-2.png" />
                                 </p>
                                 <p className="center">
                                     <b>Step 2: Embed</b>
@@ -51,7 +51,7 @@ class Summary extends Component {
                             </Col>
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Step 3, affix the slices to slides" src="/img/summary/step-3.png" />
+                                    <img alt="Step 3, affix the slices to slides" src="img/summary/step-3.png" />
                                 </p>
                                 <p className="center">
                                     <b>Step 3: Affix</b>
@@ -62,7 +62,7 @@ class Summary extends Component {
                             </Col>
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Step 4, scan the slide" src="/img/summary/step-4.png" />
+                                    <img alt="Step 4, scan the slide" src="img/summary/step-4.png" />
                                 </p>
                                 <p className="center">
                                     <b>Step 4: Scan</b>
@@ -78,7 +78,7 @@ class Summary extends Component {
                         <Row className="row-summary-info row-summary-organ-images">
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Photograph of a glomerulus with tubules" src="/img/summary/col1-glomerulus.png" />
+                                    <img alt="Photograph of a glomerulus with tubules" src="img/summary/col1-glomerulus.png" />
                                 </p>
                                 <p>
                                     Looking at this example of a biopsy slide image, a pathologist would look at the components of the kidney such as glomeruli and tubules. This can reveal evidence of disease and tissue damage.
@@ -86,7 +86,7 @@ class Summary extends Component {
                             </Col>
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Diagram of a nephron" src="/img/summary/col2-nephron.png" />
+                                    <img alt="Diagram of a nephron" src="img/summary/col2-nephron.png" />
                                 </p>
                                 <p>
                                     A glomerulus and tubule is part of a nephron. Nephrons are the filtration workhorses of the kidney. Each kidney has around 1 million nephrons.
@@ -94,7 +94,7 @@ class Summary extends Component {
                             </Col>
                             <Col className="light-border">
                                 <p className="center">
-                                    <img alt="Diagram of the renal cortex of the kidney" src="/img/summary/col3-renal-cortex.png" />
+                                    <img alt="Diagram of the renal cortex of the kidney" src="img/summary/col3-renal-cortex.png" />
                                 </p>
                                 <p>
                                     Nephrons are located in the renal cortex. During the biopsy procedure, the doctor aims to capture multiple nephrons.

@@ -5,7 +5,7 @@ class NavBar extends Component {
 	render() {
 		return (
 			<Row className="nav-container container-fluid">
-				<NavbarBrand href="/">
+				<NavbarBrand href={process.env.PUBLIC_URL + "/"}>
 					<img src="img/logo.png" alt="Patient Slide Viewer" className="logo"/>
 				</NavbarBrand>
 			</Row>

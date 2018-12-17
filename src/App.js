@@ -48,16 +48,14 @@ class App extends Component {
     }
 
     render() {
-        return (
+    	return (
             <Provider store={store}>
                 <Container fluid>
-                    <HashRouter>
-                        <div>
-                            <NavBar/>
-                            <Switch>
-                                <Route exact path="/" component={Summary}/>
-                                <Route path="/slides" component={Slides}/>
-                            </Switch>
+                	<NavBar/>
+                    <HashRouter basename='/dpr'>
+                    	<div>
+	                        <Route exact path="/" component={Summary}/>
+	                        <Route path="/slides" component={Slides}/>
                         </div>
                     </HashRouter>
                 </Container>
