@@ -7,7 +7,7 @@ class NavBar extends Component {
 			<Row className="nav-container container-fluid">
 				<Col sm="1">
 					<NavbarBrand href="/">
-						<img src="img/logo.png" alt="Patient Slide Viewer" className="logo"/>
+						<img src="img/logo.png" alt="Digital Pathology Repository" className="logo"/>
 					</NavbarBrand>
 				</Col>
 				<Col sm="11">
