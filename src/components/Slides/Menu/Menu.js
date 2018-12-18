@@ -9,7 +9,7 @@ class Menu extends Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = { isOpen: true };
+		this.state = { isOpen: false };
 	}
 	
 	toggleMenu = (newState) => {
