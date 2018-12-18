@@ -6,7 +6,7 @@ class NavBar extends Component {
 		return (
 			<Row className="nav-container container-fluid">
 				<Col sm="1">
-					<NavbarBrand href="/">
+					<NavbarBrand href={process.env.PUBLIC_URL + "/"}>
 						<img src="img/logo.png" alt="Digital Pathology Repository" className="logo"/>
 					</NavbarBrand>
 				</Col>

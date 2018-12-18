@@ -8,7 +8,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
-import { HashRouter, Switch, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
@@ -48,16 +48,14 @@ class App extends Component {
     }
 
     render() {
-        return (
+    	return (
             <Provider store={store}>
                 <Container fluid>
-                    <HashRouter>
-                        <div>
-                            <NavBar/>
-                            <Switch>
-                                <Route exact path="/" component={Summary}/>
-                                <Route path="/slides" component={Slides}/>
-                            </Switch>
+                	<NavBar/>
+                    <HashRouter basename='/dpr'>
+                    	<div>
+	                        <Route exact path="/" component={Summary}/>
+	                        <Route path="/slides" component={Slides}/>
                         </div>
                     </HashRouter>
                 </Container>

@@ -30,7 +30,7 @@ class SlideList extends Component {
     						let highlightedClass = this.props.selectedPatient.selectedSlide.id === slide.id ? " slide-highlighted" : "";
     						return (
 	    						<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
-		    						<Col sm="2" className="no-padding"><img className="thumbnail" src="/img/tn_KPMP-Ex2_TRI_1of1.jpeg" alt=""/></Col>
+		    						<Col sm="2" className="no-padding"><img className="thumbnail" src="img/tn_KPMP-Ex2_TRI_1of1.jpeg" alt=""/></Col>
 		    						<Col sm="10" className="slide-name">{slide.slideName}</Col>
 	    						</Row>
     						)
