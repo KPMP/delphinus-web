@@ -9,19 +9,19 @@ describe("noSlidesFound", () => {
 	it("should redirect when the object contains an empty array", () => {
 		noSlidesFound({ slides: [] });
 		expect(window.location.assign).toHaveBeenCalledTimes(1);
-		expect(window.location.assign).toHaveBeenCalledWith("/");
+		expect(window.location.assign).toHaveBeenCalledWith(process.env.PUBLIC_URL);
 	});
 
 	it("should redirect when the object passed in is null", () => {
 		noSlidesFound(null);
 		expect(window.location.assign).toHaveBeenCalledTimes(1);
-		expect(window.location.assign).toHaveBeenCalledWith("/");
+		expect(window.location.assign).toHaveBeenCalledWith(process.env.PUBLIC_URL);
 	});
 
 	it("should redirect when the object passed in is undefined", () => {
 		noSlidesFound(undefined);
 		expect(window.location.assign).toHaveBeenCalledTimes(1);
-		expect(window.location.assign).toHaveBeenCalledWith("/");
+		expect(window.location.assign).toHaveBeenCalledWith(process.env.PUBLIC_URL);
 	});
 
 	it("should do nothing when the object passed in has items in the array", () => {
