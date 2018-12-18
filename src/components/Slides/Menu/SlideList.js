@@ -23,15 +23,16 @@ class SlideList extends Component {
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props}/>
-				<Col>
+				<Col id="slides-col">
     				<div id="menu-slide-list-slides">
     				{
     					this.props.selectedPatient.slides.map(function(slide, index) {
     						let highlightedClass = this.props.selectedPatient.selectedSlide.id === slide.id ? " slide-highlighted" : "";
+							let thumbnailSrc = "/img/thumbnail_stain_" + slide.stain.type.toLowerCase() + ".png";
     						return (
 	    						<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
-		    						<Col sm="2" className="no-padding"><img className="thumbnail" src="img/tn_KPMP-Ex2_TRI_1of1.jpeg" alt=""/></Col>
-		    						<Col sm="10" className="slide-name">{slide.slideName}</Col>
+		    						<Col xs={{size: "auto"}} className="no-padding"><img className="thumbnail" src={thumbnailSrc} alt=""/></Col>
+		    						<Col xs={{size: "auto"}} className="slide-name">{slide.slideName}</Col>
 	    						</Row>
     						)
     					}, this)
