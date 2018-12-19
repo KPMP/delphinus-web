@@ -16,7 +16,7 @@ class Summary extends Component {
                     </p>
                     <PatientSelectContainer />
                     <div className="alert-info content-warning">This is a demonstration of the slide viewing capabilities that will be in the Digital Pathology Repository. 
-                    	This demonstration has been pre-loaded with nephrectomy cases from Pilot 1.</div>
+                    This demonstration has been pre-loaded with nephrectomy cases from Pilot 1.</div>
                 </div>
             </div>
         );
