@@ -16,11 +16,20 @@
 	text-align: center;
 }
 
-.demo-text {
+#demo-text {
 	line-height: $header-height;
 	font-size: 20px;
 	font-weight: 500;
 	text-align: center;
+	@media only screen and (max-width: 767px) {
+		display: none;
+	}
+}
+
+#demo-text-small {
+	@media only screen and (min-width: 768px) {
+		display: none;
+	}
 }
 
 .highlight {
@@ -92,9 +101,9 @@ canvas {
 	background: white;
 	
 	.logo {
-		margin-top: 10px;
-		margin-left: 10px;
-		height: 40px;
+		margin-top: 5px;
+		margin-left: 5px;
+		height: 50px;
 	}
 
 	.navbar-brand {
