@@ -14,7 +14,7 @@ class NavBar extends Component {
 				</Col>
 				<Col xs="6" id="demo-text-small"></Col>
 				<Col xs="3">
-					<div className="float-right" id="feedback-button"><Button color="primary" onClick={() => window.open("", "_blank")}>Send Feedback</Button></div>
+					<div className="float-right" id="feedback-button"><Button color="primary" onClick={() => window.open("https://goo.gl/forms/WkyC7PZM8AIe3NoI3", "_blank")}>Send Feedback</Button></div>
 				</Col>
 			</Row>
 			
