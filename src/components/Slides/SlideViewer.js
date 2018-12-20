@@ -42,7 +42,7 @@ class SlideViewer extends Component {
 		this.viewer.destroy();
 		this.viewer.navigator.destroy();
 		this.initSeaDragon();
-		noSlidesFound(this.props.selectedPatient)
+		noSlidesFound(this.props.selectedPatient);
 	}
 
 	render() {

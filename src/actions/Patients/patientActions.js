@@ -16,13 +16,14 @@ export const setSelectedSlide = (slide) => {
 	}
 }
 
-export const getPatientSlides = (patientId) => {
+export const getPatientSlides = (patientId, props) => {
 	return (dispatch) => {
-		axios.get('/api/v1/slides/' + patientId)
+		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
+		axios.get('/api/v1/slides/' + patientId, config)
 			.then(result => {
 				let slides = patientSelectSorter(result.data);
 				dispatch(setSelectedPatient({id: patientId, slides: slides, selectedSlide: slides[0]}));
-				window.location.href = process.env.PUBLIC_URL + "#/slides";
+				props.history.push("/slides");
 			})
 			.catch(err => {
 				console.log("We were unable to get a list of slides for patient " + patientId);
