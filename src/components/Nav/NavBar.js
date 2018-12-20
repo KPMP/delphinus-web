@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { Row, NavbarBrand, Col } from 'reactstrap';
+import { Row, NavbarBrand, Col, Button } from 'reactstrap';
 
 class NavBar extends Component {
 	render() {
 		return (
 			<Row className="nav-container container-fluid">
-				<Col sm="1">
+				<Col xs="3">
 					<NavbarBrand href={process.env.PUBLIC_URL + "/"}>
 						<img src="img/logo.png" alt="Digital Pathology Repository" className="logo"/>
 					</NavbarBrand>
 				</Col>
-				<Col sm="11">
-					<div className="demo-text"><span className="highlight">DEMO:</span> Digital Pathology Repository - Slide Viewer Functionality</div>
+				<Col xs="6" className="demo-text">Slide Viewer Concept
+				</Col>
+				<Col xs="3">
+					<div className="float-right" id="feedback-button"><Button color="primary" onClick={() => window.open("", "_blank")}>Send Feedback</Button></div>
 				</Col>
 			</Row>
 			
