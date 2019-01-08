@@ -13,13 +13,13 @@ import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
 
-const cacheStore = window.sessionStorage.getItem("redux-store");
+const cacheStore = window.sessionStorage.getItem("dpr");
 const initialState = cacheStore ?
     JSON.parse(cacheStore) :
     loadedState;
 const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const saveState = () => {
-    window.sessionStorage.setItem("redux-store", JSON.stringify(store.getState()));
+    window.sessionStorage.setItem("dpr", JSON.stringify(store.getState()));
 };
 const GA_TRACKING_ID = 'UA-124331187-3';
 
