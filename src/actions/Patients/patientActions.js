@@ -23,7 +23,7 @@ export const getPatientSlides = (patientId, props) => {
 			.then(result => {
 				let slides = patientSelectSorter(result.data);
 				dispatch(setSelectedPatient({id: patientId, slides: slides, selectedSlide: slides[0]}));
-				props.history.push("/slides");
+				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
 				console.log("We were unable to get a list of slides for patient " + patientId);

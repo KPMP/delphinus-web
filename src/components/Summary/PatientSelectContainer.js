@@ -11,7 +11,7 @@ const mapStateToProps = (state, props) =>
 const mapDispatchToProps = (dispatch, props) =>
     ({
         setSelectedPatient(patient) {
-            dispatch(getPatientSlides(patient,props));
+            dispatch(getPatientSlides(patient, props));
         }
     });
 
