@@ -86,28 +86,18 @@ canvas {
 	-ms-interpolation-mode: nearest-neighbor;   /* IE                            */
 }
 
-.nav-container {
-	border-width: 1px;
-	border-style: solid;
-	border-color: rgba(121, 121, 121, 1);
-	border-radius: 0px;
-	margin-left: 0px !important;
-	padding-left: 0px !important;
-	height: $header-height;
-	position: fixed;
-	top: 0px;
-	z-index: 1000;
-	background: white;
-	
-	.logo {
-		margin-top: 5px;
-		margin-left: 5px;
-		height: 50px;
-	}
+#navbar {
+	background-color: white;
+	border-bottom: 1px solid #e7e7e7;
 
-	.navbar-brand {
-		padding-top: 0px !important;
-		padding-bottom: 0px !important;
+	.navbar-header {
+
+		text-decoration: none !important;
+
+		.navbar-brand img.logo {
+			width: 80px;
+			min-width: 80px;
+		}
 	}
 
 	#feedback-button {
