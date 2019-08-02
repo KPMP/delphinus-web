@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import PatientListDropDown from './PatientListDropDown';
 import ReactGA from 'react-ga';
+import PropTypes from "prop-types";
 
 class PatientSelect extends Component {
 
@@ -35,4 +36,8 @@ class PatientSelect extends Component {
 
 }
 
+PatientSelect.propTypes = {
+    setSelectedPatient: PropTypes.func.isRequired,
+    patients: PropTypes.array.isRequired
+};
 export default PatientSelect;

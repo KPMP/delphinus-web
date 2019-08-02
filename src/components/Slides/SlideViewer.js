@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { noSlidesFound } from './slideHelpers';
 import Menu from './Menu/Menu';
+import PropTypes from 'prop-types';
 
 class SlideViewer extends Component {
 
@@ -64,5 +65,9 @@ class SlideViewer extends Component {
 		)
 	}
 }
+
+SlideViewer.propTypes = {
+    selectedPatient: PropTypes.object.isRequired,
+};
 
 export default SlideViewer;

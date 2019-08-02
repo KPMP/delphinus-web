@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Select } from 'antd';
 import 'antd/es/select/style/index.css';
+import PropTypes from 'prop-types';
 
 class PatientListDropDown extends Component {
 
@@ -25,4 +26,8 @@ class PatientListDropDown extends Component {
 
 }
 
+PatientListDropDown.propTypes = {
+    handlePatientSelect: PropTypes.func.isRequired,
+    patients: PropTypes.array.isRequired
+};
 export default PatientListDropDown;
