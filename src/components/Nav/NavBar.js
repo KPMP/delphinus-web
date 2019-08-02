@@ -7,7 +7,7 @@ class NavBar extends Component {
 		return (
 			<Navbar id="navbar" className="px-1 py-1 fixed-top">
 				<Col sm={6}>
-					<Link to="/dpr" className="navbar-header">
+					<Link to="/" className="navbar-header">
 						<NavbarBrand className="d-flex align-items-center">
 							<img src="img/logo.png" alt="Kidney Precision Medicine Project Digital Pathology Repository" className="logo" />
 							<span className="ml-2 text-dark">Digital Pathology Repository</span>
