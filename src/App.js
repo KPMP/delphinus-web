@@ -56,11 +56,11 @@ class App extends Component {
                 <Container fluid>
                     <Router history={history}>
                     	<div>
-                    	<ErrorBoundaryContainer>
-                            <NavBar/>
-	                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
-	                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
-                        </ErrorBoundaryContainer>
+	                    	<ErrorBoundaryContainer>
+	                            <NavBar/>
+		                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
+		                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
+	                        </ErrorBoundaryContainer>
 	                        <Route  exact path={process.env.PUBLIC_URL + "/oops"} component={Oops} />
 	                    </div>
                     </Router>
