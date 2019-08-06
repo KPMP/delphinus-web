@@ -1,6 +1,7 @@
 import actionNames from '../actionNames';
 import axios from 'axios';
 import patientSelectSorter from '../../components/Summary/patientSelectSorter';
+import { sendMessageToBackend } from '../Error/errorActions';
 
 export const setSelectedPatient = (patient) => {
     return {
@@ -27,6 +28,7 @@ export const getPatientSlides = (patientId, props) => {
 			})
 			.catch(err => {
 				console.log("We were unable to get a list of slides for patient " + patientId);
+				dispatch(sendMessageToBackend(err));
 			});
 	}
 }

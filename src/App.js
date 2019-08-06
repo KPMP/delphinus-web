@@ -12,6 +12,9 @@ import { Router, Route } from 'react-router-dom';
 import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
+import Oops from './components/Error/Oops';
+import ErrorBoundaryContainer from "./components/Error/ErrorBoundaryContainer";
+
 
 const cacheStore = window.sessionStorage.getItem("dpr");
 const initialState = cacheStore ?
@@ -52,11 +55,14 @@ class App extends Component {
             <Provider store={store}>
                 <Container fluid>
                     <Router history={history}>
-                        <div>
-                            <NavBar/>
-	                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
-	                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
-                        </div>
+                    	<div>
+	                    	<ErrorBoundaryContainer>
+	                            <NavBar/>
+		                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
+		                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
+	                        </ErrorBoundaryContainer>
+	                        <Route  exact path={process.env.PUBLIC_URL + "/oops"} component={Oops} />
+	                    </div>
                     </Router>
                 </Container>
             </Provider>
