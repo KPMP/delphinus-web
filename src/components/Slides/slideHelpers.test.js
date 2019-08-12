@@ -1,32 +1,32 @@
 import { noSlidesFound, downloadSlide, getNextSlide, getPreviousSlide } from './slideHelpers';
 
 describe("noSlidesFound", () => {
-	beforeEach(() => {
-		const window = document.defaultView;
-		window.location.assign = jest.fn();
-	})
 	
 	it("should redirect when the object contains an empty array", () => {
-		noSlidesFound({ slides: [] });
-		expect(window.location.assign).toHaveBeenCalledTimes(1);
-		expect(window.location.assign).toHaveBeenCalledWith(process.env.PUBLIC_URL);
+		let handleError = jest.fn();
+		noSlidesFound({ slides: [] }, handleError);
+		expect(handleError).toHaveBeenCalledTimes(1);
+		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
 	});
 
 	it("should redirect when the object passed in is null", () => {
-		noSlidesFound(null);
-		expect(window.location.assign).toHaveBeenCalledTimes(1);
-		expect(window.location.assign).toHaveBeenCalledWith(process.env.PUBLIC_URL);
+		let handleError = jest.fn();
+		noSlidesFound(null, handleError);
+		expect(handleError).toHaveBeenCalledTimes(1);
+		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
 	});
 
 	it("should redirect when the object passed in is undefined", () => {
-		noSlidesFound(undefined);
-		expect(window.location.assign).toHaveBeenCalledTimes(1);
-		expect(window.location.assign).toHaveBeenCalledWith(process.env.PUBLIC_URL);
+		let handleError = jest.fn();
+		noSlidesFound(undefined, handleError);
+		expect(handleError).toHaveBeenCalledTimes(1);
+		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
 	});
 
 	it("should do nothing when the object passed in has items in the array", () => {
-		noSlidesFound( { slides: [ {key: "value" }]});
-		expect(window.location.assign).toHaveBeenCalledTimes(0);
+		let handleError = jest.fn();
+		noSlidesFound( { slides: [ {key: "value" }]}, handleError);
+		expect(handleError).toHaveBeenCalledTimes(0);
 	});
 
 });
