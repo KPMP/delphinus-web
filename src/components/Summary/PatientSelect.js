@@ -25,6 +25,10 @@ class PatientSelect extends Component {
         this.props.setSelectedPatient(this.state.patientId);
     };
 
+    componentDidMount() {
+        this.props.getAllPatientSlides();
+    }
+
     render() {
         return (
             <div className="patient-select-controls pull-left input-group">

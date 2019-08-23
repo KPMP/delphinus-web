@@ -13,7 +13,7 @@ class PatientListDropDown extends Component {
         const Option = Select.Option
     	let { patients } = this.props;
         let options = patients.map((patient) => {
-                return <Option value={patient.id}>{patient.label}</Option>
+                return <Option value={patient.kpmpId}>{patient.label}</Option>
             }
         );
         return (

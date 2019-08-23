@@ -9,11 +9,13 @@ export const selectedPatient = (state = {}, action) => {
         default:
             return state;
     }
-}
+};
 
-export const patients = (state = [], action) => {
+export const patientSlides = (state = [], action) => {
     switch(action.type) {
-    default:
-        return state;
+        case actionNames.SET_PATIENT_SLIDES:
+            return action.payload;
+        default:
+            return state;
     }
-}
+};

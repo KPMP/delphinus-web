@@ -1,11 +1,6 @@
 {
-  "patients": [
-  	{"id": "17-1606", "label": "17-1606 (Pilot 1)"}, 
-  	{"id": "18-139", "label": "18-139 (Pilot 1)"}, 
-  	{"id": "18-142", "label": "18-142 (Pilot 1)"},
-    {"id": "18-162", "label": "18-162 (Pilot 1)"},
-    {"id": "18-168", "label": "18-168 (Pilot 1)"}
-  ],
+
+  "patientSlides": [],
   "selectedPatient": {"id": "", "slides": [], "selectedSlide": ""}
 
 }

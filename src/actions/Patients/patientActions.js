@@ -17,6 +17,13 @@ export const setSelectedSlide = (slide) => {
 	}
 }
 
+export const setPatientSlides = (patientSlides) => {
+	return {
+		type: actionNames.SET_PATIENT_SLIDES,
+		payload: patientSlides
+	}
+}
+
 export const getPatientSlides = (patientId, props) => {
 	return (dispatch) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
@@ -28,6 +35,21 @@ export const getPatientSlides = (patientId, props) => {
 			})
 			.catch(err => {
 				console.log("We were unable to get a list of slides for patient " + patientId);
+				dispatch(sendMessageToBackend(err));
+			});
+	}
+}
+
+export const getAllPatientSlides = () => {
+	return (dispatch) => {
+		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
+		axios.get('/api/v1/slides', config)
+			.then(result => {
+				let patientSlides = result.data;
+				dispatch(setPatientSlides(patientSlides));
+			})
+			.catch(err => {
+				console.log("We were unable to get the slides.");
 				dispatch(sendMessageToBackend(err));
 			});
 	}
