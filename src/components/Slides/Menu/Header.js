@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretLeft, faChevronRight, faChevronLeft, faPrint, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faCaretLeft, faChevronRight, faChevronLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
 import ReactGA from 'react-ga';
 import SlidePrintManager from './SlidePrintManager';
@@ -62,7 +62,6 @@ class Header extends Component {
 					</Col>
 				    <Col xs="6">
 				    	<div className="float-right">
-				    		<FontAwesomeIcon icon={faPrint} onClick={this.onPrint} className="clickable hoverable pad-right" size="lg"/>
 				            <a id="download" //eslint-disable-line
 				            ><FontAwesomeIcon icon={faDownload} className="clickable hoverable" onClick={this.handleDownload} size="lg" /></a>
 			            </div>
