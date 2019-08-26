@@ -15,13 +15,13 @@ class Header extends Component {
 	}
 	
     handleNextSlide() {
-        let nextSlide = getNextSlide(this.props.selectedPatient.slides, this.props.selectedPatient.selectedSlide);
+        let nextSlide = getNextSlide(this.props.selectedParticipant.slides, this.props.selectedParticipant.selectedSlide);
         this.props.setSelectedSlide(nextSlide);
         this.props.toggleMenu(true);
     }
 
     handlePreviousSlide() {
-        let previousSlide = getPreviousSlide(this.props.selectedPatient.slides, this.props.selectedPatient.selectedSlide);
+        let previousSlide = getPreviousSlide(this.props.selectedParticipant.slides, this.props.selectedParticipant.selectedSlide);
         this.props.setSelectedSlide(previousSlide);
         this.props.toggleMenu(true);
     }
@@ -30,9 +30,9 @@ class Header extends Component {
         ReactGA.event({
             category: 'Slide View',
             action: 'Download Slide',
-            label: this.props.selectedPatient.selectedSlide.slideName
+            label: this.props.selectedParticipant.selectedSlide.slideName
         });
-    	let downloadFileName = this.props.selectedPatient.selectedSlide.slideName + ".jpg";
+    	let downloadFileName = this.props.selectedParticipant.selectedSlide.slideName + ".jpg";
     	downloadSlide(downloadFileName);
     }
     
@@ -40,7 +40,7 @@ class Header extends Component {
         ReactGA.event({
             category: 'Slide View',
             action: 'Print Slide',
-            label: this.props.selectedPatient.selectedSlide.slideName
+            label: this.props.selectedParticipant.selectedSlide.slideName
         });
         SlidePrintManager.getInstance().beforePrint();
         setTimeout(window.print, 10);

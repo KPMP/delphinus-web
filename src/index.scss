@@ -128,7 +128,7 @@ canvas {
 		border-color: #BB0606;
 	}
 
-	#patient-select-wrapper {
+	#participant-select-wrapper {
 		padding: 10px;
 		position: fixed;
 		top: 60px;
@@ -136,12 +136,12 @@ canvas {
 		background: white;
 		width: 100%;
 
-		.patient-select {
+		.participant-select {
 			width: 230px;
 			margin-right: 10px;
 		}
 		
-		.patient-select-dropdown {
+		.participant-select-dropdown {
 			line-height: 15.4333px;
 			padding-right: 15px;
 			width: 230px;
@@ -265,7 +265,7 @@ canvas {
 
 		background: white;
 
-		#patient-select-wrapper, #slide-viewer, .osd-div, .osd-navigator-wrapper, #osd-navigator, .osd-toolbar, .nav-container {
+		#-select-wrapper, #slide-viewer, .osd-div, .osd-navigator-wrapper, #osd-navigator, .osd-toolbar, .nav-container {
 			display: none !important;
 		}
 

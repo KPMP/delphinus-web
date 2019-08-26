@@ -1,7 +1,7 @@
 import React from 'react';
-import patientSelectSorter from './patientSelectSorter';
+import participantSelectSorter from './participantSelectSorter';
 
-const patient = {
+const participant = {
     "_id":"5bfc010c784ef63ae4514403",
     "kpmp_id":"18-139",
     "slides":
@@ -34,9 +34,9 @@ const patient = {
         ]
     };
 
-describe('patientSelectSorter', () => {
+describe('participantSelectSorter', () => {
     it('should sort the slides array by default on slideName', () => {
-        let sortedSlides = patientSelectSorter(patient.slides);
+        let sortedSlides = participantSelectSorter(participant.slides);
         expect(sortedSlides).toBeDefined();
         expect(sortedSlides[0].slideName).toEqual('18-139-1');
         expect(sortedSlides[1].slideName).toEqual('18-139-2');

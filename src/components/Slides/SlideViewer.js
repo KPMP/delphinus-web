@@ -10,7 +10,7 @@ class SlideViewer extends Component {
 
 	initSeaDragon() {
 		let self = this;
-		let slideId = this.props.selectedPatient.selectedSlide.id;
+		let slideId = this.props.selectedParticipant.selectedSlide.id;
 		OpenSeadragon.setString("Tooltips.Home","Reset pan & zoom");
 		self.viewer =  OpenSeadragon({
 			id: "osdId",
@@ -33,7 +33,7 @@ class SlideViewer extends Component {
 	}
 
 	componentDidMount(){
-		if(!noSlidesFound(this.props.selectedPatient, this.props.handleError)) {
+		if(!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
             this.initSeaDragon();
 		}
 		document.body.classList.add('slide-viewer-body');
@@ -43,13 +43,13 @@ class SlideViewer extends Component {
 		this.viewer.destroy();
 		this.viewer.navigator.destroy();
 		this.initSeaDragon();
-		noSlidesFound(this.props.selectedPatient, this.props.handleError);
+		noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 	}
 
 	render() {
 		return (
 			<div id="slide-viewer">
-				<Menu selectedPatient={this.props.selectedPatient}/>
+				<Menu selectedParticipant={this.props.selectedParticipant}/>
 				<div className="osd-div" ref={node => {this.el = node;}}>
 					<div className="openseadragon" id="osdId"></div>
 					<ul className="osd-toolbar">
@@ -67,7 +67,7 @@ class SlideViewer extends Component {
 }
 
 SlideViewer.propTypes = {
-    selectedPatient: PropTypes.object.isRequired,
+	selectedParticipant: PropTypes.object.isRequired,
 };
 
 export default SlideViewer;

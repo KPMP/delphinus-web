@@ -1,6 +1,6 @@
 {
 
-  "patientSlides": [],
-  "selectedPatient": {"id": "", "slides": [], "selectedSlide": ""}
+  "participants": [],
+  "selected": {"id": "", "slides": [], "selectedSlide": ""}
 
 }

@@ -1,8 +1,8 @@
 import actionNames from '../../actions/actionNames';
 
-export const selectedPatient = (state = {}, action) => {
+export const selectedParticipant = (state = {}, action) => {
     switch(action.type) {
-        case actionNames.SET_SELECTED_PATIENT:
+        case actionNames.SET_SELECTED_PARTICIPANT:
             return action.payload;
         case actionNames.SET_SELECTED_SLIDE:
             return {...state, selectedSlide: action.payload};
@@ -11,9 +11,9 @@ export const selectedPatient = (state = {}, action) => {
     }
 };
 
-export const patientSlides = (state = [], action) => {
+export const participants = (state = [], action) => {
     switch(action.type) {
-        case actionNames.SET_PATIENT_SLIDES:
+        case actionNames.SET_PARTICIPANTS:
             return action.payload;
         default:
             return state;
