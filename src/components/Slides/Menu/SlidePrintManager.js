@@ -70,8 +70,8 @@ class SlidePrintManager {
             return;
         }
 
-        let slideTitleText = spm.getReduxStore().getState().selectedPatient.selectedSlide.slideName;
-        let slideTypeText = spm.getReduxStore().getState().selectedPatient.selectedSlide.stain.title;
+        let slideTitleText = spm.getReduxStore().getState().selectedParticipant.selectedSlide.slideName;
+        let slideTypeText = spm.getReduxStore().getState().selectedParticipant.selectedSlide.stain.title;
 
         let openseadragon = document.getElementsByClassName('openseadragon')[0];
         let canvasDiv = openseadragon.getElementsByClassName('openseadragon-canvas')[0];

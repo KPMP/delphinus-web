@@ -4,7 +4,7 @@ import { sendMessageToBackend } from '../../actions/Error/errorActions';
 
 const mapStateToProps = (state, props) =>
     ({
-        selectedPatient: state.selectedPatient
+        selectedParticipant: state.selectedParticipant
     });
 
 const mapDispatchToProps = (dispatch, props) =>

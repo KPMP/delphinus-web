@@ -23,8 +23,8 @@ export const downloadSlide = (downloadFileName) => {
     }
 }
 
-export const noSlidesFound = (selectedPatient, handleError) => {
-    if (selectedPatient === null || selectedPatient === undefined || Object.keys(selectedPatient.slides).length === 0) {
+export const noSlidesFound = (selected, handleError) => {
+    if (selected === null || selected === undefined || Object.keys(selected.slides).length === 0) {
         handleError({ error: 'No participant selected. No slides to show.' , stackTrace: '' })
     } 
 }
