@@ -4,7 +4,7 @@ import { setSelectedSlide } from '../../../actions/Participants/participantActio
 
 const mapStateToProps = (state, props) =>
     ({
-        selected: state.selectedParticipant
+        selectedParticipant: state.selectedParticipant
     });
 
 const mapDispatchToProps = (dispatch, props) =>
