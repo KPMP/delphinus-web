@@ -15,8 +15,6 @@ class Summary extends Component {
                         Select a KPMP ID and click view slides to get started:
                     </p>
                     <ParticipantSelectContainer />
-                    <div className="alert-info content-warning">This is a demonstration of the slide viewing capabilities that will be in the Digital Pathology Repository. 
-                    This demonstration has been pre-loaded with nephrectomy cases from Pilot 1.</div>
                 </div>
             </div>
         );
