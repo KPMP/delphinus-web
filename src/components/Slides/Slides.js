@@ -3,6 +3,8 @@ import { Row } from 'reactstrap';
 import SlideViewerContainer from './SlideViewerContainer';
 
 class Slides extends Component {
+	
+	
 	render() {
 		return(
 			<Row >

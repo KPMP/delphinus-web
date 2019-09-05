@@ -16,7 +16,7 @@ class SlideList extends Component {
     }
     
     componentDidUpdate (){
-    	noSlidesFound(this.props.selectedPatient);
+    	noSlidesFound(this.props.selectedParticipant);
     }
     
     render() {
@@ -26,8 +26,8 @@ class SlideList extends Component {
 				<Col id="slides-col">
     				<div id="menu-slide-list-slides">
     				{
-    					this.props.selectedPatient.slides.map(function(slide, index) {
-    						let highlightedClass = this.props.selectedPatient.selectedSlide.id === slide.id ? " slide-highlighted" : "";
+    					this.props.selectedParticipant.slides.map(function(slide, index) {
+    						let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
 							let thumbnailSrc = "img/thumbnail_stain_" + slide.stain.type.toLowerCase() + ".png";
     						return (
 	    						<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>

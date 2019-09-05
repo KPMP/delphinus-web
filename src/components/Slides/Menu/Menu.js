@@ -27,7 +27,7 @@ class Menu extends Component {
 					customCrossIcon={ false } >
 					<SlideListContainer toggleMenu={this.toggleMenu}/>
 				</BurgerMenu>
-                <Link id="btn-home" to="/">
+                <Link id="btn-home" to={process.env.PUBLIC_URL}>
                     <FontAwesomeIcon icon={faHome} size="2x"/>
                 </Link>
             </div>

@@ -1,0 +1,48 @@
+import React, { Component } from 'react';
+import { Button } from 'reactstrap';
+import ParticipantListDropDown from './ParticipantListDropDown';
+import ReactGA from 'react-ga';
+import PropTypes from "prop-types";
+
+class ParticipantSelect extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { participantId: null, buttonDisabled: true }
+    }
+
+    handleParticipantSelect = (participantId) => {
+        ReactGA.event({
+            category: 'Navigation',
+            action: 'View Slides',
+            label: participantId
+        });
+        this.setState({participantId: participantId});
+        this.setState({buttonDisabled: false});
+    };
+
+    handleClick = () => {
+        this.props.setSelectedParticipant(this.state.participantId);
+    };
+
+    componentDidMount() {
+        this.props.getAllParticipants();
+    }
+
+    render() {
+        return (
+            <div className="participant-select-controls pull-left input-group">
+                <ParticipantListDropDown participants={this.props.participants} handleParticipantSelect={this.handleParticipantSelect}/>
+                <Button color="primary" onClick={this.handleClick} disabled={this.state.buttonDisabled}>View Slides</Button>
+            </div>
+        );
+    }
+
+}
+
+ParticipantSelect.propTypes = {
+    setSelectedParticipant: PropTypes.func.isRequired,
+    getAllParticipants: PropTypes.func.isRequired,
+    participants: PropTypes.array.isRequired
+};
+export default ParticipantSelect;

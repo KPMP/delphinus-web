@@ -8,18 +8,21 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
-import { HashRouter, Route } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
+import Oops from './components/Error/Oops';
+import ErrorBoundaryContainer from "./components/Error/ErrorBoundaryContainer";
 
-const cacheStore = window.sessionStorage.getItem("redux-store");
+
+const cacheStore = window.sessionStorage.getItem("dpr");
 const initialState = cacheStore ?
     JSON.parse(cacheStore) :
     loadedState;
 const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const saveState = () => {
-    window.sessionStorage.setItem("redux-store", JSON.stringify(store.getState()));
+    window.sessionStorage.setItem("dpr", JSON.stringify(store.getState()));
 };
 const GA_TRACKING_ID = 'UA-124331187-3';
 
@@ -51,13 +54,16 @@ class App extends Component {
     	return (
             <Provider store={store}>
                 <Container fluid>
-                	<NavBar/>
-                    <HashRouter basename='/dpr'>
+                    <Router history={history}>
                     	<div>
-	                        <Route exact path="/" component={Summary}/>
-	                        <Route path="/slides" component={Slides}/>
-                        </div>
-                    </HashRouter>
+	                    	<ErrorBoundaryContainer>
+	                            <NavBar/>
+		                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
+		                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
+	                        </ErrorBoundaryContainer>
+	                        <Route  exact path={process.env.PUBLIC_URL + "/oops"} component={Oops} />
+	                    </div>
+                    </Router>
                 </Container>
             </Provider>
         );

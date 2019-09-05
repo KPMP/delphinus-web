@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
-import { Row, NavbarBrand, Col, Button } from 'reactstrap';
+import { Navbar, NavbarBrand, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class NavBar extends Component {
 	render() {
 		return (
-			<Row className="nav-container container-fluid">
-				<Col xs="3">
-					<NavbarBrand href={process.env.PUBLIC_URL + "/"}>
-						<img src="img/logo.png" alt="Digital Pathology Repository" className="logo"/>
-					</NavbarBrand>
+			<Navbar id="navbar" className="px-1 py-1 fixed-top">
+				<Col sm={6}>
+					<Link to="/" className="navbar-header">
+						<NavbarBrand className="d-flex align-items-center">
+							<img src="img/logo.png" alt="Kidney Precision Medicine Project Digital Pathology Repository" className="logo" />
+							<span className="ml-2 text-dark">Digital Pathology Repository</span>
+						</NavbarBrand>
+					</Link>
 				</Col>
-				<Col xs="6" id="demo-text">Slide Viewer Concept
-				</Col>
-				<Col xs="6" id="demo-text-small"></Col>
-				<Col xs="3">
-					<div className="float-right" id="feedback-button"><Button color="primary" onClick={() => window.open("https://goo.gl/forms/WkyC7PZM8AIe3NoI3", "_blank")}>Send Feedback</Button></div>
-				</Col>
-			</Row>
-			
+			</Navbar>
 		);
 	}
 }
