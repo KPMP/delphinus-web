@@ -1,55 +1,55 @@
 import { noSlidesFound, downloadSlide, getNextSlide, getPreviousSlide } from './slideHelpers';
 
-describe("noSlidesFound", () => {
+describe('noSlidesFound', () => {
 	
-	it("should redirect when the object contains an empty array", () => {
+	it('should redirect when the object contains an empty array', () => {
 		let handleError = jest.fn();
 		noSlidesFound({ slides: [] }, handleError);
 		expect(handleError).toHaveBeenCalledTimes(1);
 		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
 	});
 
-	it("should redirect when the object passed in is null", () => {
+	it('should redirect when the object passed in is null', () => {
 		let handleError = jest.fn();
 		noSlidesFound(null, handleError);
 		expect(handleError).toHaveBeenCalledTimes(1);
 		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
 	});
 
-	it("should redirect when the object passed in is undefined", () => {
+	it('should redirect when the object passed in is undefined', () => {
 		let handleError = jest.fn();
 		noSlidesFound(undefined, handleError);
 		expect(handleError).toHaveBeenCalledTimes(1);
 		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
 	});
 
-	it("should do nothing when the object passed in has items in the array", () => {
+	it('should do nothing when the object passed in has items in the array', () => {
 		let handleError = jest.fn();
-		noSlidesFound( { slides: [ {key: "value" }]}, handleError);
+		noSlidesFound( { slides: [ {key: 'value' }]}, handleError);
 		expect(handleError).toHaveBeenCalledTimes(0);
 	});
 
 });
 
-describe("downloadSlide", () => {
+describe('downloadSlide', () => {
 	beforeEach(() => {
 		document.body.innerHTML =
-			 '<a id="download" download={downloadFileName}><FontAwesomeIcon icon={faDownload} size="2x" className="clickable"/></a>' +
-			 '<div class="openseadragon"><div class="openseadragon-canvas">' +
+			'<a id="download" download={downloadFileName}><FontAwesomeIcon icon={faDownload} size="2x" className="clickable"/></a>' +
+			'<div class="openseadragon"><div class="openseadragon-canvas">' +
 				'<canvas id="myCanvas" width="500" height="500"></canvas>'+
-			 '</div></div><div class="openseadragon">second one for navigator pane</div>';
+			'</div></div><div class="openseadragon">second one for navigator pane</div>';
 		const window = document.defaultView;
 
 	});
 
-	it("sets the href and download attributes on the a tag with 'stuff' in non-IE browser", () => {
+	it('sets the href and download attributes on the a tag with "stuff" in non-IE browser', () => {
 		mockCanvas(window, 'stuff');
-		var canvas = document.getElementById("myCanvas");
+		var canvas = document.getElementById('myCanvas');
 		var context = canvas.getContext('2d');
 
 		downloadSlide('slideName');
 
-		let result = document.getElementById("download");
+		let result = document.getElementById('download');
 		expect(result.href).toEqual('http://localhost/stuff');
 		expect(result.download).toEqual('slideName');
 	});
@@ -61,7 +61,7 @@ describe("downloadSlide", () => {
 		let ieSave = jest.fn();
 		window.navigator.msSaveBlob = ieSave;
 		mockCanvas(window, 'stuff');
-		var canvas = document.getElementById("myCanvas");
+		var canvas = document.getElementById('myCanvas');
 		var context = canvas.getContext('2d');
 
 		downloadSlide('slideName');
@@ -75,36 +75,36 @@ describe("downloadSlide", () => {
 const mockCanvas = (window, toDataUrlReturn) => {
     window.HTMLCanvasElement.prototype.getContext = function () {
         return {
-            fillRect: function() {},
-            clearRect: function(){},
-            getImageData: function(x, y, w, h) {
+            fillRect() {},
+            clearRect(){},
+            getImageData(x, y, w, h) {
                 return  {
                     data: new Array(w*h*4)
                 };
             },
-            putImageData: function() {},
-            createImageData: function(){ return []},
-            setTransform: function(){},
-            drawImage: function(){},
-            save: function(){},
-            fillText: function(){},
-            restore: function(){},
-            beginPath: function(){},
-            moveTo: function(){},
-            lineTo: function(){},
-            closePath: function(){},
-            stroke: function(){},
-            translate: function(){},
-            scale: function(){},
-            rotate: function(){},
-            arc: function(){},
-            fill: function(){},
-            measureText: function(){
+            putImageData() {},
+            createImageData(){ return []; },
+            setTransform(){},
+            drawImage(){},
+            save(){},
+            fillText(){},
+            restore(){},
+            beginPath(){},
+            moveTo(){},
+            lineTo(){},
+            closePath(){},
+            stroke(){},
+            translate(){},
+            scale(){},
+            rotate(){},
+            arc(){},
+            fill(){},
+            measureText(){
                 return { width: 0 };
             },
-            transform: function(){},
-            rect: function(){},
-            clip: function(){},
+            transform(){},
+            rect(){},
+            clip(){},
         };
     }
 
@@ -115,7 +115,7 @@ const mockCanvas = (window, toDataUrlReturn) => {
     window.HTMLCanvasElement.prototype.msToBlob = function () {
         return toDataUrlReturn;
     }
-}
+};
 
 let slides = [
     { id: 1234 },
