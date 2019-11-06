@@ -34,49 +34,50 @@ describe('noSlidesFound', () => {
 describe('downloadSlide', () => {
 	
 	const mockCanvas = (window, toDataUrlReturn) => {
-	    window.HTMLCanvasElement.prototype.getContext = function () {
+		window.HTMLCanvasElement.prototype.getContext = function () {
 	        return {
-	            fillRect() {},
-	            clearRect(){},
-	            getImageData(x, y, w, h) {
-	                return  {
-	                    data: new Array(w*h*4)
-	                };
-	            },
-	            putImageData() {},
-	            createImageData(){ return []; },
-	            setTransform(){},
-	            drawImage(){},
-	            save(){},
-	            fillText(){},
-	            restore(){},
-	            beginPath(){},
-	            moveTo(){},
-	            lineTo(){},
-	            closePath(){},
-	            stroke(){},
-	            translate(){},
-	            scale(){},
-	            rotate(){},
-	            arc(){},
-	            fill(){},
-	            measureText(){
-	                return { width: 0 };
-	            },
-	            transform(){},
-	            rect(){},
-	            clip(){},
+	        	fillRect() {},
+	        	clearRect(){},
+	        	getImageData(x, y, w, h) {
+	        		return  {
+	        			data: new Array(w*h*4)
+	        		};
+	        	},
+	        	putImageData() {},
+	        	createImageData(){ return []; },
+	        	setTransform(){},
+	        	drawImage(){},
+	        	save(){},
+	        	fillText(){},
+	        	restore(){},
+	        	beginPath(){},
+	        	moveTo(){},
+	        	lineTo(){},
+	        	closePath(){},
+	        	stroke(){},
+	        	translate(){},
+	        	scale(){},
+	        	rotate(){},
+	        	arc(){},
+	        	fill(){},
+	        	measureText(){
+	        		return { width: 0 };
+	        	},
+	        	transform(){},
+	        	rect(){},
+	        	clip(){},
 	        };
-	    }
+		}
 
-	    window.HTMLCanvasElement.prototype.toDataURL = function () {
-	        return toDataUrlReturn;
-	    }
+		window.HTMLCanvasElement.prototype.toDataURL = function () {
+			return toDataUrlReturn;
+		}
 
-	    window.HTMLCanvasElement.prototype.msToBlob = function () {
-	        return toDataUrlReturn;
-	    }
+		window.HTMLCanvasElement.prototype.msToBlob = function () {
+			return toDataUrlReturn;
+		}
 	};
+	
 	beforeEach(() => {
 		document.body.innerHTML =
 			'<a id="download" download={downloadFileName}><FontAwesomeIcon icon={faDownload} size="2x" className="clickable"/></a>' +
