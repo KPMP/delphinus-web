@@ -8,21 +8,21 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
-import { Router, Route } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
 import Oops from './components/Error/Oops';
-import ErrorBoundaryContainer from "./components/Error/ErrorBoundaryContainer";
+import ErrorBoundaryContainer from './components/Error/ErrorBoundaryContainer';
 
 
-const cacheStore = window.sessionStorage.getItem("dpr");
+const cacheStore = window.sessionStorage.getItem('dpr');
 const initialState = cacheStore ?
     JSON.parse(cacheStore) :
     loadedState;
 const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const saveState = () => {
-    window.sessionStorage.setItem("dpr", JSON.stringify(store.getState()));
+    window.sessionStorage.setItem('dpr', JSON.stringify(store.getState()));
 };
 const GA_TRACKING_ID = 'UA-124331187-3';
 
@@ -47,25 +47,25 @@ SlidePrintManager.getInstance().setReduxStore(store);
 class App extends Component {
 
     componentWillMount() {
-        logPageView(window.location, "");
+        logPageView(window.location, '');
     }
 
     render() {
     	return (
-            <Provider store={store}>
-                <Container fluid>
-                    <Router history={history}>
-                    	<div>
-	                    	<ErrorBoundaryContainer>
-	                            <NavBar/>
-		                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
-		                        <Route exact path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
-	                        </ErrorBoundaryContainer>
-	                        <Route  exact path={process.env.PUBLIC_URL + "/oops"} component={Oops} />
-	                    </div>
-                    </Router>
-                </Container>
-            </Provider>
+    		<Provider store={store}>
+    			<Container fluid>
+    				<Router history={history}>
+    					<Switch>
+    						<ErrorBoundaryContainer>
+    							<NavBar/>
+    							<Route exact path={process.env.PUBLIC_URL} component={Summary}/>
+    							<Route exact path={process.env.PUBLIC_URL + '/slides'} component={Slides}/>
+    						</ErrorBoundaryContainer>
+    						<Route  exact path={process.env.PUBLIC_URL + '/oops'} component={Oops} />
+    					</Switch>
+    				</Router>
+    			</Container>
+    		</Provider>
         );
     }
 }
