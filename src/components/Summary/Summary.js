@@ -11,15 +11,15 @@ class Summary extends Component {
     render() {
         return (
         	<Container fluid>
-	            <div id="summary-page">
-	                <div id="participant-select-wrapper">
-	                    <p>
-	                        Select a KPMP ID and click view slides to get started:
-	                    </p>
-	                    <ParticipantSelectContainer />
-	                </div>
-	            </div>
-            </Container>
+        		<div id='summary-page'>
+        			<div id='participant-select-wrapper'>
+        				<p>
+        					Select a KPMP ID and click view slides to get started:
+        				</p>
+        				<ParticipantSelectContainer />
+        			</div>
+        		</div>
+        	</Container>
         );
     }
 }

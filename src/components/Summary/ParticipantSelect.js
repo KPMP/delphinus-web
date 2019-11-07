@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import ParticipantListDropDown from './ParticipantListDropDown';
 import ReactGA from 'react-ga';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
 class ParticipantSelect extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { participantId: null, buttonDisabled: true }
+        this.state = { participantId: null, buttonDisabled: true };
     }
 
     handleParticipantSelect = (participantId) => {
@@ -17,7 +17,7 @@ class ParticipantSelect extends Component {
             action: 'View Slides',
             label: participantId
         });
-        this.setState({participantId: participantId});
+        this.setState({participantId});
         this.setState({buttonDisabled: false});
     };
 
@@ -31,9 +31,9 @@ class ParticipantSelect extends Component {
 
     render() {
         return (
-            <div className="participant-select-controls pull-left input-group">
+            <div className='participant-select-controls pull-left input-group'>
                 <ParticipantListDropDown participants={this.props.participants} handleParticipantSelect={this.handleParticipantSelect}/>
-                <Button color="primary" onClick={this.handleClick} disabled={this.state.buttonDisabled}>View Slides</Button>
+                <Button color='primary' onClick={this.handleClick} disabled={this.state.buttonDisabled}>View Slides</Button>
             </div>
         );
     }
