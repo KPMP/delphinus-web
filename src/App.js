@@ -59,7 +59,7 @@ class App extends Component {
 	                    	<ErrorBoundaryContainer>
 	                            <NavBar/>
 		                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
-		                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
+		                        <Route exact path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
 	                        </ErrorBoundaryContainer>
 	                        <Route  exact path={process.env.PUBLIC_URL + "/oops"} component={Oops} />
 	                    </div>
