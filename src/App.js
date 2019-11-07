@@ -54,11 +54,11 @@ class App extends Component {
     		<Provider store={store}>
 				<Router history={history}>
 					<ErrorBoundaryContainer>
+						<NavBar/>
 						<Switch>
-							<NavBar/>
-							<Route exact path='/' component={Summary}/>
 							<Route exact path='/slides' component={Slides}/>
 							<Route  exact path='/oops' component={Oops} />
+							<Route exact path='/' component={Summary}/>
 						</Switch>
 					</ErrorBoundaryContainer>
 				</Router>
