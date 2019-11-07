@@ -11,7 +11,7 @@ class Summary extends Component {
     render() {
         return (
         	<Container fluid>
-	            <div id="summary-page" className="container-fluid">
+	            <div id="summary-page">
 	                <div id="participant-select-wrapper">
 	                    <p>
 	                        Select a KPMP ID and click view slides to get started:
