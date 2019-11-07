@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import NavBar from './components/Nav/NavBar';
 import Summary from './components/Summary/Summary';
 import Slides from './components/Slides/Slides';
-import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -53,18 +52,16 @@ class App extends Component {
     render() {
     	return (
     		<Provider store={store}>
-    			<Container fluid>
-    				<Router history={history}>
-    					<Switch>
-    						<ErrorBoundaryContainer>
-    							<NavBar/>
-    							<Route exact path='/' component={Summary}/>
-    							<Route exact path='/slides' component={Slides}/>
-    						</ErrorBoundaryContainer>
-    						<Route  exact path='/oops' component={Oops} />
-    					</Switch>
-    				</Router>
-    			</Container>
+				<Router history={history}>
+					<ErrorBoundaryContainer>
+						<Switch>
+							<NavBar/>
+							<Route exact path='/' component={Summary}/>
+							<Route exact path='/slides' component={Slides}/>
+							<Route  exact path='/oops' component={Oops} />
+						</Switch>
+					</ErrorBoundaryContainer>
+				</Router>
     		</Provider>
         );
     }
