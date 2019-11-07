@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ParticipantSelectContainer from './ParticipantSelectContainer';
-import { Container } from 'reactstrap';
 
 class Summary extends Component {
 	
@@ -10,7 +9,6 @@ class Summary extends Component {
 	
     render() {
         return (
-        	<Container fluid>
 	            <div id="summary-page">
 	                <div id="participant-select-wrapper">
 	                    <p>
@@ -19,7 +17,6 @@ class Summary extends Component {
 	                    <ParticipantSelectContainer />
 	                </div>
 	            </div>
-            </Container>
         );
     }
 }
