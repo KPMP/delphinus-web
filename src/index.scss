@@ -57,11 +57,6 @@ body.slide-viewer-body {
     overflow: hidden;
 }
 
-a {
-	color: black;
-	text-decoration: none;
-}
-
 a:hover {
 	color: black;
 	text-decoration: none;
@@ -336,4 +331,12 @@ canvas {
 		width: 385px;
 		height: 330px;
 	}
+}
+
+#permissions {
+	margin-top: 60px;
+}
+
+.error-header {
+	font-size: 20px;
 }
