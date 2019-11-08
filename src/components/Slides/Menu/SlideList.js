@@ -31,7 +31,7 @@ class SlideList extends Component {
 							let thumbnailSrc = "img/thumbnail_stain_" + slide.stain.type.toLowerCase() + ".png";
     						return (
 	    						<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
-		    						<Col xs={{size: "auto"}} className="no-padding"><img className="thumbnail" src={thumbnailSrc} alt=""/></Col>
+		    						<Col xs={{size: "auto"}} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt=""/></Col>
 		    						<Col xs={{size: "auto"}} className="slide-name">{slide.slideName}</Col>
 	    						</Row>
     						)
