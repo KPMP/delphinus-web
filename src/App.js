@@ -13,7 +13,8 @@ import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
 import Oops from './components/Error/Oops';
 import ErrorBoundaryContainer from './components/Error/ErrorBoundaryContainer';
-
+import PermissionDenied from './components/Error/PermissionDenied';
+import NotRegistered from './components/Error/NotRegistered';
 
 const cacheStore = window.sessionStorage.getItem('dpr');
 const initialState = cacheStore ?
@@ -57,7 +58,9 @@ class App extends Component {
 						<NavBar/>
 						<Switch>
 							<Route exact path='/slides' component={Slides}/>
-							<Route  exact path='/oops' component={Oops} />
+							<Route exact path='/oops' component={Oops} />
+							<Route exact path='/notRegistered' component={NotRegistered} />
+							<Route exact path='/permissionDenied' component={PermissionDenied} />
 							<Route exact path='/' component={Summary}/>
 						</Switch>
 					</ErrorBoundaryContainer>
