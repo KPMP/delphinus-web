@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faChevronRight, faChevronLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
 import ReactGA from 'react-ga';
-import SlidePrintManager from './SlidePrintManager';
 import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
 
 class Header extends Component {
