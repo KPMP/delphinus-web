@@ -3,14 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretLeft, faChevronRight, faChevronLeft, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
 import ReactGA from 'react-ga';
-import SlidePrintManager from './SlidePrintManager';
 import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
 
 class Header extends Component {
 	
 	constructor(props) {
 		super(props);
-        this.onPrint = this.onPrint.bind(this);
         this.handleDownload = this.handleDownload.bind(this);
 	}
 	
@@ -34,16 +32,6 @@ class Header extends Component {
         });
     	let downloadFileName = this.props.selectedParticipant.selectedSlide.slideName + ".jpg";
     	downloadSlide(downloadFileName);
-    }
-    
-    onPrint() {
-        ReactGA.event({
-            category: 'Slide View',
-            action: 'Print Slide',
-            label: this.props.selectedParticipant.selectedSlide.slideName
-        });
-        SlidePrintManager.getInstance().beforePrint();
-        setTimeout(window.print, 10);
     }
 
 	render() {
