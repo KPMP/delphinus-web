@@ -8,7 +8,6 @@ import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
 import { Router, Route, Switch } from 'react-router-dom';
-import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
 import Oops from './components/Error/Oops';
@@ -24,7 +23,7 @@ const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, win
 const saveState = () => {
     window.sessionStorage.setItem('dpr', JSON.stringify(store.getState()));
 };
-const GA_TRACKING_ID = 'UA-124331187-3';
+const GA_TRACKING_ID = 'UA-124331187-9';
 
 ReactGA.initialize(GA_TRACKING_ID);
 function logPageView(location, action) {
@@ -41,8 +40,6 @@ store.subscribe(function () {
 });
 
 store.subscribe(saveState);
-
-SlidePrintManager.getInstance().setReduxStore(store);
 
 class App extends Component {
 
