@@ -48,7 +48,7 @@ class SlideViewer extends Component {
 
 	render() {
 		return (
-			<div id="slide-viewer">
+			<div id="slide-viewer" className="container-fluid">
 				<Menu selectedParticipant={this.props.selectedParticipant}/>
 				<div className="osd-div" ref={node => {this.el = node;}}>
 					<div className="openseadragon" id="osdId"></div>

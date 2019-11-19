@@ -57,11 +57,6 @@ body.slide-viewer-body {
     overflow: hidden;
 }
 
-a {
-	color: black;
-	text-decoration: none;
-}
-
 a:hover {
 	color: black;
 	text-decoration: none;
@@ -73,6 +68,16 @@ a:hover {
 
 .hoverable:hover {
 	opacity: 0.6;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Opera and Firefox */
 }
 
 //https://stackoverflow.com/questions/7615009/disable-interpolation-when-scaling-a-canvas
@@ -326,4 +331,12 @@ canvas {
 		width: 385px;
 		height: 330px;
 	}
+}
+
+#permissions {
+	margin-top: 60px;
+}
+
+.error-header {
+	font-size: 20px;
 }

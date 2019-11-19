@@ -2,29 +2,28 @@ import React, { Component } from 'react';
 import NavBar from './components/Nav/NavBar';
 import Summary from './components/Summary/Summary';
 import Slides from './components/Slides/Slides';
-import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
-import { Router, Route } from 'react-router-dom';
-import SlidePrintManager from './components/Slides/Menu/SlidePrintManager';
+import { Router, Route, Switch } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import createHistory from 'history/createBrowserHistory';
 import Oops from './components/Error/Oops';
-import ErrorBoundaryContainer from "./components/Error/ErrorBoundaryContainer";
+import ErrorBoundaryContainer from './components/Error/ErrorBoundaryContainer';
+import PermissionDenied from './components/Error/PermissionDenied';
+import NotRegistered from './components/Error/NotRegistered';
 
-
-const cacheStore = window.sessionStorage.getItem("dpr");
+const cacheStore = window.sessionStorage.getItem('dpr');
 const initialState = cacheStore ?
     JSON.parse(cacheStore) :
     loadedState;
 const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 const saveState = () => {
-    window.sessionStorage.setItem("dpr", JSON.stringify(store.getState()));
+    window.sessionStorage.setItem('dpr', JSON.stringify(store.getState()));
 };
-const GA_TRACKING_ID = 'UA-124331187-3';
+const GA_TRACKING_ID = 'UA-124331187-9';
 
 ReactGA.initialize(GA_TRACKING_ID);
 function logPageView(location, action) {
@@ -42,30 +41,28 @@ store.subscribe(function () {
 
 store.subscribe(saveState);
 
-SlidePrintManager.getInstance().setReduxStore(store);
-
 class App extends Component {
 
     componentWillMount() {
-        logPageView(window.location, "");
+        logPageView(window.location, '');
     }
 
     render() {
     	return (
-            <Provider store={store}>
-                <Container fluid>
-                    <Router history={history}>
-                    	<div>
-	                    	<ErrorBoundaryContainer>
-	                            <NavBar/>
-		                        <Route exact path={process.env.PUBLIC_URL} component={Summary}/>
-		                        <Route path={process.env.PUBLIC_URL + "/slides"} component={Slides}/>
-	                        </ErrorBoundaryContainer>
-	                        <Route  exact path={process.env.PUBLIC_URL + "/oops"} component={Oops} />
-	                    </div>
-                    </Router>
-                </Container>
-            </Provider>
+    		<Provider store={store}>
+				<Router history={history}>
+					<ErrorBoundaryContainer>
+						<NavBar/>
+						<Switch>
+							<Route exact path='/slides' component={Slides}/>
+							<Route exact path='/oops' component={Oops} />
+							<Route exact path='/notRegistered' component={NotRegistered} />
+							<Route exact path='/permissionDenied' component={PermissionDenied} />
+							<Route exact path='/' component={Summary}/>
+						</Switch>
+					</ErrorBoundaryContainer>
+				</Router>
+    		</Provider>
         );
     }
 }
