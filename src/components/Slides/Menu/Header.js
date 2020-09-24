@@ -38,7 +38,7 @@ class Header extends Component {
 		return(
 			<div className="menu-slide-list-header">
 				<Row>
-					<Col className="menu-title">WHOLE SLIDE IMAGES</Col>
+					<Col className="menu-title">CASE ID: {this.props.selectedParticipant.id}</Col>
                     <div className="float-right">
 					    <Col className="menu-control"><FontAwesomeIcon icon={faCaretLeft} className="clickable" onClick={this.props.toggleMenu} size="lg"/></Col>
 				    </div>
