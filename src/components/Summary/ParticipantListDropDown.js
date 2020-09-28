@@ -17,8 +17,18 @@ class ParticipantListDropDown extends Component {
             }
         );
         return (
-	        	<Select size="large" className="participant-select-dropdown" labelInValue defaultValue={{ key: 'Select a KPMP ID' }} onChange={this.handleChange}
-	        		placeholder="Select a KPMP ID" getPopupContainer={() => document.getElementById("participant-select-wrapper")}>
+        		<Select size='large' 
+	        		className='participant-select-dropdown pr-3' 
+	        		labelInValue 
+	        		optionFilterProp="children"
+	        		defaultValue={{ key: 'Select a KPMP ID' }} 
+	        	    onChange={this.handleChange} 
+	        		placeholder='Select a KPMP ID' 
+	        		getPopupContainer={() => document.getElementById('participant-select-wrapper')}
+	        		allowClear showSearch={true}
+        		    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+	        	    onSearch={this.handleSearch}>
+        		
 	        		{options}
 	        	</Select>
         );
