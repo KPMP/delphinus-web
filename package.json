@@ -18,7 +18,7 @@
     "es6-shim": "0.35.5",
     "history": "4.10.1",
     "jquery": "3.5.1",
-    "lodash": "4.17.20",
+    "lodash": "4.17.21",
     "openseadragon": "2.4.1",
     "prop-types": "15.7.2",
     "react": "16.11.0",
