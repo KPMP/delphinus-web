@@ -178,4 +178,20 @@ describe('getStainImageName', () => {
 		let slideImageName = getStainImageName(thisSlide.stain.type);
 		expect(slideImageName).toEqual('other');
 	});
+	it('returns the stain image name of "unknown" when empty string provided', () => {
+		let thisSlide = {
+			id: 1234,
+			stain: { type: '' }
+		};
+		let slideImageName = getStainImageName(thisSlide.stain.type);
+		expect(slideImageName).toEqual('unknown');
+	});
+	it('returns the stain image name of "unknown" when undefined provided', () => {
+		let thisSlide = {
+			id: 1234,
+			stain: {}
+		};
+		let slideImageName = getStainImageName(thisSlide.stain.type);
+		expect(slideImageName).toEqual('unknown');
+	});
 });

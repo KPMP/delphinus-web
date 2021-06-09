@@ -75,7 +75,9 @@ export const getStainImageName = (stainType) => {
         'tri': true,
     };
 
-    if (availableImages[stainType.toLowerCase()]) {
+    if (!stainType) {
+        return 'unknown';
+    } else if (availableImages[stainType.toLowerCase()]) {
         return stainType.toLowerCase();
     } else {
         return 'other';
