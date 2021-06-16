@@ -18,6 +18,13 @@ class SlideViewer extends Component {
 		}
 	}
 
+	componentDidUpdate() {
+		this.viewer.destroy();
+		this.viewer.navigator.destroy();
+		this.initSeaDragon();
+		noSlidesFound(this.props.selectedParticipant, this.props.handleError);
+	}
+
 	getGridOverlay(metadata) {
 		// estimated micron unit
 		let microns = 500;
