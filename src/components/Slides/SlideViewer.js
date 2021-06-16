@@ -7,30 +7,46 @@ import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
 
 class SlideViewer extends Component {
+	constructor(props) {
+		super(props)
+		this.state = { gridOverlay: this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata), viewer: '' }
+	}
+
+	componentDidMount() {
+		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
+			this.initSeaDragon();
+		}
+	}
 
 	getGridOverlay(metadata) {
+		// estimated micron unit
+		let microns = 500;
+		let lineThickness = 10;
+
+
 		let overlay = []
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
 
-			for (let i = 0; i < width; i += 1000) {
+			for (let i = 0; i < (width + microns); i += microns) {
 				overlay.push({
 					px: i,
 					py: 0,
-					width: 100,
-					height: height,
-					className: 'hightlight'
+					width: lineThickness,
+					height: height + microns,
+					className: 'gridline'
 				})
 			}
-			for (let i = 0; i < height; i += 1000) {
+
+			for (let i = 0; i <= (height + microns); i += microns) {
 				overlay.push({
 					px: 0,
 					py: i,
 					width: width,
-					height: 100,
-					className: 'hightlight'
+					height: lineThickness,
+					className: 'gridline'
 				})
 			}
 		} else {
@@ -40,11 +56,9 @@ class SlideViewer extends Component {
 	}
 
 	initSeaDragon() {
-		let self = this;
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
-		let gridOverlay = this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata)
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
-		self.viewer = OpenSeadragon({
+		this.viewer = OpenSeadragon({
 			id: "osdId",
 			visibilityRatio: 0.5,
 			constrainDuringPan: false,
@@ -61,24 +75,11 @@ class SlideViewer extends Component {
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
-			overlays: gridOverlay
-
+			overlays: this.state.gridOverlay
 		});
+		this.setState({ viewer: this.viewer });
 	}
 
-	componentDidMount() {
-		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			this.initSeaDragon();
-		}
-		document.body.classList.add('slide-viewer-body');
-	}
-
-	componentDidUpdate() {
-		this.viewer.destroy();
-		this.viewer.navigator.destroy();
-		this.initSeaDragon();
-		noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-	}
 
 	render() {
 		return (
