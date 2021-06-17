@@ -9,7 +9,16 @@ import PropTypes from 'prop-types';
 class SlideViewer extends Component {
 	constructor(props) {
 		super(props)
-		this.state = { gridOverlay: this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata), viewer: '' }
+		this.horizontalRef = React.createRef(500);
+		this.verticalRef = React.createRef(500);
+		this.handleShowGridToggle = this.handleShowGridToggle.bind(this)
+		this.handleSetGridPropertiesClick = this.handleSetGridPropertiesClick.bind(this)
+
+		this.state = {
+			showGrid: true,
+			horizontal: 500,
+			vertical: 500,
+		}
 	}
 
 	componentDidMount() {
@@ -18,36 +27,54 @@ class SlideViewer extends Component {
 		}
 	}
 
-	componentDidUpdate() {
-		this.viewer.destroy();
-		this.viewer.navigator.destroy();
-		this.initSeaDragon();
-		noSlidesFound(this.props.selectedParticipant, this.props.handleError);
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.selectedParticipant !== this.props.selectedParticipant || this.gridSizeChanged(prevState)) {
+			this.viewer.destroy();
+			this.viewer.navigator.destroy();
+			this.initSeaDragon();
+			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
+		}
+	}
+	gridSizeChanged(prevState) {
+		if (prevState.horizontal !== this.state.horizontal ||
+			prevState.vertical !== this.state.vertical) {
+			return true;
+		}
+		return false;
+	}
+	gridStateChanged(prevState) {
+		if (prevState.showGrid !== this.state.showGrid) {
+			return true;
+		}
+		return false;
 	}
 
 	getGridOverlay(metadata) {
 		// estimated micron unit
-		let microns = 500;
 		let lineThickness = 10;
-
+		let vertical = this.state.vertical;
+		let horizontal = this.state.horizontal;
 
 		let overlay = []
+		if (!this.state.showGrid) {
+			return overlay
+		}
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
 
-			for (let i = 0; i < (width + microns); i += microns) {
+			for (let i = 0; i < (width + vertical); i += vertical) {
 				overlay.push({
 					px: i,
 					py: 0,
 					width: lineThickness,
-					height: height + microns,
+					height: height + vertical,
 					className: 'gridline'
 				})
 			}
 
-			for (let i = 0; i <= (height + microns); i += microns) {
+			for (let i = 0; i <= (height + horizontal); i += horizontal) {
 				overlay.push({
 					px: 0,
 					py: i,
@@ -64,6 +91,8 @@ class SlideViewer extends Component {
 
 	initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
+		const gridOverlay = this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata);
+
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
 			id: "osdId",
@@ -82,22 +111,42 @@ class SlideViewer extends Component {
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
-			overlays: this.state.gridOverlay
+			overlays: gridOverlay
 		});
-		this.setState({ viewer: this.viewer });
 	}
 
+	handleShowGridToggle() {
+		if (this.state.showGrid) {
+			this.setState({ showGrid: false })
+		} else {
+			this.setState({ showGrid: true })
+		}
+	}
+
+	handleSetGridPropertiesClick() {
+		this.setState({
+			horizontal: parseInt(this.horizontalRef.current.value),
+			vertical: parseInt(this.verticalRef.current.value)
+		})
+	}
 
 	render() {
 		return (
 			<div id="slide-viewer" className="container-fluid">
-				<Menu selectedParticipant={this.props.selectedParticipant} />
+				<Menu
+					handleShowGridToggle={this.handleShowGridToggle}
+					showGrid={this.state.showGrid}
+					handleSetGridPropertiesClick={this.handleSetGridPropertiesClick}
+					vertical={this.state.vertical}
+					horizontal={this.state.horizontal}
+					horizontalRef={this.horizontalRef}
+					verticalRef={this.verticalRef}
+					selectedParticipant={this.props.selectedParticipant} />
 				<div id="osdOverlay">
 
 				</div>
-				<hr />
 				<div className="osd-div" ref={node => { this.el = node; }}>
-					<div className="openseadragon" id="osdId"></div>
+					<div className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
 					<ul className="osd-toolbar">
 						<li><div className="osd-button" id="zoom-in"><FontAwesomeIcon icon={faPlus} /></div></li>
 						<li><div className="osd-button" id="zoom-out"><FontAwesomeIcon icon={faMinus} /></div></li>
