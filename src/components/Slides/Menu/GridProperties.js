@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'reactstrap';
 
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import { faWindowClose as farWindowClose } from '@fortawesome/free-regular-svg-icons';
+import { faWindowClose as farWindowClose, faSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 
 class GridProperties extends Component {
     render() {
@@ -13,6 +13,7 @@ class GridProperties extends Component {
                 <div>
                     <label>Horizontal</label>
                     <input
+                        disabled
                         defaultValue={this.props.horizontal}
                         ref={this.props.horizontalRef}
                         type="text" name="name" /><span className="micolabel">μm</span>
@@ -20,10 +21,19 @@ class GridProperties extends Component {
                 <div>
                     <label>Vertical</label>
                     <input
+                        disabled
                         defaultValue={this.props.vertical}
                         ref={this.props.verticalRef}
                         type="text" name="name" /><span className="micolabel">μm</span>
                 </div>
+
+                <FontAwesomeIcon
+                    icon={this.props.showGridLabels ? faCheckSquare : faSquare}
+                    className="clickable hoverable showLabelsCheckbox"
+                    onClick={this.props.handleShowLabel}
+                    size="lg" />
+                <label>Show labels</label>
+
                 <Row >
                     <Col xs={{ size: 1, offset: 8 }}>
                         <FontAwesomeIcon

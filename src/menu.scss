@@ -130,7 +130,9 @@ $menu-header-height: 80px;
 		color: #333;
 		padding: 2%;
 		box-shadow: 0px 3px 5px gray;
-
+	}
+	.menu-slide-list-header-child label {
+		margin-left: 2%;
 	}
 	.menu-slide-list-header label {
 		width: 31%;

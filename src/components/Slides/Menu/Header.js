@@ -18,8 +18,9 @@ import GridProperties from './GridProperties.js';
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false }
+		this.state = { showGridProperties: false, showGridLabels: false }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
+		this.handleShowLabel = this.handleShowLabel.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
 		this.focusTextInput = this.focusTextInput.bind(this);
@@ -56,6 +57,13 @@ class Header extends Component {
 			this.setState({ showGridProperties: false })
 		} else {
 			this.setState({ showGridProperties: true })
+		}
+	}
+	handleShowLabel() {
+		if (this.state.showGridLabels) {
+			this.setState({ showGridLabels: false })
+		} else {
+			this.setState({ showGridLabels: true })
 		}
 	}
 
@@ -118,6 +126,8 @@ class Header extends Component {
 						verticalRef={this.props.verticalRef}
 						vertical={this.props.vertical}
 						handleShowGridProperties={this.handleShowGridProperties}
+						handleShowLabel={this.handleShowLabel}
+						showGridLabels={this.state.showGridLabels}
 						handleSetGridPropertiesClick={this.props.handleSetGridPropertiesClick}
 						handleShowGridToggle={this.props.handleShowGridToggle}
 
