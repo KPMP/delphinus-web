@@ -7,7 +7,8 @@ import { Link } from 'react-router-dom';
 
 class Menu extends Component {
 
-	constructor() {
+	constructor(props) {
+		super(props)
 		this.state = { isOpen: false };
 	}
 
