@@ -10,7 +10,9 @@ class DivOverlays extends Component {
                     key={`labelOverlay-${item}`}
                     id={`labelOverlay-${item}`}
                     className={`labelOverlay ${this.props.showGridLabel ? '' : 'hideLabels'}`}>
-                    {item}
+                    <div>
+                        {item}
+                    </div>
                 </div>
             })
         }

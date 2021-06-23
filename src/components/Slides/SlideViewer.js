@@ -18,10 +18,10 @@ class SlideViewer extends Component {
 		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
 
 		this.state = {
-			showGrid: true,
+			showGrid: false,
 			showGridLabel: false,
-			horizontal: 5000,
-			vertical: 5000,
+			horizontal: 1500,
+			vertical: 1500,
 			overlayDivs: '',
 			overlayLabels: []
 		}
@@ -34,7 +34,9 @@ class SlideViewer extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant || this.gridSizeChanged(prevState)) {
+		if (
+			prevProps.selectedParticipant !== this.props.selectedParticipant
+			|| this.gridSizeChanged(prevState)) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			this.initSeaDragon();
@@ -44,13 +46,6 @@ class SlideViewer extends Component {
 	gridSizeChanged(prevState) {
 		if (prevState.horizontal !== this.state.horizontal ||
 			prevState.vertical !== this.state.vertical) {
-			return true;
-		}
-		return false;
-	}
-
-	gridStateChanged(prevState) {
-		if (prevState.showGrid !== this.state.showGrid) {
 			return true;
 		}
 		return false;
@@ -107,14 +102,11 @@ class SlideViewer extends Component {
 	}
 	async getGridOverlay(metadata) {
 		// estimated micron unit
-		let lineThickness = 10;
+		let lineThickness = 25;
 		let vertical = this.state.vertical;
 		let horizontal = this.state.horizontal;
 
 		let overlay = [];
-		if (!this.state.showGrid) {
-			return overlay
-		}
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 
 			let width = parseInt(metadata.aperio.originalWidth);
@@ -146,7 +138,9 @@ class SlideViewer extends Component {
 
 					overlayLabel.push(`${currentLetter + (yy / vertical)}`)
 					overlay.push({
-						id: `labelOverlay-${currentLetter + (yy / vertical)}`, px: 0 + (i / vertical * vertical + lineThickness), py: 0 + (yy / horizontal * horizontal + lineThickness),
+						id: `labelOverlay-${currentLetter + (yy / vertical)}`,
+						px: 0 + (i / vertical * vertical + lineThickness),
+						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
 					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
 				}
