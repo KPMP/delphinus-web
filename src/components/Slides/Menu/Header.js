@@ -81,12 +81,6 @@ class Header extends Component {
 						<FontAwesomeIcon icon={faChevronLeft} className="clickable hoverable pad-right" onClick={() => this.handlePreviousSlide()} size="lg" />
 						<FontAwesomeIcon icon={faChevronRight} className="clickable hoverable" onClick={() => this.handleNextSlide()} size="lg" />
 					</Col>
-					{/* <Col xs="3">
-						<div className="float-right">
-							<a id="download" //eslint-disable-line
-							><FontAwesomeIcon icon={faCheckSquare} className="clickable hoverable" onClick={this.handleDownload} size="lg" /></a>
-						</div>
-					</Col> */}
 					<Col xs="4">
 						<div className="float-right">
 							<FontAwesomeIcon
