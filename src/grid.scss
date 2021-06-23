@@ -1,3 +1,23 @@
-.gridline {
+.showGridlines .gridline {
 	background-color: #333;
+	-webkit-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.hideGridlines .gridline {
+	background-color: rgba(0,0,0,0);
+    -webkit-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+.gridCheckbox {
+	padding-right: 5%;
+}
+.showLabelsCheckbox {
+    padding: 0px;
+}
+
+.gridPropertiesCaret {
+	padding-left: 5%;
 }
