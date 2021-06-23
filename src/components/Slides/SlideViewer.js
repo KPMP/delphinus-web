@@ -100,6 +100,11 @@ class SlideViewer extends Component {
 		return nextLetter;
 	}
 
+	calculateGridLineLength(imageDimension, lineDimension) {
+		// The choosen micron dimension may not be cleanly devisable by the image dimensions.
+		// This function ensures the lines correctly line up during those cases.
+		return (Math.ceil(((imageDimension + lineDimension) / lineDimension)) - 1) * lineDimension
+	}
 	async getGridOverlay(metadata) {
 		// estimated micron unit
 		let lineThickness = 10;
@@ -114,28 +119,26 @@ class SlideViewer extends Component {
 
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
-
-			let currentLetter = ''
 			for (let i = 0; i < (width + vertical); i += vertical) {
 				overlay.push({
 					px: i,
 					py: 0,
 					width: lineThickness,
-					height: height + vertical,
+					height: this.calculateGridLineLength(height, horizontal),
 					className: 'gridline'
 				})
-
-
 			}
+
 			for (let i = 0; i <= (height + horizontal); i += horizontal) {
 				overlay.push({
 					px: 0,
 					py: i,
-					width: width,
+					width: this.calculateGridLineLength(width, vertical),
 					height: lineThickness,
 					className: 'gridline'
 				})
 			}
+			let currentLetter = '';
 			let overlayLabel = []
 			for (let yy = 0; yy < (height); yy += vertical) {
 				currentLetter = await this.getNextLetterInAlphabet('');
