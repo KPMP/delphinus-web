@@ -5,6 +5,7 @@ import { faPlus, faMinus, faCrosshairs } from '@fortawesome/free-solid-svg-icons
 import { noSlidesFound } from './slideHelpers';
 import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
+import DivOverlays from './DivOverlays';
 
 class SlideViewer extends Component {
 	constructor(props) {
@@ -12,12 +13,17 @@ class SlideViewer extends Component {
 		this.horizontalRef = React.createRef(500);
 		this.verticalRef = React.createRef(500);
 		this.handleShowGridToggle = this.handleShowGridToggle.bind(this)
+		this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this)
 		this.handleSetGridPropertiesClick = this.handleSetGridPropertiesClick.bind(this)
+		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
 
 		this.state = {
 			showGrid: true,
-			horizontal: 500,
-			vertical: 500,
+			showGridLabel: false,
+			horizontal: 5000,
+			vertical: 5000,
+			overlayDivs: '',
+			overlayLabels: []
 		}
 	}
 
@@ -42,6 +48,7 @@ class SlideViewer extends Component {
 		}
 		return false;
 	}
+
 	gridStateChanged(prevState) {
 		if (prevState.showGrid !== this.state.showGrid) {
 			return true;
@@ -49,13 +56,57 @@ class SlideViewer extends Component {
 		return false;
 	}
 
-	getGridOverlay(metadata) {
+	async getNextLetterInAlphabet(currentLetter = '') {
+
+		if (!currentLetter || currentLetter === '') {
+			return 'A'
+		}
+		let zerothLetter = currentLetter.split('')[0]
+
+		const alphabet = {
+			'A': 'B',
+			'B': 'C',
+			'C': 'D',
+			'D': 'E',
+			'E': 'F',
+			'F': 'G',
+			'G': 'H',
+			'H': 'I',
+			'I': 'J',
+			'J': 'K',
+			'K': 'L',
+			'L': 'M',
+			'M': 'N',
+			'N': 'O',
+			'O': 'P',
+			'P': 'Q',
+			'Q': 'R',
+			'R': 'S',
+			'S': 'T',
+			'T': 'U',
+			'U': 'V',
+			'V': 'W',
+			'W': 'X',
+			'X': 'Y',
+			'Y': 'Z',
+			'Z': 'A',
+		};
+
+		let nextLetterLength = alphabet[zerothLetter] === 'A' ? currentLetter.length + 1 : currentLetter.length;
+		let nextLetter = ''
+		for (let i of new Array(nextLetterLength)) {  // eslint-disable-line
+			nextLetter = nextLetter + alphabet[zerothLetter];
+		}
+		return nextLetter;
+	}
+
+	async getGridOverlay(metadata) {
 		// estimated micron unit
 		let lineThickness = 10;
 		let vertical = this.state.vertical;
 		let horizontal = this.state.horizontal;
 
-		let overlay = []
+		let overlay = [];
 		if (!this.state.showGrid) {
 			return overlay
 		}
@@ -64,6 +115,7 @@ class SlideViewer extends Component {
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
 
+			let currentLetter = ''
 			for (let i = 0; i < (width + vertical); i += vertical) {
 				overlay.push({
 					px: i,
@@ -72,8 +124,9 @@ class SlideViewer extends Component {
 					height: height + vertical,
 					className: 'gridline'
 				})
-			}
 
+
+			}
 			for (let i = 0; i <= (height + horizontal); i += horizontal) {
 				overlay.push({
 					px: 0,
@@ -83,15 +136,32 @@ class SlideViewer extends Component {
 					className: 'gridline'
 				})
 			}
+			let overlayLabel = []
+			for (let yy = 0; yy < (height); yy += vertical) {
+				currentLetter = await this.getNextLetterInAlphabet('');
+				for (let i = 0; i < (width); i += vertical) {
+
+					overlayLabel.push(`${currentLetter + (yy / vertical)}`)
+					overlay.push({
+						id: `labelOverlay-${currentLetter + (yy / vertical)}`, px: 0 + (i / vertical * vertical + lineThickness), py: 0 + (yy / horizontal * horizontal + lineThickness),
+					})
+					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
+				}
+			}
+
+			this.setState(prevState => ({
+				overlayLabels: overlayLabel
+			}))
+
 		} else {
 			console.error('Metadata not provided with slide')
 		}
 		return overlay;
 	}
 
-	initSeaDragon() {
+	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
-		const gridOverlay = this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata);
+		const gridOverlay = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata);
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
@@ -111,7 +181,7 @@ class SlideViewer extends Component {
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
-			overlays: gridOverlay
+			overlays: gridOverlay,
 		});
 	}
 
@@ -123,37 +193,55 @@ class SlideViewer extends Component {
 		}
 	}
 
+	handleShowLabelToggle() {
+		if (this.state.showGridLabel) {
+			this.setState({ showGridLabel: false })
+		} else {
+			this.setState({ showGridLabel: true })
+		}
+	}
+
 	handleSetGridPropertiesClick() {
 		this.setState({
 			horizontal: parseInt(this.horizontalRef.current.value),
 			vertical: parseInt(this.verticalRef.current.value)
 		})
 	}
+	handleCancelGridPropertiesClick(showGridLabel) {
+		this.setState({ showGridLabel })
+	}
 
 	render() {
 		return (
-			<div id="slide-viewer" className="container-fluid">
-				<Menu
-					handleShowGridToggle={this.handleShowGridToggle}
-					showGrid={this.state.showGrid}
-					handleSetGridPropertiesClick={this.handleSetGridPropertiesClick}
-					vertical={this.state.vertical}
-					horizontal={this.state.horizontal}
-					horizontalRef={this.horizontalRef}
-					verticalRef={this.verticalRef}
-					selectedParticipant={this.props.selectedParticipant} />
-				<div id="osdOverlay">
+			<div>
 
-				</div>
-				<div className="osd-div" ref={node => { this.el = node; }}>
-					<div className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
-					<ul className="osd-toolbar">
-						<li><div className="osd-button" id="zoom-in"><FontAwesomeIcon icon={faPlus} /></div></li>
-						<li><div className="osd-button" id="zoom-out"><FontAwesomeIcon icon={faMinus} /></div></li>
-						<li><div className="osd-button" id="reset"><FontAwesomeIcon icon={faCrosshairs} /></div></li>
-					</ul>
-					<div className="osd-navigator-wrapper">
-						<div id="osd-navigator"></div>
+				<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabels} />
+
+				<div id="slide-viewer" className="container-fluid">
+
+					<Menu
+						handleShowGridToggle={this.handleShowGridToggle}
+						handleShowLabelToggle={this.handleShowLabelToggle}
+						handleCancelGridPropertiesClick={this.handleCancelGridPropertiesClick}
+						showGrid={this.state.showGrid}
+						showGridLabel={this.state.showGridLabel}
+						handleSetGridPropertiesClick={this.handleSetGridPropertiesClick}
+						vertical={this.state.vertical}
+						horizontal={this.state.horizontal}
+						horizontalRef={this.horizontalRef}
+						verticalRef={this.verticalRef}
+						selectedParticipant={this.props.selectedParticipant} />
+
+					<div className="osd-div" ref={node => { this.el = node; }}>
+						<div className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
+						<ul className="osd-toolbar">
+							<li><div className="osd-button" id="zoom-in"><FontAwesomeIcon icon={faPlus} /></div></li>
+							<li><div className="osd-button" id="zoom-out"><FontAwesomeIcon icon={faMinus} /></div></li>
+							<li><div className="osd-button" id="reset"><FontAwesomeIcon icon={faCrosshairs} /></div></li>
+						</ul>
+						<div className="osd-navigator-wrapper">
+							<div id="osd-navigator"></div>
+						</div>
 					</div>
 				</div>
 			</div>
