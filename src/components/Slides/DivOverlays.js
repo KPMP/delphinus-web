@@ -13,10 +13,7 @@ class DivOverlays extends Component {
                     {item}
                 </div>
             })
-        } else {
-            labels = ''
         }
-
 
         return (
             <div>
