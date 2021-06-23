@@ -3,9 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'reactstrap';
 
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import { faWindowClose as farWindowClose, faSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
+import { faWindowClose as farWindowClose, faSquare } from '@fortawesome/free-regular-svg-icons';
 
 class GridProperties extends Component {
+    constructor(props) {
+        super(props)
+        this.state = { initialShowGridLabel: props.showGridLabel }
+    }
     render() {
         return (
             <div className="menu-slide-list-header-child">
@@ -28,9 +32,9 @@ class GridProperties extends Component {
                 </div>
 
                 <FontAwesomeIcon
-                    icon={this.props.showGridLabels ? faCheckSquare : faSquare}
+                    icon={this.props.showGridLabel ? faCheckSquare : faSquare}
                     className="clickable hoverable showLabelsCheckbox"
-                    onClick={this.props.handleShowLabel}
+                    onClick={this.props.handleShowLabelToggle}
                     size="lg" />
                 <label>Show labels</label>
 
@@ -39,14 +43,20 @@ class GridProperties extends Component {
                         <FontAwesomeIcon
                             icon={farWindowClose}
                             className="far clickable hoverable ctrl-btn"
-                            onClick={this.props.handleShowGridProperties}
+                            onClick={() => {
+                                this.props.handleCancelGridPropertiesClick(this.state.initialShowGridLabel);
+                                this.props.handleShowGridProperties();
+                            }}
                             size="lg" />
                     </Col>
                     <Col xs={{ size: 1 }}>
                         <FontAwesomeIcon
                             icon={faCheckSquare}
                             className="clickable hoverable ctrl-btn"
-                            onClick={this.props.handleSetGridPropertiesClick}
+                            onClick={() => {
+                                this.props.handleSetGridPropertiesClick();
+                                this.props.handleShowGridProperties();
+                            }}
                             size="lg" />
                     </Col>
                 </Row>
