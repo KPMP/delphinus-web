@@ -20,8 +20,8 @@ class SlideViewer extends Component {
 		this.state = {
 			showGrid: false,
 			showGridLabel: false,
-			horizontal: 1500,
-			vertical: 1500,
+			horizontal: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.aperio.mpp),
+			vertical: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.aperio.mpp),
 			overlayDivs: '',
 			overlayLabels: []
 		}
@@ -136,9 +136,9 @@ class SlideViewer extends Component {
 				currentLetter = await this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
 
-					overlayLabel.push(`${currentLetter + (yy / vertical)}`)
+					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
 					overlay.push({
-						id: `labelOverlay-${currentLetter + (yy / vertical)}`,
+						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}`,
 						px: 0 + (i / vertical * vertical + lineThickness),
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
