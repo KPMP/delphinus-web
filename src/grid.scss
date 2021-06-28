@@ -14,6 +14,16 @@
 .gridCheckbox {
 	padding-right: 5%;
 }
+
+#side-menu .menu-slide-list-header .showLabelCheckboxContainer {
+	label {
+		width: 90%;
+	}
+	svg {
+		width: 8%;
+	}
+}
+
 .showLabelsCheckbox {
     padding: 0px;
 }
@@ -33,3 +43,9 @@
 	color: rgba(255, 255, 255, 0);	
 	background-color: rgba(255, 255, 255, 0);
 }
+.tightRow {
+	padding-bottom: 5px !important;
+	float: right;
+    margin-right: -25px !important;
+}
+
