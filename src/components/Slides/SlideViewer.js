@@ -20,8 +20,8 @@ class SlideViewer extends Component {
 		this.state = {
 			showGrid: false,
 			showGridLabel: false,
-			horizontal: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_x),
-			vertical: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y),
+			horizontal: 500,
+			vertical: 500,
 			overlayDivs: '',
 			overlayLabels: []
 		}
@@ -103,8 +103,8 @@ class SlideViewer extends Component {
 	async getGridOverlay(metadata) {
 		// estimated micron unit
 		let lineThickness = 25;
-		let vertical = this.state.vertical;
-		let horizontal = this.state.horizontal;
+		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
+		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let overlay = [];
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 
@@ -183,7 +183,7 @@ class SlideViewer extends Component {
 
 	handleShowGridToggle() {
 		if (this.state.showGrid) {
-			this.setState({ showGrid: false })
+			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
 		}
@@ -193,7 +193,7 @@ class SlideViewer extends Component {
 		if (this.state.showGridLabel) {
 			this.setState({ showGridLabel: false })
 		} else {
-			this.setState({ showGridLabel: true })
+			this.setState({ showGrid: true, showGridLabel: true })
 		}
 	}
 
