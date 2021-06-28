@@ -20,8 +20,8 @@ class SlideViewer extends Component {
 		this.state = {
 			showGrid: false,
 			showGridLabel: false,
-			horizontal: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.aperio.mpp),
-			vertical: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.aperio.mpp),
+			horizontal: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_x),
+			vertical: 500 / parseFloat(props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y),
 			overlayDivs: '',
 			overlayLabels: []
 		}
@@ -105,7 +105,6 @@ class SlideViewer extends Component {
 		let lineThickness = 25;
 		let vertical = this.state.vertical;
 		let horizontal = this.state.horizontal;
-
 		let overlay = [];
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 
