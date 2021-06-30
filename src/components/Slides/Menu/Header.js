@@ -69,11 +69,11 @@ class Header extends Component {
 					</div>
 				</Row>
 				<Row>
-					<Col className="float-left" xs="6">
+					<Col className="float-left" xs="4">
 						<FontAwesomeIcon icon={faChevronLeft} className="clickable hoverable pad-right" onClick={() => this.handlePreviousSlide()} size="lg" />
 						<FontAwesomeIcon icon={faChevronRight} className="clickable hoverable" onClick={() => this.handleNextSlide()} size="lg" />
 					</Col>
-					<Col xs="4">
+					<Col xs={{ size: 5, offset: 1 }}>
 						<div className="float-right">
 							<FontAwesomeIcon
 								icon={this.props.showGrid ? faCheckSquare : faSquare}

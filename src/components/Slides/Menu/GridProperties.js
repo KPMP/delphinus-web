@@ -13,7 +13,7 @@ class GridProperties extends Component {
     render() {
         return (
             <div className="menu-slide-list-header-child">
-                <p>Grid properties:</p>
+                <h6>Grid properties:</h6>
                 <div>
                     <label>Horizontal</label>
                     <input
@@ -30,16 +30,16 @@ class GridProperties extends Component {
                         ref={this.props.verticalRef}
                         type="text" name="name" /><span className="micolabel">μm</span>
                 </div>
-
-                <FontAwesomeIcon
-                    icon={this.props.showGridLabel ? faCheckSquare : faSquare}
-                    className="clickable hoverable showLabelsCheckbox"
-                    onClick={this.props.handleShowLabelToggle}
-                    size="lg" />
-                <label>Show labels</label>
-
-                <Row >
-                    <Col xs={{ size: 1, offset: 8 }}>
+                <div className="showLabelCheckboxContainer">
+                    <FontAwesomeIcon
+                        icon={this.props.showGridLabel ? faCheckSquare : faSquare}
+                        className="clickable hoverable showLabelsCheckbox"
+                        onClick={this.props.handleShowLabelToggle}
+                        size="lg" />
+                    <label>Show labels</label>
+                </div>
+                <Row className="tightRow">
+                    <Col xs={{ size: 1 }}>
                         <FontAwesomeIcon
                             icon={farWindowClose}
                             className="far clickable hoverable ctrl-btn"
