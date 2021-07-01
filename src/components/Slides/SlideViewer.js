@@ -23,32 +23,45 @@ class SlideViewer extends Component {
 			horizontal: 500,
 			vertical: 500,
 			overlayDivs: '',
-			overlayLabels: []
+			overlayLabel: [],
+			renderLabels: true,
+			labelSetId: 0
 		}
 	}
 
-	componentDidMount() {
+	async componentDidMount() {
+		this.renderOverlayLabels();
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			this.initSeaDragon();
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) {
+	async componentDidUpdate(prevProps, prevState) {
 		if (
 			prevProps.selectedParticipant !== this.props.selectedParticipant
 			|| this.gridSizeChanged(prevState)) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
+			await this.renderOverlayLabels();
 			this.initSeaDragon();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 		}
 	}
+
 	gridSizeChanged(prevState) {
 		if (prevState.horizontal !== this.state.horizontal ||
 			prevState.vertical !== this.state.vertical) {
 			return true;
 		}
 		return false;
+	}
+
+	async renderOverlayLabels() {
+		const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
+			this.props.selectedParticipant.selectedSlide.metadata,
+			this.state.labelSetId + 1);
+		await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
+		await this.setState({ renderLabels: true })
 	}
 
 	async getNextLetterInAlphabet(currentLetter = '') {
@@ -101,11 +114,13 @@ class SlideViewer extends Component {
 		return (Math.ceil(((imageDimension + lineDimension) / lineDimension)) - 1) * lineDimension
 	}
 	async getGridOverlay(metadata) {
+
 		// estimated micron unit
 		let lineThickness = 25;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let overlay = [];
+		let overlayLabel = []
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 
 			let width = parseInt(metadata.aperio.originalWidth);
@@ -130,14 +145,14 @@ class SlideViewer extends Component {
 				})
 			}
 			let currentLetter = '';
-			let overlayLabel = []
+
 			for (let yy = 0; yy < (height); yy += vertical) {
 				currentLetter = await this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
 
 					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
 					overlay.push({
-						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}`,
+						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}-${this.state.labelSetId}`,
 						px: 0 + (i / vertical * vertical + lineThickness),
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
@@ -145,21 +160,18 @@ class SlideViewer extends Component {
 				}
 			}
 
-			this.setState(prevState => ({
-				overlayLabels: overlayLabel
-			}))
-
 		} else {
 			console.error('Metadata not provided with slide')
 		}
-		return overlay;
+		return [overlay, overlayLabel];
 	}
 
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
-		const gridOverlay = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata);
+		let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
+
 		this.viewer = OpenSeadragon({
 			id: "osdId",
 			visibilityRatio: 0.5,
@@ -177,7 +189,7 @@ class SlideViewer extends Component {
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
-			overlays: gridOverlay,
+			overlays: gridOverlay
 		});
 	}
 
@@ -210,8 +222,9 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-
-				<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabels} />
+				{(this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
+					<DivOverlays showGridLabel={this.state.showGridLabel} labelSetId={this.state.labelSetId} overlayLabels={this.state.overlayLabel} />
+				}
 
 				<div id="slide-viewer" className="container-fluid">
 
