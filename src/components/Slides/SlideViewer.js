@@ -30,7 +30,7 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidMount() {
-		this.renderOverlayLabels();
+		await this.renderOverlayLabels();
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			this.initSeaDragon();
 		}
@@ -113,8 +113,7 @@ class SlideViewer extends Component {
 		// This function ensures the lines correctly line up during those cases.
 		return (Math.ceil(((imageDimension + lineDimension) / lineDimension)) - 1) * lineDimension
 	}
-	async getGridOverlay(metadata) {
-
+	async getGridOverlay(metadata, labelSetId) {
 		// estimated micron unit
 		let lineThickness = 25;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
@@ -152,7 +151,7 @@ class SlideViewer extends Component {
 
 					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
 					overlay.push({
-						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}-${this.state.labelSetId}`,
+						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}-${labelSetId}`,
 						px: 0 + (i / vertical * vertical + lineThickness),
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
@@ -169,7 +168,6 @@ class SlideViewer extends Component {
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
 		let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
-
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 
 		this.viewer = OpenSeadragon({
