@@ -115,7 +115,7 @@ class SlideViewer extends Component {
 	}
 	async getGridOverlay(metadata, labelSetId) {
 		// estimated micron unit
-		let lineThickness = 25;
+		let lineThickness = 13;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let overlay = [];
