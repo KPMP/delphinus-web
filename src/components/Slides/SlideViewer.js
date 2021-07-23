@@ -16,6 +16,7 @@ class SlideViewer extends Component {
 		this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this)
 		this.handleSetGridPropertiesClick = this.handleSetGridPropertiesClick.bind(this)
 		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
+		this.determineIfSlideTooLargeForGrid = this.determineIfSlideTooLargeForGrid.bind(this);
 
 		this.state = {
 			showGrid: false,
@@ -25,7 +26,8 @@ class SlideViewer extends Component {
 			overlayDivs: '',
 			overlayLabel: [],
 			renderLabels: true,
-			labelSetId: 0
+			labelSetId: 0,
+			slideTooLarge: false
 		}
 	}
 
@@ -55,13 +57,39 @@ class SlideViewer extends Component {
 		}
 		return false;
 	}
+	determineIfSlideTooLargeForGrid(metadata) {
+		let numberOfLabels = 0
+		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
+
+		if (metadata.aperio.originalWidth && metadata.aperio.originalWidth) {
+			let width = parseInt(metadata.aperio.originalWidth);
+			let height = parseInt(metadata.aperio.originalHeight);
+			for (let yy = 0; yy < (height - (vertical * 4)); yy += vertical) {
+				for (let ii = 0; ii < (width - (vertical * 4)); ii += vertical * 2) {
+					numberOfLabels += 1;
+				}
+			}
+			if (numberOfLabels > 620) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			console.error('original width or height not available on metadata object')
+		}
+	}
 
 	async renderOverlayLabels() {
-		const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
-			this.props.selectedParticipant.selectedSlide.metadata,
-			this.state.labelSetId + 1);
-		await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
-		await this.setState({ renderLabels: true })
+		const slideTooLarge = this.determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata)
+		if (!this.state.slideTooLarge) {
+			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
+				this.props.selectedParticipant.selectedSlide.metadata,
+				this.state.labelSetId + 1);
+			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1, slideTooLarge })
+			await this.setState({ renderLabels: true })
+		} else {
+			this.setState({ slideTooLarge, showGrid: false })
+		}
 	}
 
 	async getNextLetterInAlphabet(currentLetter = '') {
@@ -121,7 +149,6 @@ class SlideViewer extends Component {
 		let overlay = [];
 		let overlayLabel = []
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
-
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
 			for (let i = 0; i < (width + vertical); i += vertical) {
@@ -145,10 +172,9 @@ class SlideViewer extends Component {
 			}
 			let currentLetter = '';
 
-			for (let yy = 0; yy < (height); yy += vertical) {
+			for (let yy = 0; yy < (height); yy += vertical * 2) {
 				currentLetter = await this.getNextLetterInAlphabet('');
-				for (let i = 0; i < (width); i += vertical) {
-
+				for (let i = 0; i < (width); i += vertical * 2) {
 					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
 					overlay.push({
 						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}-${labelSetId}`,
@@ -156,6 +182,8 @@ class SlideViewer extends Component {
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
 					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
+					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
+
 				}
 			}
 
@@ -167,9 +195,12 @@ class SlideViewer extends Component {
 
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
-		let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
+		let overlayGrid = []
+		if (!this.state.slideTooLarge) {
+			let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
+			overlayGrid = gridOverlay
+		}
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
-
 		this.viewer = OpenSeadragon({
 			id: "osdId",
 			visibilityRatio: 0.5,
@@ -187,12 +218,13 @@ class SlideViewer extends Component {
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
-			overlays: gridOverlay
+			overlays: overlayGrid
 		});
 	}
 
 	handleShowGridToggle() {
-		if (this.state.showGrid) {
+
+		if (this.state.showGrid || this.state.slideTooLarge) {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
@@ -232,6 +264,7 @@ class SlideViewer extends Component {
 						handleCancelGridPropertiesClick={this.handleCancelGridPropertiesClick}
 						showGrid={this.state.showGrid}
 						showGridLabel={this.state.showGridLabel}
+						slideTooLarge={this.state.slideTooLarge}
 						handleSetGridPropertiesClick={this.handleSetGridPropertiesClick}
 						vertical={this.state.vertical}
 						horizontal={this.state.horizontal}
