@@ -1,0 +1,54 @@
+.showGridlines .gridline {
+	background-color: rgba(33, 33, 33, .5);
+	-webkit-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+
+.hideGridlines .gridline {
+	background-color: rgba(0,0,0,0);
+    -webkit-transition: background-color 100ms linear;
+    -ms-transition: background-color 100ms linear;
+    transition: background-color 100ms linear;
+}
+.gridCheckbox {
+	padding-right: 5%;
+}
+
+#side-menu .menu-slide-list-header .showLabelCheckboxContainer {
+	label {
+		width: 90%;
+	}
+	svg {
+		width: 8%;
+	}
+}
+
+.showLabelsCheckbox {
+    padding: 0px;
+}
+
+.gridPropertiesCaret {
+	padding-left: 5%;
+}
+
+.labelOverlay {
+    font-size: 14px;
+	width: 40px;
+	height: 40px;
+	background-color: rgba(255, 255, 255, 0.7);	
+}
+
+.labelOverlay.hideLabels {
+	color: rgba(255, 255, 255, 0);	
+	background-color: rgba(255, 255, 255, 0);
+}
+#side-menu .row.tightRow {
+	padding-bottom: 5px !important;
+    margin-right: -25px !important;
+	float: right;
+}
+
+.isDisabled {
+	color: rgba(251, 251, 251, 0.11);
+}

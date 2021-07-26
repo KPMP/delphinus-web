@@ -1,72 +1,72 @@
-import { noSlidesFound, downloadSlide, getNextSlide, getPreviousSlide } from './slideHelpers';
+import { noSlidesFound, downloadSlide, getNextSlide, getPreviousSlide, getStainImageName } from './slideHelpers';
 
 describe('noSlidesFound', () => {
-	
+
 	it('should redirect when the object contains an empty array', () => {
 		let handleError = jest.fn();
 		noSlidesFound({ slides: [] }, handleError);
 		expect(handleError).toHaveBeenCalledTimes(1);
-		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
+		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.', stackTrace: '' });
 	});
 
 	it('should redirect when the object passed in is null', () => {
 		let handleError = jest.fn();
 		noSlidesFound(null, handleError);
 		expect(handleError).toHaveBeenCalledTimes(1);
-		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
+		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.', stackTrace: '' });
 	});
 
 	it('should redirect when the object passed in is undefined', () => {
 		let handleError = jest.fn();
 		noSlidesFound(undefined, handleError);
 		expect(handleError).toHaveBeenCalledTimes(1);
-		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.' , stackTrace: '' });
+		expect(handleError).toHaveBeenCalledWith({ error: 'No participant selected. No slides to show.', stackTrace: '' });
 	});
 
 	it('should do nothing when the object passed in has items in the array', () => {
 		let handleError = jest.fn();
-		noSlidesFound( { slides: [ {key: 'value' }]}, handleError);
+		noSlidesFound({ slides: [{ key: 'value' }] }, handleError);
 		expect(handleError).toHaveBeenCalledTimes(0);
 	});
 
 });
 
 describe('downloadSlide', () => {
-	
+
 	const mockCanvas = (window, toDataUrlReturn) => {
 		window.HTMLCanvasElement.prototype.getContext = function () {
-	        return {
-	        	fillRect() {},
-	        	clearRect(){},
-	        	getImageData(x, y, w, h) {
-	        		return  {
-	        			data: new Array(w*h*4)
-	        		};
-	        	},
-	        	putImageData() {},
-	        	createImageData(){ return []; },
-	        	setTransform(){},
-	        	drawImage(){},
-	        	save(){},
-	        	fillText(){},
-	        	restore(){},
-	        	beginPath(){},
-	        	moveTo(){},
-	        	lineTo(){},
-	        	closePath(){},
-	        	stroke(){},
-	        	translate(){},
-	        	scale(){},
-	        	rotate(){},
-	        	arc(){},
-	        	fill(){},
-	        	measureText(){
-	        		return { width: 0 };
-	        	},
-	        	transform(){},
-	        	rect(){},
-	        	clip(){},
-	        };
+			return {
+				fillRect() { },
+				clearRect() { },
+				getImageData(x, y, w, h) {
+					return {
+						data: new Array(w * h * 4)
+					};
+				},
+				putImageData() { },
+				createImageData() { return []; },
+				setTransform() { },
+				drawImage() { },
+				save() { },
+				fillText() { },
+				restore() { },
+				beginPath() { },
+				moveTo() { },
+				lineTo() { },
+				closePath() { },
+				stroke() { },
+				translate() { },
+				scale() { },
+				rotate() { },
+				arc() { },
+				fill() { },
+				measureText() {
+					return { width: 0 };
+				},
+				transform() { },
+				rect() { },
+				clip() { },
+			};
 		}
 
 		window.HTMLCanvasElement.prototype.toDataURL = function () {
@@ -77,12 +77,12 @@ describe('downloadSlide', () => {
 			return toDataUrlReturn;
 		}
 	};
-	
+
 	beforeEach(() => {
 		document.body.innerHTML =
 			'<a id="download" download={downloadFileName}><FontAwesomeIcon icon={faDownload} size="2x" className="clickable"/></a>' +
 			'<div class="openseadragon"><div class="openseadragon-canvas">' +
-				'<canvas id="myCanvas" width="500" height="500"></canvas>'+
+			'<canvas id="myCanvas" width="500" height="500"></canvas>' +
 			'</div></div><div class="openseadragon">second one for navigator pane</div>';
 		const window = document.defaultView;
 
@@ -101,7 +101,7 @@ describe('downloadSlide', () => {
 	});
 
 	it('uses msSaveOrOpenBlob in IE browser', () => {
-		navigator.__defineGetter__('userAgent', function() {
+		navigator.__defineGetter__('userAgent', function () {
 			return 'MSIE';
 		});
 		let ieSave = jest.fn();
@@ -121,42 +121,77 @@ describe('downloadSlide', () => {
 
 
 let slides = [
-    { id: 1234 },
-    { id: 4321 }
+	{ id: 1234 },
+	{ id: 4321 }
 ];
 
 describe('getNextSlide', () => {
-    it('returns the next slide', () => {
-        let thisSlide = { id: 1234 };
-        let nextSlide = getNextSlide(slides, thisSlide);
-        expect(nextSlide).toEqual({ id: 4321 });
-    });
-    it('returns the first if it is the last slide', () => {
-        let thisSlide = { id: 4321 };
-        let nextSlide = getNextSlide(slides, thisSlide);
-        expect(nextSlide).toEqual({ id: 1234 });
-    });
-    it('returns the same slide if it cannot find the slide', () => {
-        let thisSlide = { id: 1234567 };
-        let nextSlide = getNextSlide(slides, thisSlide);
-        expect(nextSlide).toEqual({ id: 1234567 });
-    });
+	it('returns the next slide', () => {
+		let thisSlide = { id: 1234 };
+		let nextSlide = getNextSlide(slides, thisSlide);
+		expect(nextSlide).toEqual({ id: 4321 });
+	});
+	it('returns the first if it is the last slide', () => {
+		let thisSlide = { id: 4321 };
+		let nextSlide = getNextSlide(slides, thisSlide);
+		expect(nextSlide).toEqual({ id: 1234 });
+	});
+	it('returns the same slide if it cannot find the slide', () => {
+		let thisSlide = { id: 1234567 };
+		let nextSlide = getNextSlide(slides, thisSlide);
+		expect(nextSlide).toEqual({ id: 1234567 });
+	});
 });
 
 describe('getPreviousSlide', () => {
-    it('returns the last slide if it is the first slide', () => {
-        let thisSlide = { id: 1234 };
-        let prevSlide = getPreviousSlide(slides, thisSlide);
-        expect(prevSlide).toEqual({ id: 4321 });
-    });
-    it('returns the previous slide', () => {
-        let thisSlide = { id: 4321 };
-        let prevSlide = getPreviousSlide(slides, thisSlide);
-        expect(prevSlide).toEqual({ id: 1234 });
-    });
-    it('returns the same slide if it cannot find the slide', () => {
-        let thisSlide = { id: 1234567 };
-        let prevSlide = getNextSlide(slides, thisSlide);
-        expect(prevSlide).toEqual({ id: 1234567 });
-    });
+	it('returns the last slide if it is the first slide', () => {
+		let thisSlide = { id: 1234 };
+		let prevSlide = getPreviousSlide(slides, thisSlide);
+		expect(prevSlide).toEqual({ id: 4321 });
+	});
+	it('returns the previous slide', () => {
+		let thisSlide = { id: 4321 };
+		let prevSlide = getPreviousSlide(slides, thisSlide);
+		expect(prevSlide).toEqual({ id: 1234 });
+	});
+	it('returns the same slide if it cannot find the slide', () => {
+		let thisSlide = { id: 1234567 };
+		let prevSlide = getNextSlide(slides, thisSlide);
+		expect(prevSlide).toEqual({ id: 1234567 });
+	});
+});
+
+describe('getStainImageName', () => {
+	it('returns the stain image name when provided with slide has valid stain', () => {
+		let thisSlide = {
+			id: 1234,
+			stain: { type: 'ihc' }
+		};
+		let slideImageName = getStainImageName(thisSlide.stain.type);
+		expect(slideImageName).toEqual('ihc');
+	});
+	it('returns the stain image name of "other" when stain type exists but does not have a corresponding image', () => {
+		let thisSlide = {
+			id: 1234,
+			stain: { type: 'foo' }
+		};
+		let slideImageName = getStainImageName(thisSlide.stain.type);
+		expect(slideImageName).toEqual('other');
+	});
+	it('returns the stain image name of "unknown" when empty string provided', () => {
+		let thisSlide = {
+			id: 1234,
+			stain: { type: '' }
+		};
+		let slideImageName = getStainImageName(thisSlide.stain.type);
+		expect(slideImageName).toEqual('unknown');
+	});
+	it('returns the stain image name of "unknown" when undefined provided', () => {
+		let thisSlide = {
+			id: 1234,
+			stain: {}
+		};
+		let slideImageName = getStainImageName(thisSlide.stain.type);
+		expect(slideImageName).toEqual('unknown');
+	});
 });

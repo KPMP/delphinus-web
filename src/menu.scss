@@ -75,10 +75,22 @@ $menu-header-height: 80px;
 	border-right: 1px solid silver;
 
 	#bm-menu-wrap {
-		@media only screen and (max-width: 767px) {
+		@media only screen and (max-width: 401px) {
+			width: 100% !important;
+		}
+		@media only screen and (min-width: 402px) {
+			width: 90% !important;
+		}
+		@media only screen and (min-width: 484px) {
+			width: 75% !important;
+		}
+		@media only screen and (min-width: 552px) {
 			width: 66% !important;
 		}
-		@media only screen and (min-width: 768px) {
+		@media only screen and (min-width: 875px) {
+			width: 45% !important;
+		}
+		@media only screen and (min-width: 1095px) {
 			width: 33% !important;
 		}
 	}
@@ -119,7 +131,85 @@ $menu-header-height: 80px;
 			opacity: 0.6;
 		}
 	}
-	
+	.menu-slide-list-header-child {
+		position: absolute;
+		background-color: white;
+		z-index: 99;
+		width: 225px;
+		top: 75px;
+		border-radius: 5px;
+		color: #333;
+		padding: 2%;
+		box-shadow: 0px 3px 5px gray;
+		@media only screen and (max-width: 401px) {
+			margin-left: 19%;
+		}
+		@media only screen and (min-width: 402px) {
+			margin-left: 19%;
+		}
+		@media only screen and (min-width: 450px) {
+			margin-left: 24%;
+		}
+		@media only screen and (min-width: 460px) {
+			margin-left: 23%;
+		}
+		@media only screen and (min-width: 630px) {
+			margin-left: 25%;
+		}
+		@media only screen and (min-width: 650px) {
+			margin-left: 29%;
+		}
+		@media only screen and (min-width: 720px) {
+			margin-left: 33%;
+		}
+		@media only screen and (min-width: 720px) {
+			margin-left: 36%;
+		}
+		@media only screen and (min-width: 815px) {
+			margin-left: 39%;
+		}
+		@media only screen and (min-width: 875px) {
+			margin-left: 22%;
+		}
+		@media only screen and (min-width: 875px) {
+			margin-left: 25%;
+		}
+		@media only screen and (min-width: 975px) {
+			margin-left: 29%;
+		}
+		@media only screen and (min-width: 1060px) {
+			margin-left: 33%;
+		}
+		@media only screen and (min-width: 1095px) {
+			margin-left: 16%;
+		}
+		@media only screen and (min-width: 1175px) {
+			margin-left: 22%;
+		}
+		@media only screen and (min-width: 1285px) {
+			margin-left: 26%;
+		}
+		@media only screen and (min-width: 1365px) {
+			margin-left: 30%;
+		}
+		@media only screen and (min-width: 1440px) {
+			margin-left: 32%;
+		}
+	}
+
+	.menu-slide-list-header-child label {
+		margin-left: 2%;
+	}
+	.menu-slide-list-header label {
+		width: 31%;
+		font-size: 12px;
+	}
+	.menu-slide-list-header input {
+		width: 52%;
+	}
+	.menu-slide-list-header .micolabel {
+		margin-left: 3%;
+	}
 	#menu-slide-list {
 		background: white;
 		border-bottom: 1px solid silver;

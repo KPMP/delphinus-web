@@ -10,10 +10,10 @@ export const downloadSlide = (downloadFileName) => {
         downloadLink.setAttribute("download", downloadFileName);
         downloadLink.setAttribute("href", image);
 
-        
+
         // For some reason, we need to click the button again in firefox for the download to happen
         if (navigator.userAgent.match(/Firefox/g)) {
-        	downloadLink.click();
+            downloadLink.click();
         }
     }
 
@@ -25,8 +25,8 @@ export const downloadSlide = (downloadFileName) => {
 
 export const noSlidesFound = (selected, handleError) => {
     if (selected === null || selected === undefined || Object.keys(selected.slides).length === 0) {
-        handleError({ error: 'No participant selected. No slides to show.' , stackTrace: '' })
-    } 
+        handleError({ error: 'No participant selected. No slides to show.', stackTrace: '' })
+    }
 }
 
 const getSlideIndex = (slideArray, selectedSlide) => {
@@ -62,3 +62,24 @@ export const getPreviousSlide = (slideArray, selectedSlide) => {
         return slideArray[previousSlideIndex];
     }
 };
+
+export const getStainImageName = (stainType) => {
+    const availableImages = {
+        'cr': true,
+        'frz': true,
+        'he': true,
+        'ihc': true,
+        'pas': true,
+        'silver': true,
+        'tol': true,
+        'tri': true,
+    };
+
+    if (!stainType) {
+        return 'unknown';
+    } else if (availableImages[stainType.toLowerCase()]) {
+        return stainType.toLowerCase();
+    } else {
+        return 'other';
+    }
+}
