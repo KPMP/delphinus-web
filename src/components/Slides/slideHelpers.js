@@ -83,3 +83,25 @@ export const getStainImageName = (stainType) => {
         return 'other';
     }
 }
+
+export const determineIfSlideTooLargeForGrid = (metadata, verticalGridSize = 500) => {
+    let numberOfLabels = 0
+    let vertical = verticalGridSize / parseFloat(metadata.openSlide.mpp_y);
+
+    if (metadata.aperio.originalWidth && metadata.aperio.originalWidth) {
+        let width = parseInt(metadata.aperio.originalWidth);
+        let height = parseInt(metadata.aperio.originalHeight);
+        for (let yy = 0; yy < (height - (vertical * 4)); yy += vertical) {
+            for (let ii = 0; ii < (width - (vertical * 4)); ii += vertical) {
+                numberOfLabels += 1;
+            }
+        }
+        if (numberOfLabels > 620) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        console.error('original width or height not available on metadata object')
+    }
+}
