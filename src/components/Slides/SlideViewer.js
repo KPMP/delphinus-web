@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import OpenSeadragon from 'openseadragon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
-import { noSlidesFound } from './slideHelpers';
+import { noSlidesFound, determineIfSlideTooLargeForGrid } from './slideHelpers';
 import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
 import DivOverlays from './DivOverlays';
@@ -16,7 +16,6 @@ class SlideViewer extends Component {
 		this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this)
 		this.handleSetGridPropertiesClick = this.handleSetGridPropertiesClick.bind(this)
 		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
-		this.determineIfSlideTooLargeForGrid = this.determineIfSlideTooLargeForGrid.bind(this);
 
 		this.state = {
 			showGrid: false,
@@ -57,30 +56,10 @@ class SlideViewer extends Component {
 		}
 		return false;
 	}
-	determineIfSlideTooLargeForGrid(metadata) {
-		let numberOfLabels = 0
-		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 
-		if (metadata.aperio.originalWidth && metadata.aperio.originalWidth) {
-			let width = parseInt(metadata.aperio.originalWidth);
-			let height = parseInt(metadata.aperio.originalHeight);
-			for (let yy = 0; yy < (height - (vertical * 4)); yy += vertical) {
-				for (let ii = 0; ii < (width - (vertical * 4)); ii += vertical * 2) {
-					numberOfLabels += 1;
-				}
-			}
-			if (numberOfLabels > 620) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			console.error('original width or height not available on metadata object')
-		}
-	}
 
 	async renderOverlayLabels() {
-		const slideTooLarge = this.determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata)
+		const slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical)
 		if (!this.state.slideTooLarge) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
@@ -174,7 +153,7 @@ class SlideViewer extends Component {
 
 			for (let yy = 0; yy < (height); yy += vertical * 2) {
 				currentLetter = await this.getNextLetterInAlphabet('');
-				for (let i = 0; i < (width); i += vertical * 2) {
+				for (let i = 0; i < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
 					overlay.push({
 						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}-${labelSetId}`,
