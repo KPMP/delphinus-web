@@ -151,7 +151,7 @@ class SlideViewer extends Component {
 			}
 			let currentLetter = '';
 
-			for (let yy = 0; yy < (height); yy += vertical * 2) {
+			for (let yy = 0; yy < (height); yy += vertical) {
 				currentLetter = await this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
@@ -161,8 +161,6 @@ class SlideViewer extends Component {
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
 					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
-					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
-
 				}
 			}
 
