@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
 import ReactGA from 'react-ga';
-import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
+import { getNextSlide, getPreviousSlide, downloadSlide, printSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
 
 class Header extends Component {
@@ -21,6 +21,7 @@ class Header extends Component {
 		this.state = { showGridProperties: false }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
+		this.handlePrint = this.handlePrint.bind(this);
 		this.textInput = React.createRef();
 		this.focusTextInput = this.focusTextInput.bind(this);
 	}
@@ -51,6 +52,16 @@ class Header extends Component {
 		let downloadFileName = this.props.selectedParticipant.selectedSlide.slideName + ".jpg";
 		downloadSlide(downloadFileName);
 	}
+
+	handlePrint() {
+		ReactGA.event({
+			category: 'Slide View',
+			action: 'Print Slide',
+			label: this.props.selectedParticipant.selectedSlide.slideName
+		});
+		printSlide()
+	}
+
 	handleShowGridProperties() {
 		if (this.state.showGridProperties) {
 			this.setState({ showGridProperties: false })
@@ -94,7 +105,7 @@ class Header extends Component {
 					<Col xs="1">
 						<div className="float-right">
 							<a id="print" //eslint-disable-line
-							><FontAwesomeIcon icon={faPrint} className="clickable hoverable" size="lg" /></a>
+							><FontAwesomeIcon icon={faPrint} onClick={this.handlePrint} className="clickable hoverable" size="lg" /></a>
 						</div>
 					</Col>
 					<Col xs="1">
