@@ -28,6 +28,7 @@ class Menu extends Component {
 					<SlideListContainer
 						showGrid={this.props.showGrid}
 						slideTooLarge={this.props.slideTooLarge}
+						isPilotSlide={this.props.isPilotSlide}
 						showGridLabel={this.props.showGridLabel}
 						handleShowGridToggle={this.props.handleShowGridToggle}
 						handleShowLabelToggle={this.props.handleShowLabelToggle}
