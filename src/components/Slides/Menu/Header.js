@@ -21,7 +21,6 @@ class Header extends Component {
 		this.state = { showGridProperties: false }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
-		this.handlePrint = this.handlePrint.bind(this);
 		this.textInput = React.createRef();
 		this.focusTextInput = this.focusTextInput.bind(this);
 	}
@@ -51,15 +50,6 @@ class Header extends Component {
 		});
 		let downloadFileName = this.props.selectedParticipant.selectedSlide.slideName + ".jpg";
 		downloadSlide(downloadFileName);
-	}
-
-	handlePrint() {
-		ReactGA.event({
-			category: 'Slide View',
-			action: 'Print Slide',
-			label: this.props.selectedParticipant.selectedSlide.slideName
-		});
-		printSlide()
 	}
 
 	handleShowGridProperties() {
@@ -100,12 +90,6 @@ class Header extends Component {
 								size="lg"
 							/>
 
-						</div>
-					</Col>
-					<Col xs="1">
-						<div className="float-right">
-							<a id="print" //eslint-disable-line
-							><FontAwesomeIcon icon={faPrint} onClick={this.handlePrint} className="clickable hoverable" size="lg" /></a>
 						</div>
 					</Col>
 					<Col xs="1">
