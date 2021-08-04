@@ -116,3 +116,11 @@ export const determineIfSlideTooLargeForGrid = (metadata, verticalGridSize = 500
         console.error('original width or height not available on metadata object')
     }
 }
+
+export const determineIfPilotSlide = (slideName) => {
+    if (slideName.toLowerCase().indexOf('pilot') >= 0) {
+        return true;
+    } else {
+        return false;
+    }
+}

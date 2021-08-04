@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import OpenSeadragon from 'openseadragon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
-import { noSlidesFound, determineIfSlideTooLargeForGrid } from './slideHelpers';
+import { noSlidesFound, determineIfSlideTooLargeForGrid, determineIfPilotSlide } from './slideHelpers';
 import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
 import DivOverlays from './DivOverlays';
@@ -26,7 +26,8 @@ class SlideViewer extends Component {
 			overlayLabel: [],
 			renderLabels: true,
 			labelSetId: 0,
-			slideTooLarge: false
+			slideTooLarge: false,
+			isPilotSlide: false,
 		}
 	}
 
@@ -60,14 +61,15 @@ class SlideViewer extends Component {
 
 	async renderOverlayLabels() {
 		const slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical)
-		if (!this.state.slideTooLarge) {
+		const isPilotSlide = determineIfPilotSlide(this.selectedParticipant.selectedSlide.slideName)
+		if (!this.state.slideTooLarge || !isPilotSlide) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
-			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1, slideTooLarge })
+			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1, slideTooLarge, isPilotSlide })
 			await this.setState({ renderLabels: true })
 		} else {
-			this.setState({ slideTooLarge, showGrid: false })
+			this.setState({ slideTooLarge, showGrid: false, isPilotSlide })
 		}
 	}
 
@@ -173,7 +175,7 @@ class SlideViewer extends Component {
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
 		let overlayGrid = []
-		if (!this.state.slideTooLarge) {
+		if (!this.state.slideTooLarge || !this.state.isPilotSlide) {
 			let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
 			overlayGrid = gridOverlay
 		}
@@ -201,7 +203,7 @@ class SlideViewer extends Component {
 
 	handleShowGridToggle() {
 
-		if (this.state.showGrid || this.state.slideTooLarge) {
+		if (this.state.showGrid || this.state.slideTooLarge || this.state.isPilotSlide) {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
@@ -242,6 +244,7 @@ class SlideViewer extends Component {
 						showGrid={this.state.showGrid}
 						showGridLabel={this.state.showGridLabel}
 						slideTooLarge={this.state.slideTooLarge}
+						isPilotSlide={this.state.isPilotSlide}
 						handleSetGridPropertiesClick={this.handleSetGridPropertiesClick}
 						vertical={this.state.vertical}
 						horizontal={this.state.horizontal}
