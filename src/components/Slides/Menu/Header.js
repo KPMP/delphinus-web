@@ -87,7 +87,7 @@ class Header extends Component {
 					<Col xs={{ size: 5, offset: 1 }}>
 						<div className={`${(this.props.slideTooLarge || this.props.isPilotSlide) ? `isDisabled` : ''} float-right`}>
 							<FontAwesomeIcon
-								icon={this.props.showGrid ? faCheckSquare : faSquare}
+								icon={(this.props.showGrid && !this.props.slideTooLarge && !this.props.isPilotSlide) ? faCheckSquare : faSquare}
 								className="clickable hoverable gridCheckbox"
 								onClick={this.props.handleShowGridToggle}
 								size="lg" />
