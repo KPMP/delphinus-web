@@ -61,7 +61,7 @@ class SlideViewer extends Component {
 
 	async renderOverlayLabels() {
 		const slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical)
-		const isPilotSlide = determineIfPilotSlide(this.props.selectedParticipant.selectedSlide.slideName)
+		const isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)
 		if (!slideTooLarge && !isPilotSlide) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
