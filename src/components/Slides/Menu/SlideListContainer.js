@@ -3,15 +3,16 @@ import SlideList from './SlideList';
 import { setSelectedSlide } from '../../../actions/Participants/participantActions';
 
 const mapStateToProps = (state, props) =>
-    ({
-        selectedParticipant: state.selectedParticipant
-    });
+({
+    selectedParticipant: state.selectedParticipant,
+    participants: state.participants,
+});
 
 const mapDispatchToProps = (dispatch, props) =>
-    ({
-        setSelectedSlide(slide) {
-            dispatch(setSelectedSlide(slide))
-        }
-    });
+({
+    setSelectedSlide(slide) {
+        dispatch(setSelectedSlide(slide))
+    }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SlideList);

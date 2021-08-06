@@ -61,15 +61,15 @@ class SlideViewer extends Component {
 
 	async renderOverlayLabels() {
 		const slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical)
-		const isPilotSlide = determineIfPilotSlide(this.selectedParticipant.selectedSlide.slideName)
-		if (!this.state.slideTooLarge || !isPilotSlide) {
+		const isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)
+		if (!slideTooLarge && !isPilotSlide) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
 			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1, slideTooLarge, isPilotSlide })
 			await this.setState({ renderLabels: true })
 		} else {
-			this.setState({ slideTooLarge, showGrid: false, isPilotSlide })
+			this.setState({ slideTooLarge, isPilotSlide })
 		}
 	}
 
@@ -253,7 +253,7 @@ class SlideViewer extends Component {
 						selectedParticipant={this.props.selectedParticipant} />
 
 					<div className="osd-div" ref={node => { this.el = node; }}>
-						<div className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
+						<div className={`openseadragon ${(this.state.showGrid && !this.state.slideTooLarge && !this.state.isPilotSlide) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
 						<ul className="osd-toolbar">
 							<li><div className="osd-button" id="zoom-in"><FontAwesomeIcon icon={faPlus} /></div></li>
 							<li><div className="osd-button" id="zoom-out"><FontAwesomeIcon icon={faMinus} /></div></li>

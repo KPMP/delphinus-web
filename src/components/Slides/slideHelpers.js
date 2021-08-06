@@ -117,8 +117,9 @@ export const determineIfSlideTooLargeForGrid = (metadata, verticalGridSize = 500
     }
 }
 
-export const determineIfPilotSlide = (slideName) => {
-    if (slideName.toLowerCase().indexOf('pilot') >= 0) {
+export const determineIfPilotSlide = (participants, selectedParticipant) => {
+    const currentParticipant = participants.filter(participant => participant.kpmpId === selectedParticipant.id);
+    if (currentParticipant.length > 0 && currentParticipant[0].label.toLowerCase().indexOf('pilot') >= 0) {
         return true;
     } else {
         return false;

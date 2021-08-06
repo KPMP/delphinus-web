@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
-import { noSlidesFound, getStainImageName, determineIfSlideTooLargeForGrid } from '../slideHelpers.js';
+import {
+	noSlidesFound,
+	getStainImageName,
+	determineIfSlideTooLargeForGrid,
+	determineIfPilotSlide
+} from '../slideHelpers.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderAll } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,6 +29,7 @@ class SlideList extends Component {
 	}
 
 	render() {
+		const isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
@@ -38,7 +44,7 @@ class SlideList extends Component {
 									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
 										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
 										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
-										{slideTooLarge ? "" : <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>}
+										{slideTooLarge || isPilotSlide ? "" : <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>}
 									</Row>
 								)
 							}, this)
