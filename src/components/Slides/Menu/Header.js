@@ -74,7 +74,7 @@ class Header extends Component {
 						<FontAwesomeIcon icon={faChevronLeft} className="clickable hoverable pad-right" onClick={() => this.handlePreviousSlide()} size="lg" />
 						<FontAwesomeIcon icon={faChevronRight} className="clickable hoverable" onClick={() => this.handleNextSlide()} size="lg" />
 					</Col>
-					<Col xs={{ size: 5, offset: 1 }}>
+					<Col xs={{ size: 5, offset: 2 }}>
 						<div className={`${(this.props.slideTooLarge || this.props.isPilotSlide) ? `isDisabled` : ''} float-right`}>
 							<FontAwesomeIcon
 								icon={(this.props.showGrid && !this.props.slideTooLarge && !this.props.isPilotSlide) ? faCheckSquare : faSquare}
