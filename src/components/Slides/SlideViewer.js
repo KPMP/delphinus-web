@@ -152,18 +152,19 @@ class SlideViewer extends Component {
 				})
 			}
 			let currentLetter = '';
-
+			let currentNumber = 0;
 			for (let yy = 0; yy < (height); yy += vertical) {
 				currentLetter = await this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
-					overlayLabel.push(`${currentLetter + Math.ceil((yy / vertical))}`)
+					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
-						id: `labelOverlay-${currentLetter + Math.ceil((yy / vertical))}-${labelSetId}`,
+						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
 						px: 0 + (i / vertical * vertical + lineThickness),
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
 					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
 				}
+				currentNumber += 1;
 			}
 
 		} else {
