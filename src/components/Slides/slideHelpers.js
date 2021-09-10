@@ -96,17 +96,15 @@ export const getStainImageName = (stainType) => {
 }
 
 export const determineIfSlideTooLargeForGrid = (metadata, verticalGridSize = 500) => {
-    let numberOfLabels = 0
     let vertical = verticalGridSize / parseFloat(metadata.openSlide.mpp_y);
 
     if (metadata.aperio.originalWidth && metadata.aperio.originalWidth) {
         let width = parseInt(metadata.aperio.originalWidth);
         let height = parseInt(metadata.aperio.originalHeight);
-        for (let yy = 0; yy < (height - (vertical * 4)); yy += vertical) {
-            for (let ii = 0; ii < (width - (vertical * 4)); ii += vertical) {
-                numberOfLabels += 1;
-            }
-        }
+        let outerLoopCount = (height - (vertical * 4)) / vertical;
+        let innerLoopCount = (width - (vertical * 4)) / vertical;
+        let numberOfLabels = Math.ceil(outerLoopCount) * Math.ceil(innerLoopCount);
+
         if (numberOfLabels > 620) {
             return true;
         } else {
@@ -124,4 +122,76 @@ export const determineIfPilotSlide = (participants, selectedParticipant) => {
     } else {
         return false;
     }
+}
+
+export const getNextLetterInAlphabet =(currentLetter = '')  => {
+
+        if(currentLetter === "") {
+            return "A";
+        }
+        var prefix = currentLetter.substring(0, currentLetter.length-1);
+        var last = currentLetter[currentLetter.length-1]
+        if(last === "Z") {
+            return (getNextLetterInAlphabet(prefix) + "A");
+        }
+        return prefix + String.fromCharCode(currentLetter.charCodeAt(currentLetter.length-1) + 1);
+
+}
+
+export const calculateGridLineLength = (imageDimension, lineDimension) => {
+    // The choosen micron dimension may not be cleanly devisable by the image dimensions.
+    // This function ensures the lines correctly line up during those cases.
+    return (Math.ceil(((imageDimension + lineDimension) / lineDimension)) - 1) * lineDimension
+}
+
+export const getGridOverlay = (metadata, labelSetId, verticalSize, horizontalSize) => {
+    let lineThickness = 13;
+		let vertical = verticalSize / parseFloat(metadata.openSlide.mpp_y);
+		let horizontal = horizontalSize / parseFloat(metadata.openSlide.mpp_y);
+		let overlay = [];
+		let overlayLabel = []
+		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
+			let width = parseInt(metadata.aperio.originalWidth);
+			let height = parseInt(metadata.aperio.originalHeight);
+            let gridLineLengthForHeight = (Math.ceil(((height + horizontal) / horizontal)) -1 ) * horizontal;
+            let gridLineLengthForWidth = (Math.ceil(((width + horizontal) / horizontal)) -1 ) * horizontal;
+			for (let i = 0; i < (width + vertical); i += vertical) {
+				overlay.push({
+					px: i,
+					py: 0,
+					width: lineThickness,
+					height: gridLineLengthForHeight,
+					className: 'gridline'
+				})
+			}
+
+			for (let i = 0; i <= (height + horizontal); i += horizontal) {
+				overlay.push({
+					px: 0,
+					py: i,
+					width: gridLineLengthForWidth,
+					height: lineThickness,
+					className: 'gridline'
+				})
+			}
+			let currentLetter = '';
+			let currentNumber = 0;
+			for (let yy = 0; yy < (height); yy += vertical) {
+				currentLetter = getNextLetterInAlphabet('');
+				for (let i = 0; i < (width); i += vertical) {
+					overlayLabel.push(`${currentLetter + currentNumber}`)
+					overlay.push({
+						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
+						px: 0 + (i / vertical * vertical + lineThickness),
+						py: 0 + (yy / horizontal * horizontal + lineThickness),
+					})
+					currentLetter = getNextLetterInAlphabet(currentLetter);
+				}
+				currentNumber += 1;
+			}
+
+		} else {
+			console.error('Metadata not provided with slide')
+		}
+		return [overlay, overlayLabel];
 }
