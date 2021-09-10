@@ -60,16 +60,15 @@ class SlideViewer extends Component {
 
 
 	async renderOverlayLabels() {
-		if (!determineIfPilotSlide(this.props.participants, this.props.selectedParticipant) 
-			&& !determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical) ) {
+		this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
+			isPiolotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
+		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
-			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1, slideTooLarge, isPilotSlide })
+			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
 			await this.setState({ renderLabels: true })
-		} else {
-			this.setState({ slideTooLarge, isPilotSlide })
-		}
+		} 
 	}
 
 	getNextLetterInAlphabet(currentLetter = '') {
