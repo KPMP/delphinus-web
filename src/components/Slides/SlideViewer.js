@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import OpenSeadragon from 'openseadragon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
-import { noSlidesFound, determineIfSlideTooLargeForGrid, determineIfPilotSlide } from './slideHelpers';
+import { noSlidesFound, determineIfSlideTooLargeForGrid, determineIfPilotSlide, getNextLetterInAlphabet } from './slideHelpers';
 import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
 import DivOverlays from './DivOverlays';
@@ -41,7 +41,7 @@ class SlideViewer extends Component {
 	async componentDidUpdate(prevProps, prevState) {
 		if (
 			prevProps.selectedParticipant !== this.props.selectedParticipant
-			|| this.gridSizeChanged(prevState)) {
+				|| this.gridSizeChanged(prevState)) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			await this.renderOverlayLabels();
@@ -51,8 +51,8 @@ class SlideViewer extends Component {
 	}
 
 	gridSizeChanged(prevState) {
-		if (prevState.horizontal !== this.state.horizontal ||
-			prevState.vertical !== this.state.vertical) {
+		if (prevState.horizontal !== this.state.horizontal 
+			|| prevState.vertical !== this.state.vertical) {
 			return true;
 		}
 		return false;
@@ -60,84 +60,41 @@ class SlideViewer extends Component {
 
 
 	async renderOverlayLabels() {
-		const slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical)
-		const isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)
-		if (!slideTooLarge && !isPilotSlide) {
+		this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
+			isPiolotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
+		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
-			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1, slideTooLarge, isPilotSlide })
+			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
 			await this.setState({ renderLabels: true })
-		} else {
-			this.setState({ slideTooLarge, isPilotSlide })
-		}
+		} 
 	}
 
-	async getNextLetterInAlphabet(currentLetter = '') {
-
-		if (!currentLetter || currentLetter === '') {
-			return 'A'
-		}
-		let zerothLetter = currentLetter.split('')[0]
-
-		const alphabet = {
-			'A': 'B',
-			'B': 'C',
-			'C': 'D',
-			'D': 'E',
-			'E': 'F',
-			'F': 'G',
-			'G': 'H',
-			'H': 'I',
-			'I': 'J',
-			'J': 'K',
-			'K': 'L',
-			'L': 'M',
-			'M': 'N',
-			'N': 'O',
-			'O': 'P',
-			'P': 'Q',
-			'Q': 'R',
-			'R': 'S',
-			'S': 'T',
-			'T': 'U',
-			'U': 'V',
-			'V': 'W',
-			'W': 'X',
-			'X': 'Y',
-			'Y': 'Z',
-			'Z': 'A',
-		};
-
-		let nextLetterLength = alphabet[zerothLetter] === 'A' ? currentLetter.length + 1 : currentLetter.length;
-		let nextLetter = ''
-		for (let i of new Array(nextLetterLength)) {  // eslint-disable-line
-			nextLetter = nextLetter + alphabet[zerothLetter];
-		}
-		return nextLetter;
+	getNextLetterInAlphabet(currentLetter = '') {
+		return getNextLetterInAlphabet(currentLetter);
 	}
 
-	calculateGridLineLength(imageDimension, lineDimension) {
-		// The choosen micron dimension may not be cleanly devisable by the image dimensions.
-		// This function ensures the lines correctly line up during those cases.
-		return (Math.ceil(((imageDimension + lineDimension) / lineDimension)) - 1) * lineDimension
-	}
 	async getGridOverlay(metadata, labelSetId) {
 		// estimated micron unit
 		let lineThickness = 13;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let overlay = [];
-		let overlayLabel = []
+		let overlayLabel = [];
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
+
+			let gridLineLengthForHeight = (Math.ceil(((height + horizontal) / horizontal)) -1 ) * horizontal;
+            let gridLineLengthForWidth = (Math.ceil(((width + horizontal) / horizontal)) -1 ) * horizontal;
+
 			for (let i = 0; i < (width + vertical); i += vertical) {
 				overlay.push({
 					px: i,
 					py: 0,
 					width: lineThickness,
-					height: this.calculateGridLineLength(height, horizontal),
+					height: gridLineLengthForHeight,
 					className: 'gridline'
 				})
 			}
@@ -146,7 +103,7 @@ class SlideViewer extends Component {
 				overlay.push({
 					px: 0,
 					py: i,
-					width: this.calculateGridLineLength(width, vertical),
+					width: gridLineLengthForWidth,
 					height: lineThickness,
 					className: 'gridline'
 				})
@@ -154,7 +111,7 @@ class SlideViewer extends Component {
 			let currentLetter = '';
 			let currentNumber = 0;
 			for (let yy = 0; yy < (height); yy += vertical) {
-				currentLetter = await this.getNextLetterInAlphabet('');
+				currentLetter = this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
@@ -162,13 +119,13 @@ class SlideViewer extends Component {
 						px: 0 + (i / vertical * vertical + lineThickness),
 						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
-					currentLetter = await this.getNextLetterInAlphabet(currentLetter);
+					currentLetter = this.getNextLetterInAlphabet(currentLetter);
 				}
 				currentNumber += 1;
 			}
 
 		} else {
-			console.error('Metadata not provided with slide')
+			console.error('Metadata not provided with slide');
 		}
 		return [overlay, overlayLabel];
 	}
