@@ -64,8 +64,10 @@ class SlideViewer extends Component {
 
 	async renderOverlayLabels() {
 		
-		this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
+		await this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
 			isPilotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
+		console.log(this.state.isPilotSlide);
+		console.log(this.state.slideTooLarge)
 		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
@@ -138,12 +140,7 @@ class SlideViewer extends Component {
 
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
-		// let overlayGrid = []
-		// if (!this.state.slideTooLarge || !this.state.isPilotSlide) {
-			
-		// 	let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
-		// 	overlayGrid = gridOverlay
-		// }
+
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
 			id: "osdId",
