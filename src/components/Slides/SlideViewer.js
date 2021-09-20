@@ -66,8 +66,7 @@ class SlideViewer extends Component {
 		
 		await this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
 			isPilotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
-		console.log(this.state.isPilotSlide);
-		console.log(this.state.slideTooLarge)
+		
 		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
@@ -82,7 +81,6 @@ class SlideViewer extends Component {
 	}
 
 	async getGridOverlay(metadata, labelSetId) {
-		console.log("grid overlay calculation.")
 		let lineThickness = 13;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
