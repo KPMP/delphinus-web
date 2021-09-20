@@ -100,11 +100,6 @@ class SlideViewer extends Component {
 				})
 			}
 
-			let currentLetter = '';
-			let currentNumber = 0;
-			let verticalOffset = vertical * vertical + lineThickness;
-			let horizontalOffset = horizontal * horizontal + lineThickness;
-
 			for (let i = 0; i <= (height + horizontal); i += horizontal) {
 				overlay.push({
 					px: 0,
@@ -113,36 +108,26 @@ class SlideViewer extends Component {
 					height: lineThickness,
 					className: 'gridline'
 				})
-				for (let j = 0; j < (width); j += vertical) {
+			}
+			
+			let currentLetter = '';
+			let currentNumber = 0;
+			let verticalOffset = vertical * vertical + lineThickness;
+			let horizontalOffset = horizontal * horizontal + lineThickness;
+			
+			for (let yy = 0; yy < (height); yy += horizontal) {
+				currentLetter = this.getNextLetterInAlphabet('');
+				for (let i = 0; i < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
 						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
-						px: 0 + (j / verticalOffset),
-						py: 0 + (i / horizontalOffset),
+						px: 0 + (i / verticalOffset),
+						py: 0 + (yy / horizontalOffset),
 					})
 					currentLetter = this.getNextLetterInAlphabet(currentLetter);
 				}
 				currentNumber += 1;
 			}
-			
-			// let currentLetter = '';
-			// let currentNumber = 0;
-			// let verticalOffset = vertical * vertical + lineThickness;
-			// let horizontalOffset = horizontal * horizontal + lineThickness;
-			
-			// for (let yy = 0; yy < (height); yy += horizontal) {
-			// 	currentLetter = this.getNextLetterInAlphabet('');
-			// 	for (let i = 0; i < (width); i += vertical) {
-			// 		overlayLabel.push(`${currentLetter + currentNumber}`)
-			// 		overlay.push({
-			// 			id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
-			// 			px: 0 + (i / verticalOffset),
-			// 			py: 0 + (yy / horizontalOffset),
-			// 		})
-			// 		currentLetter = this.getNextLetterInAlphabet(currentLetter);
-			// 	}
-			// 	currentNumber += 1;
-			// }
 
 		} else {
 			console.error('Metadata not provided with slide');
@@ -153,7 +138,7 @@ class SlideViewer extends Component {
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
 		let overlayGrid = []
-		if (!this.state.slideTooLarge || !this.state.isPilotSlide) {
+		if (!this.state.slideTooLarge && !this.state.isPilotSlide) {
 			let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
 			overlayGrid = gridOverlay
 		}
@@ -180,7 +165,6 @@ class SlideViewer extends Component {
 	}
 
 	handleShowGridToggle() {
-		console.log('handle show grid toggle');
 		if (this.state.showGrid || this.state.slideTooLarge || this.state.isPilotSlide) {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
