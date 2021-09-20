@@ -67,7 +67,7 @@ class SlideViewer extends Component {
 			isPilotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
 		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
 			console.log("should show labels");
-			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
+			const overlayLabel = await this.getGridOverlayLabels( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
 			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
@@ -79,12 +79,42 @@ class SlideViewer extends Component {
 		return getNextLetterInAlphabet(currentLetter);
 	}
 
+
+	async getOvralayLabels(metadata, labelSetId) {
+		let overlayLabel = [];
+		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
+		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_x);
+		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
+			let currentLetter = '';
+			let currentNumber = 0;
+			let verticalOffset = vertical * vertical + lineThickness;
+			let horizontalOffset = horizontal * horizontal + lineThickness;
+			
+			for (let yy = 0; yy < (height); yy += horizontal) {
+				currentLetter = this.getNextLetterInAlphabet('');
+				for (let i = 0; i < (width); i += vertical) {
+					overlayLabel.push(`${currentLetter + currentNumber}`)
+					overlay.push({
+						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
+						px: 0 + (i / verticalOffset),
+						py: 0 + (yy / horizontalOffset),
+					})
+					currentLetter = this.getNextLetterInAlphabet(currentLetter);
+				}
+				currentNumber += 1;
+			}
+		} else {
+			console.error('Metadata not provided with slide');
+		}
+		return overlayLabel;
+	}
+
 	async getGridOverlay(metadata, labelSetId) {
 		let lineThickness = 13;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_x);
 		let overlay = [];
-		let overlayLabel = [];
+
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
 			let width = parseInt(metadata.aperio.originalWidth);
 			let height = parseInt(metadata.aperio.originalHeight);
@@ -112,29 +142,10 @@ class SlideViewer extends Component {
 				})
 			}
 			
-			let currentLetter = '';
-			let currentNumber = 0;
-			let verticalOffset = vertical * vertical + lineThickness;
-			let horizontalOffset = horizontal * horizontal + lineThickness;
-			
-			for (let yy = 0; yy < (height); yy += horizontal) {
-				currentLetter = this.getNextLetterInAlphabet('');
-				for (let i = 0; i < (width); i += vertical) {
-					overlayLabel.push(`${currentLetter + currentNumber}`)
-					overlay.push({
-						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
-						px: 0 + (i / verticalOffset),
-						py: 0 + (yy / horizontalOffset),
-					})
-					currentLetter = this.getNextLetterInAlphabet(currentLetter);
-				}
-				currentNumber += 1;
-			}
-
 		} else {
 			console.error('Metadata not provided with slide');
 		}
-		return [overlay, overlayLabel];
+		return overlay;
 	}
 
 	async initSeaDragon() {
@@ -142,7 +153,7 @@ class SlideViewer extends Component {
 		let overlayGrid = []
 		if (!this.state.slideTooLarge && !this.state.isPilotSlide) {
 			
-			let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
+			let gridOverlay = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
 			overlayGrid = gridOverlay
 		}
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
