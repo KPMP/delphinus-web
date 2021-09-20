@@ -68,7 +68,8 @@ class SlideViewer extends Component {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
-			this.setState({ overlayLabel, renderLabels: true, labelSetId: this.state.labelSetId + 1 })
+				await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
+				await this.setState({ renderLabels: true })
 		} 
 	}
 
