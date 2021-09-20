@@ -37,14 +37,13 @@ class SlideList extends Component {
 					<div id="menu-slide-list-slides">
 						{
 							this.props.selectedParticipant.slides.map(function (slide, index) {
-								let slideTooLarge = determineIfSlideTooLargeForGrid(slide.metadata)
 								let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
 								let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
 								return (
 									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
 										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
 										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
-										{slideTooLarge || isPilotSlide ? "" : <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>}
+										{isPilotSlide || determineIfSlideTooLargeForGrid(slide.metadata) ? "" : <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>}
 									</Row>
 								)
 							}, this)
