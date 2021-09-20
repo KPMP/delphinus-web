@@ -19,7 +19,7 @@ class SlideViewer extends Component {
 		let slideTooLarge = false;
 		let isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant);
 		if (!isPilotSlide) {
-			slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical);
+			slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, 500);
 		}
 
 
