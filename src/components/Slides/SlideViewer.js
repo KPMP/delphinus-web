@@ -17,8 +17,7 @@ class SlideViewer extends Component {
 		this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this)
 		this.handleSetGridPropertiesClick = this.handleSetGridPropertiesClick.bind(this)
 		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
-		let slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, vertical);
-		let isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant);
+	
 
 		this.state = {
 			showGrid: false,
@@ -29,8 +28,8 @@ class SlideViewer extends Component {
 			overlayLabel: [],
 			renderLabels: true,
 			labelSetId: 0,
-			slideTooLarge: slideTooLarge,
-			isPilotSlide: isPilotSlide,
+			slideTooLarge: false,
+			isPilotSlide: false,
 		}
 	}
 
@@ -63,6 +62,8 @@ class SlideViewer extends Component {
 
 
 	async renderOverlayLabels() {
+		this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
+			isPiolotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
 		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
