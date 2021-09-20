@@ -17,11 +17,8 @@ class SlideViewer extends Component {
 		this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this)
 		this.handleSetGridPropertiesClick = this.handleSetGridPropertiesClick.bind(this)
 		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
-		let slideTooLarge = false;
+		let slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, vertical);
 		let isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant);
-		if (!isPilotSlide) {
-			slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, vertical);
-		}
 
 		this.state = {
 			showGrid: false,
