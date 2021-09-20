@@ -166,7 +166,7 @@ class SlideViewer extends Component {
 	}
 
 	handleShowGridToggle() {
-
+		console.log('handle show grid toggle');
 		if (this.state.showGrid || this.state.slideTooLarge || this.state.isPilotSlide) {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
