@@ -114,8 +114,6 @@ class SlideViewer extends Component {
 			
 			let currentLetter = '';
 			let currentNumber = 0;
-			let verticalOffset = vertical * vertical + lineThickness;
-			let horizontalOffset = horizontal * horizontal + lineThickness;
 			
 			for (let yy = 0; yy < (height); yy += horizontal) {
 				currentLetter = this.getNextLetterInAlphabet('');
@@ -123,8 +121,8 @@ class SlideViewer extends Component {
 					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
 						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
-						px: 0 + (i / verticalOffset),
-						py: 0 + (yy / horizontalOffset),
+						px: 0 + (i / vertical * vertical + lineThickness),
+						py: 0 + (yy / horizontal * horizontal + lineThickness),
 					})
 					currentLetter = this.getNextLetterInAlphabet(currentLetter);
 				}
