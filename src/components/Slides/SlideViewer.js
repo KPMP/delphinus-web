@@ -68,7 +68,8 @@ class SlideViewer extends Component {
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
-			await this.setState({ overlayLabel, renderLabels: true, labelSetId: this.state.labelSetId + 1 })
+			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
+			await this.setState({ renderLabels: true })
 		} 
 	}
 
@@ -99,6 +100,11 @@ class SlideViewer extends Component {
 				})
 			}
 
+			let currentLetter = '';
+			let currentNumber = 0;
+			let verticalOffset = vertical * vertical + lineThickness;
+			let horizontalOffset = horizontal * horizontal + lineThickness;
+
 			for (let i = 0; i <= (height + horizontal); i += horizontal) {
 				overlay.push({
 					px: 0,
@@ -107,15 +113,6 @@ class SlideViewer extends Component {
 					height: lineThickness,
 					className: 'gridline'
 				})
-			}
-			
-			let currentLetter = '';
-			let currentNumber = 0;
-			let verticalOffset = vertical * vertical + lineThickness;
-			let horizontalOffset = horizontal * horizontal + lineThickness;
-			
-			for (let yy = 0; yy < (height); yy += horizontal) {
-				currentLetter = this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
@@ -127,6 +124,25 @@ class SlideViewer extends Component {
 				}
 				currentNumber += 1;
 			}
+			
+			// let currentLetter = '';
+			// let currentNumber = 0;
+			// let verticalOffset = vertical * vertical + lineThickness;
+			// let horizontalOffset = horizontal * horizontal + lineThickness;
+			
+			// for (let yy = 0; yy < (height); yy += horizontal) {
+			// 	currentLetter = this.getNextLetterInAlphabet('');
+			// 	for (let i = 0; i < (width); i += vertical) {
+			// 		overlayLabel.push(`${currentLetter + currentNumber}`)
+			// 		overlay.push({
+			// 			id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
+			// 			px: 0 + (i / verticalOffset),
+			// 			py: 0 + (yy / horizontalOffset),
+			// 		})
+			// 		currentLetter = this.getNextLetterInAlphabet(currentLetter);
+			// 	}
+			// 	currentNumber += 1;
+			// }
 
 		} else {
 			console.error('Metadata not provided with slide');
