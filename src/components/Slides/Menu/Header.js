@@ -60,6 +60,8 @@ class Header extends Component {
 	}
 
 	render() {
+		console.log(this.props.isPilotSlide);
+		console.log(this.props.slideTooLarge);
 		return (
 			<div className="menu-slide-list-header">
 				<Row>
