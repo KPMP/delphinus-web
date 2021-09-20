@@ -5,14 +5,13 @@ import {
 	faChevronRight,
 	faChevronLeft,
 	faDownload,
-	faPrint,
 	faSquare,
 	faCheckSquare,
 	faCaretDown
 } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
 import ReactGA from 'react-ga';
-import { getNextSlide, getPreviousSlide, downloadSlide, printSlide } from '../slideHelpers.js';
+import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
 
 class Header extends Component {
