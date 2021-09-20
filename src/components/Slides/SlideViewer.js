@@ -37,7 +37,6 @@ class SlideViewer extends Component {
 	async componentDidMount() {
 		await this.renderOverlayLabels();
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 	}
@@ -81,6 +80,7 @@ class SlideViewer extends Component {
 	}
 
 	async getGridOverlay(metadata, labelSetId) {
+		console.log("grid overlay calculation. caller is " + this.getGridOverlay.caller)
 		let lineThickness = 13;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
 		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
