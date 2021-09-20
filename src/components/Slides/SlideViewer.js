@@ -113,12 +113,12 @@ class SlideViewer extends Component {
 					height: lineThickness,
 					className: 'gridline'
 				})
-				for (let i = 0; i < (width); i += vertical) {
+				for (let j = 0; j < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
 						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
-						px: 0 + (i / verticalOffset),
-						py: 0 + (yy / horizontalOffset),
+						px: 0 + (j / verticalOffset),
+						py: 0 + (i / horizontalOffset),
 					})
 					currentLetter = this.getNextLetterInAlphabet(currentLetter);
 				}
