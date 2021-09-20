@@ -28,7 +28,12 @@ export const sendMessageToBackend = (error) => {
 		return (dispatch) => {
 			api.post('/api/v1/error', errorMessage)
 			.then((res) => {
-				dispatch(handleError(error.response.status));
+				if (error.response && error.response.status) {
+					dispatch(handleError(error.response.status));
+				} else {
+					dispatch(handleError("send to oops"));
+				}
+				
 			});
 		};
 	}

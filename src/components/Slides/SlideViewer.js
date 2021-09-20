@@ -9,7 +9,8 @@ import DivOverlays from './DivOverlays';
 
 class SlideViewer extends Component {
 	constructor(props) {
-		super(props)
+		super(props);
+		let vertical = 500;
 		this.horizontalRef = React.createRef(500);
 		this.verticalRef = React.createRef(500);
 		this.handleShowGridToggle = this.handleShowGridToggle.bind(this)
@@ -19,15 +20,14 @@ class SlideViewer extends Component {
 		let slideTooLarge = false;
 		let isPilotSlide = determineIfPilotSlide(this.props.participants, this.props.selectedParticipant);
 		if (!isPilotSlide) {
-			slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, 500);
+			slideTooLarge = determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, vertical);
 		}
-
 
 		this.state = {
 			showGrid: false,
 			showGridLabel: false,
 			horizontal: 500,
-			vertical: 500,
+			vertical: vertical,
 			overlayDivs: '',
 			overlayLabel: [],
 			renderLabels: true,
@@ -79,10 +79,9 @@ class SlideViewer extends Component {
 	}
 
 	async getGridOverlay(metadata, labelSetId) {
-		// estimated micron unit
 		let lineThickness = 13;
 		let vertical = this.state.vertical / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
-		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_y);
+		let horizontal = this.state.horizontal / parseFloat(this.props.selectedParticipant.selectedSlide.metadata.openSlide.mpp_x);
 		let overlay = [];
 		let overlayLabel = [];
 		if (metadata && metadata.aperio && metadata.aperio.originalHeight && metadata.aperio.originalWidth) {
@@ -111,16 +110,20 @@ class SlideViewer extends Component {
 					className: 'gridline'
 				})
 			}
+			
 			let currentLetter = '';
 			let currentNumber = 0;
-			for (let yy = 0; yy < (height); yy += vertical) {
+			let verticalOffset = vertical * vertical + lineThickness;
+			let horizontalOffset = horizontal * horizontal + lineThickness;
+			
+			for (let yy = 0; yy < (height); yy += horizontal) {
 				currentLetter = this.getNextLetterInAlphabet('');
 				for (let i = 0; i < (width); i += vertical) {
 					overlayLabel.push(`${currentLetter + currentNumber}`)
 					overlay.push({
 						id: `labelOverlay-${currentLetter + currentNumber}-${labelSetId}`,
-						px: 0 + (i / vertical * vertical + lineThickness),
-						py: 0 + (yy / horizontal * horizontal + lineThickness),
+						px: 0 + (i / verticalOffset),
+						py: 0 + (yy / horizontalOffset),
 					})
 					currentLetter = this.getNextLetterInAlphabet(currentLetter);
 				}
