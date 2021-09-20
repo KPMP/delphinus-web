@@ -44,7 +44,7 @@ class SlideList extends Component {
 									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
 										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
 										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
-										{isPilotSlide || slideTooLarge ? "" : <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>}
+										{slideTooLarge || isPilotSlide ? "" : <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>}
 									</Row>
 								)
 							}, this)
