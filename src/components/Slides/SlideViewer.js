@@ -30,12 +30,14 @@ class SlideViewer extends Component {
 			labelSetId: 0,
 			slideTooLarge: false,
 			isPilotSlide: false,
+			gridOverlay: []
 		}
 	}
 
 	async componentDidMount() {
 		await this.renderOverlayLabels();
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
+			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 	}
@@ -66,11 +68,10 @@ class SlideViewer extends Component {
 		this.setState({slideTooLarge: determineIfSlideTooLargeForGrid(this.props.selectedParticipant.selectedSlide.metadata, this.state.vertical),
 			isPilotSlide: determineIfPilotSlide(this.props.participants, this.props.selectedParticipant)});
 		if (!this.state.isPilotSlide && !this.state.slideTooLarge ) {
-			console.log("should show labels")
 			const [gridOverlay, overlayLabel] = await this.getGridOverlay( // eslint-disable-line
 				this.props.selectedParticipant.selectedSlide.metadata,
 				this.state.labelSetId + 1);
-			await this.setState({ overlayLabel, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
+			await this.setState({ overlayLabel, gridOverlay, renderLabels: false, labelSetId: this.state.labelSetId + 1 })
 			await this.setState({ renderLabels: true })
 		} 
 	}
@@ -137,12 +138,12 @@ class SlideViewer extends Component {
 
 	async initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
-		let overlayGrid = []
-		if (!this.state.slideTooLarge || !this.state.isPilotSlide) {
+		// let overlayGrid = []
+		// if (!this.state.slideTooLarge || !this.state.isPilotSlide) {
 			
-			let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
-			overlayGrid = gridOverlay
-		}
+		// 	let [gridOverlay] = await this.getGridOverlay(this.props.selectedParticipant.selectedSlide.metadata, this.state.labelSetId);
+		// 	overlayGrid = gridOverlay
+		// }
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
 			id: "osdId",
@@ -161,7 +162,7 @@ class SlideViewer extends Component {
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
-			overlays: overlayGrid
+			overlays: this.state.gridOverlay
 		});
 	}
 
