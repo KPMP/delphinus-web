@@ -198,38 +198,6 @@ describe('getStainImageName', () => {
 	});
 });
 
-describe('determineIfSlideTooLargeForGrid', () => {
-
-	it('should return true for large images', () => {
-		let metadata = {
-			aperio : {
-				originalWidth: 164592,
-				originalHeight: 67372
-			},
-			openSlide : {
-				mpp_y: .25
-			}
-		};
-		let result = determineIfSlideTooLargeForGrid(metadata, 500);
-		expect(result).toEqual(true)
-	});
-	
-	it('should return false for small enough images', () => {
-		let metadata = {
-			aperio : {
-				originalWidth: 44592,
-				originalHeight: 67372
-			},
-			openSlide : {
-				mpp_y: .25
-			}
-		};
-		let result = determineIfSlideTooLargeForGrid(metadata, 500);
-		expect(result).toEqual(false);
-	})
-
-});
-
 describe('getNextLetterInAlphabet', () => {
 	
 	it('should return the next letter', () => {
