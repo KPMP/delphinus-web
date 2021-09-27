@@ -51,9 +51,6 @@ class SlideList extends Component {
                   <Col xs={{ size: "auto" }} className="slide-name">
                     {slide.slideName}
                   </Col>
-                  <Col className="grid-icon" xs={{ size: "auto" }}>
-                    <FontAwesomeIcon icon={faBorderAll} />
-                  </Col>
                 </Row>
               );
             }, this)}
