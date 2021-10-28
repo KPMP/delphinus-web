@@ -105,7 +105,7 @@ export const determineIfSlideTooLargeForGrid = (metadata, verticalGridSize = 500
         let innerLoopCount = (width - (vertical * 4)) / vertical;
         let numberOfLabels = Math.ceil(outerLoopCount) * Math.ceil(innerLoopCount);
 
-        if (numberOfLabels > 620) {
+        if (numberOfLabels > 775) {
             return true;
         } else {
             return false;
