@@ -27,6 +27,8 @@ class Menu extends Component {
 					customCrossIcon={false} >
 					<SlideListContainer
 						showGrid={this.props.showGrid}
+						slideTooLarge={this.props.slideTooLarge}
+						isPilotSlide={this.props.isPilotSlide}
 						showGridLabel={this.props.showGridLabel}
 						handleShowGridToggle={this.props.handleShowGridToggle}
 						handleShowLabelToggle={this.props.handleShowLabelToggle}
