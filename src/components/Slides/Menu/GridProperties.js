@@ -54,7 +54,6 @@ class GridProperties extends Component {
                             icon={faCheckSquare}
                             className="clickable hoverable ctrl-btn"
                             onClick={() => {
-                                this.props.handleSetGridPropertiesClick();
                                 this.props.handleShowGridProperties();
                             }}
                             size="lg" />
