@@ -45,11 +45,8 @@ class SlideViewer extends Component {
 	}
 
 	renderOverlayLabels() {
-		console.log(this.props.selectedParticipant.selectedSlide.metadata.overlay)
 		this.setState({ overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel, gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay, 
 			renderLabels: true })
-		// this.setState({ renderLabels: true })
-
 	}
 
 	async initSeaDragon() {
