@@ -26,30 +26,30 @@ class SlideViewer extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this.renderOverlayLabels();
+	async componentDidMount() {
+		await this.renderOverlayLabels();
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			this.initSeaDragon();
 		}
 	}
 
-	componentDidUpdate(prevProps, prevState) {
-		if (
-			prevProps.selectedParticipant !== this.props.selectedParticipant) {
+	async componentDidUpdate(prevProps, prevState) {
+		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
-			this.renderOverlayLabels();
+			await this.renderOverlayLabels();
 			this.initSeaDragon();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 		}
 	}
 
-	renderOverlayLabels() {
-		this.setState({ overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel, gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay, 
-			renderLabels: true })
+	async renderOverlayLabels() {
+		await this.setState({ overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel, gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay, 
+			renderLabels: false });
+		await this.setState({renderLabels: true});
 	}
 
-	async initSeaDragon() {
+	initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
