@@ -27,8 +27,8 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidMount() {
-		await this.renderOverlayLabels();
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
+			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 	}
@@ -37,9 +37,9 @@ class SlideViewer extends Component {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
+			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
-			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 		}
 	}
 
