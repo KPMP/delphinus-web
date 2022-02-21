@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import PropTypes from 'prop-types';
 
 class DivOverlays extends Component {
     render() {
@@ -25,4 +25,10 @@ class DivOverlays extends Component {
         )
     }
 }
+
+DivOverlays.propTypes = {
+    showGridLabel: PropTypes.bool.isRequired,
+    overlayLabels: PropTypes.array.isRequired
+}
+
 export default DivOverlays;

@@ -133,6 +133,7 @@ class SlideViewer extends Component {
 
 SlideViewer.propTypes = {
 	selectedParticipant: PropTypes.object.isRequired,
+	handleError: PropTypes.func.isRequired
 };
 
 export default SlideViewer;

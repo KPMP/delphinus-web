@@ -4,6 +4,7 @@ import SlideListContainer from './SlideListContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Menu extends Component {
 
@@ -27,7 +28,6 @@ class Menu extends Component {
 					customCrossIcon={false} >
 					<SlideListContainer
 						showGrid={this.props.showGrid}
-						slideTooLarge={this.props.slideTooLarge}
 						showGridLabel={this.props.showGridLabel}
 						handleShowGridToggle={this.props.handleShowGridToggle}
 						handleShowLabelToggle={this.props.handleShowLabelToggle}
@@ -45,6 +45,18 @@ class Menu extends Component {
 		);
 	}
 
+}
+
+Menu.propTypes = {
+	showGrid: PropTypes.bool.isRequired,
+	showGridLabel: PropTypes.bool.isRequired,
+	handleShowGridToggle: PropTypes.func.isRequired,
+	handleShowLabelToggle: PropTypes.func.isRequired,
+	handleCancelGridPropertiesClick: PropTypes.func.isRequired,
+	horizontal: PropTypes.number.isRequired,
+	horizontalRef: PropTypes.func.isRequired,
+	vertical: PropTypes.number.isRequired,
+	verticalRef: PropTypes.func.isRequired
 }
 
 export default Menu;
