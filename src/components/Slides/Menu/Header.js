@@ -13,6 +13,7 @@ import { Col, Row } from 'reactstrap';
 import ReactGA from 'react-ga';
 import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
+import PropTypes from 'prop-types';
 
 class Header extends Component {
 	constructor(props) {
@@ -118,6 +119,24 @@ class Header extends Component {
 			</div>
 		);
 	}
+
+}
+
+Header.propTypes = {
+	selectedParticipant: PropTypes.object.isRequired,
+	setSelectedSlide: PropTypes.func.isRequired,
+	toggleMenu: PropTypes.func.isRequired,
+	handlePreviousSlide: PropTypes.func.isRequired,
+	handleNextSlide: PropTypes.func.isRequired,
+	showGrid: PropTypes.bool,
+	handleShowGridToggle: PropTypes.func.isRequired,
+	horizontal: PropTypes.number.isRequired,
+	horizontalRef: PropTypes.func.isRequired,
+	vertical: PropTypes.number.isRequired,
+	verticalRef: PropTypes.func.isRequired,
+	handleShowLabelToggle: PropTypes.func.isRequired,
+	handleSetGridPropertiesClick: PropTypes.func.isRequired,
+	handleCancelGridPropertiesClick: PropTypes.func.isRequired
 
 }
 

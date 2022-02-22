@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Col, Row } from 'reactstrap';
-
+import PropTypes from 'prop-types';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { faWindowClose as farWindowClose, faSquare } from '@fortawesome/free-regular-svg-icons';
 
@@ -64,5 +64,16 @@ class GridProperties extends Component {
     }
 
 }
+
+GridProperties.propTypes = {
+	showGridLabel: PropTypes.bool,
+	horizontal: PropTypes.number.isRequired,
+    horizontalRef: PropTypes.func.isRequired,
+    vertical: PropTypes.number.isRequired,
+    verticalRef: PropTypes.func.isRequired,
+    handleShowLabelToggle: PropTypes.func.isRequired,
+    handleCancelGridPropertiesClick: PropTypes.func.isRequired,
+    handleShowGridProperties: PropTypes.func.isRequired
+};
 
 export default GridProperties;

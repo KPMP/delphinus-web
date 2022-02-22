@@ -23,17 +23,6 @@ export const downloadSlide = (downloadFileName) => {
     }
 }
 
-export const printSlide = () => {
-    let openseadragon = document.getElementsByClassName("openseadragon")[0];
-    let canvasDiv = openseadragon.getElementsByClassName("openseadragon-canvas")[0];
-    let canvas = canvasDiv.getElementsByTagName("canvas")[0];
-
-    let image = canvas.toDataURL("image/jpeg");
-    let printWindow = window.open('');
-    printWindow.document.write('<img src="' + image + '" onload="window.print();window.close()" />');
-    printWindow.focus();
-}
-
 export const noSlidesFound = (selected, handleError) => {
     if (selected === null || selected === undefined || Object.keys(selected.slides).length === 0) {
         handleError({ error: 'No participant selected. No slides to show.', stackTrace: '' })

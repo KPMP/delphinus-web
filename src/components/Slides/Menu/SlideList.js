@@ -6,6 +6,7 @@ import {
 } from '../slideHelpers.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBorderAll } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 
 import Header from './Header';
@@ -52,6 +53,13 @@ class SlideList extends Component {
 		);
 
 	}
+}
+
+SlideList.propTypes = {
+	selectedParticipant: PropTypes.object.isRequired,
+	setSelectedSlide: PropTypes.func.isRequired,
+	toggleMenu: PropTypes.func.isRequired,
+	handleSelectSlide: PropTypes.func.isRequired
 }
 
 export default SlideList;
