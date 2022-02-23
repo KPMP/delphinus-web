@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 class DivOverlays extends Component {
     render() {
         let labels = '';
         if (this.props.overlayLabels) {
             labels = this.props.overlayLabels.map((item, i) => {
                 return <div
-                    key={`labelOverlay-${item}-${this.props.labelSetId}`}
-                    id={`labelOverlay-${item}-${this.props.labelSetId}`}
+                    key={`labelOverlay-${item}`}
+                    id={`labelOverlay-${item}`}
                     className={`labelOverlay ${this.props.showGridLabel ? '' : 'hideLabels'}`}>
 
                     <div>
@@ -23,4 +25,10 @@ class DivOverlays extends Component {
         )
     }
 }
+
+DivOverlays.propTypes = {
+    showGridLabel: PropTypes.bool.isRequired,
+    overlayLabels: PropTypes.array.isRequired
+}
+
 export default DivOverlays;
