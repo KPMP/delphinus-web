@@ -4,8 +4,6 @@ import {
 	noSlidesFound,
 	getStainImageName
 } from '../slideHelpers.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBorderAll } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 
@@ -42,7 +40,6 @@ class SlideList extends Component {
 									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
 										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
 										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
-										 <Col className="grid-icon" xs={{ size: "auto" }}><FontAwesomeIcon icon={faBorderAll} /></Col>
 									</Row>
 								)
 							}, this)
