@@ -14,6 +14,7 @@ import Oops from './components/Error/Oops';
 import ErrorBoundaryContainer from './components/Error/ErrorBoundaryContainer';
 import PermissionDenied from './components/Error/PermissionDenied';
 import NotRegistered from './components/Error/NotRegistered';
+import NotFoundPage from './components/Error/NotFoundPage.js';
 
 const cacheStore = window.sessionStorage.getItem('dpr');
 const initialState = cacheStore ?
@@ -59,6 +60,7 @@ class App extends Component {
 							<Route exact path='/notRegistered' component={NotRegistered} />
 							<Route exact path='/permissionDenied' component={PermissionDenied} />
 							<Route exact path='/' component={Summary}/>
+							<Route path='/*' component={NotFoundPage} />
 						</Switch>
 					</ErrorBoundaryContainer>
 				</Router>
