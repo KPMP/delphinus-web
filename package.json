@@ -19,6 +19,7 @@
     "es6-shim": "0.35.6",
     "history": "4.10.1",
     "jquery": "3.6.0",
+    "kpmp-common-components": "1.1.10",
     "lodash": "4.17.21",
     "openseadragon": "2.4.1",
     "prop-types": "15.8.1",
