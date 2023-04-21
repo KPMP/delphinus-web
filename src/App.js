@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
 import { Router, Route, Switch } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import createHistory from 'history/createBrowserHistory';
 import Oops from './components/Error/Oops';
 import ErrorBoundaryContainer from './components/Error/ErrorBoundaryContainer';
@@ -28,8 +28,7 @@ const GA_TRACKING_ID = 'UA-124331187-9';
 
 ReactGA.initialize(GA_TRACKING_ID);
 function logPageView(location, action) {
-    ReactGA.set({ page: location.pathname + location.search });
-    ReactGA.pageview(location.pathname + location.search);
+	ReactGA.send({hitType: 'pageview', page: location.pathname + location.search})
 }
 const history = createHistory();
 history.listen((location, action) => {
