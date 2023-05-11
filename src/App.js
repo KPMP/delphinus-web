@@ -24,7 +24,7 @@ const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, win
 const saveState = () => {
     window.sessionStorage.setItem('dpr', JSON.stringify(store.getState()));
 };
-const GA_TRACKING_ID = 'UA-124331187-9';
+const GA_TRACKING_ID = 'G-D5ZPP3Z2K5';
 
 ReactGA.initialize(GA_TRACKING_ID);
 function logPageView(location, action) {
