@@ -26,7 +26,7 @@ const saveState = () => {
 };
 const GA_TRACKING_ID = 'G-D5ZPP3Z2K5';
 
-ReactGA.initialize(GA_TRACKING_ID);
+ReactGA.initialize(GA_TRACKING_ID, { testMode: process.env.NODE_ENV === 'test'});
 function logPageView(location, action) {
 	ReactGA.set({page: location.pathname + location.search});
 	ReactGA.send({hitType: 'pageview', page: location.pathname + location.search})
