@@ -28,6 +28,7 @@ const GA_TRACKING_ID = 'G-D5ZPP3Z2K5';
 
 ReactGA.initialize(GA_TRACKING_ID);
 function logPageView(location, action) {
+	ReactGA.set({page: location.pathname + location.search});
 	ReactGA.send({hitType: 'pageview', page: location.pathname + location.search})
 }
 const history = createHistory();
