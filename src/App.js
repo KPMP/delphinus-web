@@ -26,10 +26,10 @@ const saveState = () => {
 };
 const GA_TRACKING_ID = 'G-D5ZPP3Z2K5';
 
-ReactGA.initialize(GA_TRACKING_ID, { testMode: process.env.NODE_ENV === 'test'});
+ReactGA.initialize(GA_TRACKING_ID,{ testMode: process.env.NODE_ENV === 'test' ? true : false });
 function logPageView(location, action) {
-	ReactGA.set({page: location.pathname + location.search});
-	ReactGA.send({hitType: 'pageview', page: location.pathname + location.search})
+  ReactGA.set({ page: location.pathname + location.search });
+  ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
 }
 const history = createHistory();
 history.listen((location, action) => {
