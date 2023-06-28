@@ -10,10 +10,10 @@ import {
 	faCaretDown
 } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
-import ReactGA from 'react-ga';
 import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
 import PropTypes from 'prop-types';
+import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
 
 class Header extends Component {
 	constructor(props) {
@@ -43,11 +43,11 @@ class Header extends Component {
 	}
 
 	handleDownload() {
-		ReactGA.event({
-			category: 'Slide View',
-			action: 'Download Slide',
-			label: this.props.selectedParticipant.selectedSlide.slideName
-		});
+
+		handleGoogleAnalyticsEvent('DPR', 'Download', 
+		this.props.selectedParticipant.id 
+		+ this.props.selectedParticipant.selectedSlide.slideName);
+
 		let downloadFileName = this.props.selectedParticipant.selectedSlide.slideName + ".jpg";
 		downloadSlide(downloadFileName);
 	}

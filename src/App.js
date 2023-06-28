@@ -8,12 +8,13 @@ import thunk from 'redux-thunk';
 import loadedState from './initialState';
 import rootReducer from './reducers';
 import { Router, Route, Switch } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import createHistory from 'history/createBrowserHistory';
 import Oops from './components/Error/Oops';
 import ErrorBoundaryContainer from './components/Error/ErrorBoundaryContainer';
 import PermissionDenied from './components/Error/PermissionDenied';
 import NotRegistered from './components/Error/NotRegistered';
+import NotFoundPage from './components/Error/NotFoundPage.js';
 
 const cacheStore = window.sessionStorage.getItem('dpr');
 const initialState = cacheStore ?
@@ -23,12 +24,12 @@ const store = applyMiddleware(thunk)(createStore)(rootReducer, initialState, win
 const saveState = () => {
     window.sessionStorage.setItem('dpr', JSON.stringify(store.getState()));
 };
-const GA_TRACKING_ID = 'UA-124331187-9';
+const GA_TRACKING_ID = 'G-D5ZPP3Z2K5';
 
-ReactGA.initialize(GA_TRACKING_ID);
+ReactGA.initialize(GA_TRACKING_ID,{ testMode: process.env.NODE_ENV === 'test' ? true : false });
 function logPageView(location, action) {
-    ReactGA.set({ page: location.pathname + location.search });
-    ReactGA.pageview(location.pathname + location.search);
+  ReactGA.set({ page: location.pathname + location.search });
+  ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
 }
 const history = createHistory();
 history.listen((location, action) => {
@@ -59,6 +60,7 @@ class App extends Component {
 							<Route exact path='/notRegistered' component={NotRegistered} />
 							<Route exact path='/permissionDenied' component={PermissionDenied} />
 							<Route exact path='/' component={Summary}/>
+							<Route path='/*' component={NotFoundPage} />
 						</Switch>
 					</ErrorBoundaryContainer>
 				</Router>

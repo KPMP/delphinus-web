@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import ParticipantListDropDown from './ParticipantListDropDown';
-import ReactGA from 'react-ga';
+import ReactGA from 'react-ga4';
 import PropTypes from 'prop-types';
 
 class ParticipantSelect extends Component {
@@ -13,8 +13,8 @@ class ParticipantSelect extends Component {
 
     handleParticipantSelect = (participantId) => {
         ReactGA.event({
-            category: 'Navigation',
-            action: 'View Slides',
+            category: 'DPR',
+            action: 'Navigation',
             label: participantId
         });
         this.setState({participantId});
