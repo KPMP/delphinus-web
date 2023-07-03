@@ -10,6 +10,10 @@ import DivOverlays from './DivOverlays';
 class SlideViewer extends Component {
 	constructor(props) {
 		super(props);
+		if (!this.props.selectedParticipant || this.props.selectedParticipant.id === "") {
+			window.location.href = "/";
+		}
+
 		this.horizontalRef = React.createRef(500);
 		this.verticalRef = React.createRef(500);
 		this.handleShowGridToggle = this.handleShowGridToggle.bind(this)
