@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Select } from 'antd';
-import 'antd/es/select/style/index.css';
+import 'antd/es/select/style/index.js';
 import PropTypes from 'prop-types';
 
 class ParticipantListDropDown extends Component {
