@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Select } from 'antd';
-import 'antd/es/select/style/index.css';
 import PropTypes from 'prop-types';
 
 class ParticipantListDropDown extends Component {
@@ -18,7 +17,7 @@ class ParticipantListDropDown extends Component {
         );
         return (
         		<Select size='large' 
-	        		className='participant-select-dropdown pr-3' 
+	        		className='participant-select-dropdown mr-3'
 	        		labelInValue 
 	        		optionFilterProp="children"
 	        		defaultValue={{ key: 'Select a KPMP ID' }} 
