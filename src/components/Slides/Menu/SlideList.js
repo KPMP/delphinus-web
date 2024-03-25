@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, UncontrolledAccordion, AccordionItem, AccordionHeader, AccordionBody} from 'reactstrap';
 import {
 	noSlidesFound,
 	getStainImageName
@@ -31,7 +31,29 @@ class SlideList extends Component {
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-					<div id="menu-slide-list-slides">
+          <UncontrolledAccordion defaultOpen={['1', '2', '3']}
+                    stayOpen>
+            <AccordionItem>
+              <AccordionHeader targetId='1'>
+                (LM) Light Microscopy
+              </AccordionHeader>
+              <AccordionBody accordionId="1">
+              {
+							this.props.selectedParticipant.slides.map(function (slide, index) {
+								let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
+								let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
+								return (
+									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
+										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
+										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
+									</Row>
+								)
+							}, this)
+						}
+              </AccordionBody>
+            </AccordionItem>
+          </UncontrolledAccordion>
+					{/* <div id="menu-slide-list-slides">
 						{
 							this.props.selectedParticipant.slides.map(function (slide, index) {
 								let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
@@ -44,7 +66,7 @@ class SlideList extends Component {
 								)
 							}, this)
 						}
-					</div>
+					</div> */}
 				</Col>
 			</div>
 		);

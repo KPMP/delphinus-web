@@ -123,7 +123,8 @@ class SlideViewer extends Component {
 						horizontal='500'
 						horizontalRef={this.horizontalRef}
 						verticalRef={this.verticalRef}
-						selectedParticipant={this.props.selectedParticipant} />
+						selectedParticipant={this.props.selectedParticipant} 
+            slideType={this.props.selectedParticipant.selectedSlide.slideType}/>
 
 					<div className="osd-div" ref={node => { this.el = node; }}>
 						<div className={`openseadragon ${(this.state.showGrid) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
