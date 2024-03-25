@@ -35,7 +35,7 @@ export const getParticipantSlides = (participantId, props) => {
         // }
         console.log(Object.length(result.data))
         let configType = Object.keys(result.data)
-        // let slides = participantSelectSorter(Object.keys(result.data)[0])
+        let slides = participantSelectSorter(Object.keys(result.data)[0])
 
         console.log(configType)
         dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
