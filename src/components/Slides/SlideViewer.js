@@ -24,7 +24,7 @@ class SlideViewer extends Component {
 			showGrid: false,
 			showGridLabel: false,
 			overlayDivs: '',
-			overlayLabel: null,
+			overlayLabel: [],
 			renderLabels: true,
 			gridOverlay: null
 		}
@@ -35,10 +35,7 @@ class SlideViewer extends Component {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
-    if(this.props.selectedParticipant.selectedSlide.metadata){
-      this.setState({overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
-      gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.gridOverlay})
-    }
+    
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -52,8 +49,14 @@ class SlideViewer extends Component {
 	}
 
 	async renderOverlayLabels() {
-		await this.setState({ overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel, gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay, 
-			renderLabels: false });
+    if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy"){
+      await this.setState({
+        overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
+        gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
+        renderLabels: false,
+        }
+      )
+    }
 		await this.setState({renderLabels: true});
 	}
 
