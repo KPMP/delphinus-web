@@ -29,17 +29,18 @@ export const getParticipantSlides = (participantId, props) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
 		axios.get('/api/v1/slides/' + participantId, config)
 			.then(result => {
-        // for (let i = 0; i < Object.length(result.data); i++){
-        //   let slides = participantSelectSorter(Object.keys(result.data)[i])
-          
-        // }
-        console.log(Object.length(result.data))
-        let configType = Object.keys(result.data)
-        let slides = participantSelectSorter(Object.keys(result.data)[0])
-
-        console.log(configType)
-        dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
-				console.log(Object.length(result.data))
+        if (result.data["(LM) Light Microscopy"] != null){
+          let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
+          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        }
+        if (result.data["(IF) Immunofluorescence"] != null){
+          let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
+          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        }
+        if (result.data["(EM) Electron Microscopy"] != null){
+          let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
+          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        }
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
