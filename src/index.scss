@@ -2,6 +2,8 @@
 @import "common-values.scss";
 @import "grid.scss";
 
+@import "../node_modules/bootstrap/scss/functions";
+
 $accordion-button-active-color: black;
 $accordion-button-color: black;
 $bs-border-color: #dee2e6;
