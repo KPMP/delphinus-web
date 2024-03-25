@@ -24,9 +24,9 @@ class SlideViewer extends Component {
 			showGrid: false,
 			showGridLabel: false,
 			overlayDivs: '',
-			overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
+			overlayLabel: null,
 			renderLabels: true,
-			gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay
+			gridOverlay: null
 		}
 	}
 
@@ -35,6 +35,10 @@ class SlideViewer extends Component {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
+    if(this.props.selectedParticipant.selectedSlide.metadata){
+      this.setState({overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
+      gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.gridOverlay})
+    }
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
