@@ -29,13 +29,14 @@ export const getParticipantSlides = (participantId, props) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
 		axios.get('/api/v1/slides/' + participantId, config)
 			.then(result => {
-        for (let i = 0; i < Object.length(result.data); i++){
-          let slides = participantSelectSorter(Object.keys(result.data)[i])
-          console.log(slides)
-          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
-        }
-				// let slides = participantSelectSorter(result.data);
-				
+        // for (let i = 0; i < Object.length(result.data); i++){
+        //   let slides = participantSelectSorter(Object.keys(result.data)[i])
+          
+        // }
+        let slides = participantSelectSorter(Object.keys(result.data)[0])
+        console.log(slides)
+        dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+				console.log(Object.length(result.data))
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
