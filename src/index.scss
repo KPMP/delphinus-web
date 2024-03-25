@@ -8,7 +8,8 @@ $accordion-button-active-color: black;
 $accordion-button-color: black;
 $bs-border-color: #dee2e6;
 $accordion-icon-width: .8125rem;
-$accordion-body-padding: 0rem;
+$accordion-body-padding-y: 0rem;
+$accordion-body-padding-x: 0rem;
 
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
