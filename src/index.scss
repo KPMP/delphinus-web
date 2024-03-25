@@ -18,6 +18,11 @@ $accordion-icon-width: .8125rem;
   --bs-accordion-border-color: #dee2e6;
 }
 
+.accordion-button{
+--bs-accordion-body-padding-y: 0px !important;
+--bs-accordion-body-padding-x: 0px !important
+}
+
 .accordion-item:first-of-type(.collapsed) .accordion-button {
   --bs-accordion-color: $accordion-button-color
   --bs-accorion-border-color: $accordion-button-color
