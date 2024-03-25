@@ -33,8 +33,11 @@ export const getParticipantSlides = (participantId, props) => {
         //   let slides = participantSelectSorter(Object.keys(result.data)[i])
           
         // }
-        let slides = participantSelectSorter(Object.keys(result.data)[0])
-        console.log(slides)
+        console.log(Object.length(result.data))
+        let configType = Object.keys(result.data)
+        // let slides = participantSelectSorter(Object.keys(result.data)[0])
+
+        console.log(configType)
         dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
 				console.log(Object.length(result.data))
 				props.history.push(process.env.PUBLIC_URL + "/slides");
