@@ -38,6 +38,7 @@ class SlideList extends Component {
                 (LM) Light Microscopy
               </AccordionHeader>
               <AccordionBody accordionId="1">
+              <div id="menu-slide-list-slides">
               {
 							this.props.selectedParticipant.slides.map(function (slide, index) {
 								let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
@@ -50,6 +51,7 @@ class SlideList extends Component {
 								)
 							}, this)
 						}
+            </div>
               </AccordionBody>
             </AccordionItem>
           </UncontrolledAccordion>
