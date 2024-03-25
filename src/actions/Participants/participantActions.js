@@ -30,6 +30,7 @@ export const getParticipantSlides = (participantId, props) => {
 		axios.get('/api/v1/slides/' + participantId, config)
 			.then(result => {
         console.log(result)
+        console.log(result.data)
 				let slides = participantSelectSorter(result.data);
 				dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
