@@ -36,9 +36,6 @@ class SlideList extends Component {
 
 SlideList.propTypes = {
 	selectedParticipant: PropTypes.object.isRequired,
-	setSelectedSlide: PropTypes.func.isRequired,
-	toggleMenu: PropTypes.func.isRequired,
-	handleSelectSlide: PropTypes.func.isRequired
 }
 
 export default SlideList;
