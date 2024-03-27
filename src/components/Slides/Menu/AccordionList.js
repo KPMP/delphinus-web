@@ -18,6 +18,7 @@ class AccordionList extends Component {
 	}
 
   render() {
+    console.log(this.props.selectedParticipant)
     return (
       <AccordionItem>
               <AccordionHeader targetId={this.props.targetId}>
@@ -49,6 +50,9 @@ AccordionList.propTypes = {
   accordionId: PropTypes.bool.isRequired,
   slideType: PropTypes.bool.isRequired,
   selectedParticipant: PropTypes.bool.isRequired,
+  setSelectedSlide: PropTypes.func.isRequired,
+	toggleMenu: PropTypes.func.isRequired,
+	handleSelectSlide: PropTypes.func.isRequired
 }
 
 export default AccordionList;
