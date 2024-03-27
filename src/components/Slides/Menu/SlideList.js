@@ -3,7 +3,6 @@ import { Col, UncontrolledAccordion} from 'reactstrap';
 import {
 	noSlidesFound,
 } from '../slideHelpers.js';
-// import AccordionList from './AccordionList.js';
 import PropTypes from 'prop-types';
 
 
