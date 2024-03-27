@@ -33,9 +33,10 @@ class SlideList extends Component {
 				<Header {...this.props} />
 				<Col id="slides-col">
           <UncontrolledAccordion defaultOpen={['1', '2', '3']} stayOpen >
-            {
-              slideType === "(LM) Light Microscopy" ? <AccordionList selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='1' targetId='1' /> : ''
-            }
+            {slideType === "(LM) Light Microscopy" ? <AccordionList selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='1' targetId='1' /> : ''}
+            {slideType === "(EM) Electron Microscopy" ? <AccordionList selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='2' targetId='2' /> : ''}
+            {slideType === "(IF) Immunoflourescence" ? <AccordionList selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='3' targetId='3' /> : ''}
+   
           </UncontrolledAccordion>
 				</Col>
 			</div>
