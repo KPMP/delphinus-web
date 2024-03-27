@@ -4,6 +4,7 @@ import {
 	noSlidesFound,
 	getStainImageName
 } from '../slideHelpers.js';
+import AccordionList from './AccordionList.js';
 import PropTypes from 'prop-types';
 
 
@@ -26,49 +27,16 @@ class SlideList extends Component {
 	}
 
 	render() {
-		
+		let slideType = this.props.selectedParticipant.selectedSlide.slideType;
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-          <UncontrolledAccordion defaultOpen={['1', '2', '3']}
-                    stayOpen>
-            <AccordionItem>
-              <AccordionHeader targetId='1'>
-                (LM) Light Microscopy
-              </AccordionHeader>
-              <AccordionBody accordionId="1">
-              <div id="menu-slide-list-slides">
-              {
-							this.props.selectedParticipant.slides.map(function (slide, index) {
-								let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
-								let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
-								return (
-									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
-										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
-										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
-									</Row>
-								)
-							}, this)
-						}
-            </div>
-              </AccordionBody>
-            </AccordionItem>
+          <UncontrolledAccordion defaultOpen={['1', '2', '3']} stayOpen >
+            {
+              slideType === "(LM) Light Microscopy" ? <AccordionList slideType={slideType} accordionId='1' targetId='1' /> : ''
+            }
           </UncontrolledAccordion>
-					{/* <div id="menu-slide-list-slides">
-						{
-							this.props.selectedParticipant.slides.map(function (slide, index) {
-								let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
-								let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
-								return (
-									<Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
-										<Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
-										<Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
-									</Row>
-								)
-							}, this)
-						}
-					</div> */}
 				</Col>
 			</div>
 		);
