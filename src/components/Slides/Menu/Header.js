@@ -65,17 +65,17 @@ class Header extends Component {
 			<div className="menu-slide-list-header">
 				<Row>
 					<Col className="menu-title">CASE ID: {this.props.selectedParticipant.id}</Col>
-					<div className="float-right">
+					<div className="float-end">
 						<Col className="menu-control"><FontAwesomeIcon icon={faCaretLeft} className="clickable" onClick={this.props.toggleMenu} size="lg" /></Col>
 					</div>
 				</Row>
 				<Row>
-					<Col className="float-left" xs="4">
+					<Col className="float-start" xs="4">
 						<FontAwesomeIcon icon={faChevronLeft} className="clickable hoverable pad-right" onClick={() => this.handlePreviousSlide()} size="lg" />
 						<FontAwesomeIcon icon={faChevronRight} className="clickable hoverable" onClick={() => this.handleNextSlide()} size="lg" />
 					</Col>
 					<Col xs={{ size: 5, offset: 2 }}>
-						<div className='float-right' id="grid-control">
+						<div className='float-end' id="grid-control">
 							<FontAwesomeIcon
 								icon={(this.props.showGrid) ? faCheckSquare : faSquare}
 								className="clickable hoverable gridCheckbox"
@@ -93,7 +93,7 @@ class Header extends Component {
 						</div>
 					</Col>
 					<Col xs="1">
-						<div className="float-right">
+						<div className="float-end">
 							<a id="download" //eslint-disable-line
 							><FontAwesomeIcon icon={faDownload} className="clickable hoverable" onClick={this.handleDownload} size="lg" /></a>
 						</div>
