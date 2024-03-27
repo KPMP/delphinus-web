@@ -37,7 +37,8 @@ class AccordionList extends Component {
 AccordionList.propTypes = {
   targetId: PropTypes.bool.isRequired,
   accordionId: PropTypes.bool.isRequired,
-  slideType: PropTypes.bool.isRequired
+  slideType: PropTypes.bool.isRequired,
+  selectedParticipant: PropTypes.bool.isRequired,
 }
 
 export default AccordionList;
