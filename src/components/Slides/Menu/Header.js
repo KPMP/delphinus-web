@@ -64,8 +64,10 @@ class Header extends Component {
 		return (
 			<div className="menu-slide-list-header">
 				<Row>
-					<Col className="menu-title">CASE ID: {this.props.selectedParticipant.id}</Col>
-					<div className="float-end menu-control"><FontAwesomeIcon icon={faCaretLeft} className="clickable" onClick={this.props.toggleMenu} size="lg" /></div>
+					<Col className="menu-title">CASE ID: {this.props.selectedParticipant.id}
+            <div className="float-end menu-control"><FontAwesomeIcon icon={faCaretLeft} className="clickable" onClick={this.props.toggleMenu} size="lg" /></div>
+          </Col>
+					
 				</Row>
 				<Row>
 					<Col className="float-start" xs="4">
