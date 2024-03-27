@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import AccordionList from './AccordionList';
+import SlideList from './SlideList';
 import { setSelectedSlide } from '../../../actions/Participants/participantActions';
 
 const mapStateToProps = (state, props) =>
@@ -15,4 +16,4 @@ const mapDispatchToProps = (dispatch, props) =>
     }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccordionList);
+export default connect(mapStateToProps, mapDispatchToProps)(SlideList, AccordionList);
