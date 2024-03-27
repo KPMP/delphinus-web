@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Col, Row, UncontrolledAccordion, AccordionItem, AccordionHeader, AccordionBody} from 'reactstrap';
+import { Col, UncontrolledAccordion} from 'reactstrap';
 import {
 	noSlidesFound,
-	getStainImageName
 } from '../slideHelpers.js';
 import AccordionList from './AccordionList.js';
 import PropTypes from 'prop-types';
@@ -11,16 +10,6 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 
 class SlideList extends Component {
-
-	constructor(props) {
-		super(props);
-		this.handleSelectSlide = this.handleSelectSlide.bind(this);
-	}
-
-	handleSelectSlide(slide) {
-		this.props.setSelectedSlide(slide);
-		this.props.toggleMenu(true);
-	}
 
 	componentDidUpdate() {
 		noSlidesFound(this.props.selectedParticipant);

@@ -7,6 +7,16 @@ import {
 
 class AccordionList extends Component {
 
+  constructor(props) {
+		super(props);
+		this.handleSelectSlide = this.handleSelectSlide.bind(this);
+	}
+
+  handleSelectSlide(slide) {
+		this.props.setSelectedSlide(slide);
+		this.props.toggleMenu(true);
+	}
+
   render() {
     return (
       <AccordionItem>
