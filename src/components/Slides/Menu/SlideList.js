@@ -23,9 +23,9 @@ class SlideList extends Component {
 				<Header {...this.props} />
 				<Col id="slides-col">
           <UncontrolledAccordion defaultOpen={['1', '2', '3']} stayOpen >
-            {slideType === "(LM) Light Microscopy" ? <AccordionListContainer selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='1' targetId='1' /> : ''}
-            {slideType === "(EM) Electron Microscopy" ? <AccordionListContainer selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='2' targetId='2' /> : ''}
-            {slideType === "(IF) Immunoflourescence" ? <AccordionListContainer selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='3' targetId='3' /> : ''}
+            {slideType === "(LM) Light Microscopy" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='1' targetId='1' /> : ''}
+            {slideType === "(EM) Electron Microscopy" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='2' targetId='2' /> : ''}
+            {slideType === "(IF) Immunoflourescence" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='3' targetId='3' /> : ''}
    
           </UncontrolledAccordion>
 				</Col>
