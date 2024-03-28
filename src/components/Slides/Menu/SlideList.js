@@ -27,7 +27,7 @@ class SlideList extends Component {
 				<Col id="slides-col">
         <UncontrolledAccordion defaultOpen={['1', '2', '3']} stayOpen >
           {
-            this.props.selectedParticipant.slides.map(function (slide, index){
+            Object.keys(this.props.selectedParticipant).map(function (slide, index){
               let slideType = this.props.slideType;
               let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
