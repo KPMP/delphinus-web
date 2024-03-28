@@ -21,22 +21,15 @@ class SlideList extends Component {
 
 	render() {
 		let slideType = this.props.selectedParticipant.selectedSlide.slideType;
-    console.log(this.props.selectedParticipant)
+    console.log(this.props.selectedParticipant.slides)
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
         <UncontrolledAccordion defaultOpen={['1', '2', '3']} stayOpen >
-          {
-            Object.keys(this.props.selectedParticipant.selectedSlide).map(function (slide, index){
-              return (
-                <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slide} accordionId={index} targetId={index} />
-              )
-            })
-          }
-        {/* {slideType === "(LM) Light Microscopy" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='1' targetId='1' /> : null}
+        {slideType === "(LM) Light Microscopy" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='1' targetId='1' /> : null}
         {slideType === "(EM) Electron Microscopy" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='2' targetId='2' /> : null}
-        {slideType === "(IF) Immunoflourescence" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='3' targetId='3' /> : null} */}
+        {slideType === "(IF) Immunoflourescence" ? <AccordionListContainer toggleMenu={this.props.toggleMenu} selectedParticipant={this.props.selectedParticipant} slideType={slideType} accordionId='3' targetId='3' /> : null}
       </UncontrolledAccordion>
 				</Col>
 			</div>
