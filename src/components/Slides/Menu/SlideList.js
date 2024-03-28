@@ -15,10 +15,6 @@ class SlideList extends Component {
 		noSlidesFound(this.props.selectedParticipant);
 	}
 
-  async componentDidMount() {
-    await this.props.slideType
-  }
-
 	render() {
     console.log(this.props.slideType)
 		return (
