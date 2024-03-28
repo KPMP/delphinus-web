@@ -13,7 +13,9 @@ class SlideList extends Component {
 
   constructor(props){
     super(props)
-    this.state({loaded: false})
+    this.state = {
+      loaded: false
+    }
   }
 
 	componentDidUpdate() {
