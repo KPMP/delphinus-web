@@ -22,14 +22,14 @@ class SlideList extends Component {
         <UncontrolledAccordion defaultOpen={['0', '1', '2']} stayOpen >
           {
             this.props.slideTypes.map(function (slide, index){
-              let slideType = this.props.slideTypes;
+              let slideType = this.props.slideTypes[index]
               let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
               console.log(this.props.selectedParticipant)
               console.log(slideType)
               console.log(index)
               return (
-                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
+                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType[index]} accordionId={index} targetId={index} />
               )
             }, this)
           }
