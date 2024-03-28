@@ -41,6 +41,7 @@ export const getParticipantSlides = (participantId, props) => {
           let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
+        console.log(result.data)
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
