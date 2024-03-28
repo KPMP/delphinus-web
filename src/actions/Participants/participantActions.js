@@ -31,18 +31,21 @@ export const getParticipantSlides = (participantId, props) => {
 			.then(result => {
         if (result.data["(LM) Light Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
+          console.log("Pushed LM")
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(IF) Immunofluorescence"] != null){
           let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
+          console.log("Pushed IF")
+
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(EM) Electron Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
+          console.log("Pushed EM")
+
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
-        let data = []
-        console.log([...result.data, data])
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
