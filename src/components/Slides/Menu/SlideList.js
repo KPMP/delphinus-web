@@ -43,7 +43,7 @@ class SlideList extends Component {
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-          {this.state.loaded ? this.content(slideType) : null}
+          {this.content(slideType)}
 				</Col>
 			</div>
 		);
