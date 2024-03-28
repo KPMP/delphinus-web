@@ -41,7 +41,7 @@ class SlideViewer extends Component {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
-    
+    this.setState({loaded: true})
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
