@@ -36,6 +36,7 @@ class SlideViewer extends Component {
     await this.props.selectedParticipant.selectedSlide.slideType
     this.state.slideTypes.push(this.props.selectedParticipant.selectedSlide.slideType)
     console.log(this.state.slideTypes)
+    
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
@@ -44,6 +45,9 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
+    await this.props.selectedParticipant.selectedSlide.slideType
+    this.state.slideTypes.push(this.props.selectedParticipant.selectedSlide.slideType)
+    console.log(this.state.slideTypes)
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
