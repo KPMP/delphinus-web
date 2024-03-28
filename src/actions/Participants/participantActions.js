@@ -33,20 +33,20 @@ export const getParticipantSlides = (participantId, props) => {
         let data = Object.keys(result.data)
         if (result.data["(LM) Light Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
-          console.log(slides)
+          // console.log(slides)
           // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(IF) Immunofluorescence"] != null){
           let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
           console.log("append IF")
-          console.log(slides)
+          // console.log(slides)
 
           // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(EM) Electron Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
           console.log("append EM")
-          console.log(slides)
+          // console.log(slides)
 
           // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
@@ -55,6 +55,7 @@ export const getParticipantSlides = (participantId, props) => {
           let newValue = participantSelectSorter(value);
           newData[key] = newValue
         }
+        console.log(newData)
 
         dispatch(setSelectedParticipant({id: participantId, slides: newData, selectedSlide:newData["(LM) Light Microscopy"][0]}));
         // dispatch(setSelectedParticipant({id: participantId, slides: data[index], selectedSlide: data[0]}));
