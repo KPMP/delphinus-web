@@ -29,20 +29,20 @@ export const getParticipantSlides = (participantId, props) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
 		axios.get('/api/v1/slides/' + participantId, config)
 			.then(result => {
-        // if (result.data["(LM) Light Microscopy"] != null){
-        //   let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
-        //   dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
-        // }
-        // if (result.data["(IF) Immunofluorescence"] != null){
-        //   let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
-        //   dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
-        // }
-        // if (result.data["(EM) Electron Microscopy"] != null){
-        //   let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
-        //   dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
-        // }
-        let slides = participantSelectSorter(result.data)
-        dispatch(setSelectedParticipant({id: participantId, slides: result.data, setSelectedSlide: result.data['(LM) Light Microscopy'][0]}))
+        if (result.data["(LM) Light Microscopy"] != null){
+          let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
+          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        }
+        if (result.data["(IF) Immunofluorescence"] != null){
+          let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
+          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        }
+        if (result.data["(EM) Electron Microscopy"] != null){
+          let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
+          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        }
+        let data = []
+        console.log([...result.data, data])
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
