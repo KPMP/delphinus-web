@@ -28,17 +28,14 @@ class SlideList extends Component {
           {
             this.props.selectedParticipant.slides.map(function (slide, index){
               let slideType = slide.slideType;
-              // let toggleMenu = this.props.toggleMenu;
-              // let selectedParticipant = this.props.selectedParticipant;
+              let toggleMenu = this.props.toggleMenu
+              let selectedParticipant = this.props.selectedParticipant;
               console.log(slideType)
               console.log(index)
-              // return (
-              //   <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
-              // )
-              return{
-                slideType
-              }
-            })
+              return (
+                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
+              )
+            }, this)
           }
       </UncontrolledAccordion>
 				</Col>
