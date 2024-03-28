@@ -22,6 +22,7 @@ class Menu extends Component {
 	}
 
 	render() {
+    console.log("Checking slide type in menu " + this.props.slideType)
 		return (
 			<div id="side-menu">
 				<BurgerMenu id={"bm-menu-wrap"} width={"33%"} isOpen={this.state.isOpen} noOverlay customBurgerIcon={<FontAwesomeIcon icon={faBars} />}
