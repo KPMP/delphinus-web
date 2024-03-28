@@ -35,6 +35,7 @@ class SlideViewer extends Component {
 	async componentDidMount() {
     await this.props.selectedParticipant.selectedSlide.slideType
     this.state.slideTypes.push(this.props.selectedParticipant.selectedSlide.slideType)
+    console.log(this.state.slideTypes)
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
