@@ -10,15 +10,7 @@ class AccordionList extends Component {
   constructor(props) {
 		super(props);
 		this.handleSelectSlide = this.handleSelectSlide.bind(this);
-    this.state = {
-      loaded: false
-    }
 	}
-
-  async componentDidMount() {
-    await this.props.setSelectedParticipant(this.props.selectedParticipant)
-    this.setState({loaded: true})
-  }
 
   handleSelectSlide(slide) {
 		this.props.setSelectedSlide(slide);
@@ -48,7 +40,7 @@ class AccordionList extends Component {
               </AccordionHeader>
               <AccordionBody accordionId={this.props.accordionId}>
               <div id="menu-slide-list-slides">
-                {this.state.loaded ? this.createAccordions() : null}
+                {this.createAccordions()}
             </div>
         </AccordionBody>
       </AccordionItem>

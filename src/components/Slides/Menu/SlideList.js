@@ -31,8 +31,8 @@ class SlideList extends Component {
   }
 
   async componentDidMount() {
-    await this.props.setSelectedPaticipant(this.props.selectedParticipant)
-    this.setState({loaded: false})
+    await this.props.slideType
+    this.setState({loaded: true})
   }
 
 	render() {
