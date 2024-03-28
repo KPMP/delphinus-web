@@ -17,10 +17,10 @@ class SlideList extends Component {
 
   async componentDidMount() {
     await this.props.slideType
-    console.log(this.props.slideType)
   }
 
 	render() {
+    console.log(this.props.slideType)
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
@@ -28,8 +28,8 @@ class SlideList extends Component {
         <UncontrolledAccordion defaultOpen={['1', '2', '3']} stayOpen >
           {
             this.props.selectedParticipant.slides.map(function (slide, index){
-              let slideType = slide.slideType;
-              let toggleMenu = this.props.toggleMenu
+              let slideType = this.props.slideType;
+              let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
               console.log(slideType)
               console.log(index)
