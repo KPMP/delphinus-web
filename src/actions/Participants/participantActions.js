@@ -2,6 +2,7 @@ import actionNames from '../actionNames';
 import axios from 'axios';
 import participantSelectSorter from '../../components/Summary/participantSelectSorter';
 import { sendMessageToBackend } from '../Error/errorActions';
+import { slide } from 'react-burger-menu';
 
 export const setSelectedParticipant = (participant) => {
     return {
@@ -29,23 +30,26 @@ export const getParticipantSlides = (participantId, props) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
 		axios.get('/api/v1/slides/' + participantId, config)
 			.then(result => {
+        let data = []
         if (result.data["(LM) Light Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
-          console.log("Pushed LM")
-          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+          data.push(slides)
+          console.log("append LM")
+          // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(IF) Immunofluorescence"] != null){
           let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
-          console.log("Pushed IF")
-
-          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+          console.log("append IF")
+          data.push(slides)
+          // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(EM) Electron Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
-          console.log("Pushed EM")
-
-          dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+          console.log("append EM")
+          data.push(slides)
+          // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
+        dispatch(setSelectedParticipant({id: participantId, slides: data, selectedSlide: data[0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
