@@ -2,7 +2,7 @@ import actionNames from '../actionNames';
 import axios from 'axios';
 import participantSelectSorter from '../../components/Summary/participantSelectSorter';
 import { sendMessageToBackend } from '../Error/errorActions';
-import { slide } from 'react-burger-menu';
+import { set } from 'lodash';
 
 export const setSelectedParticipant = (participant) => {
     return {
@@ -49,8 +49,12 @@ export const getParticipantSlides = (participantId, props) => {
           data.push(slides)
           // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
-        console.log(data)
-        dispatch(setSelectedParticipant({id: participantId, slides: data, selectedSlide: data[0]}));
+
+        for (let i = 0; i < data.length(); i ++ ){
+          console.log(data[i]);
+          // dispatch(setSelectedParticipant({id: participantId, slide: data[i], selectedSlide:data[i]}));
+        }
+        // dispatch(setSelectedParticipant({id: participantId, slides: data[index], selectedSlide: data[0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
