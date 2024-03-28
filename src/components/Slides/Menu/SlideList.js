@@ -17,7 +17,6 @@ class SlideList extends Component {
 
 	render() {
     console.log(this.props.slideTypes)
-    console.log(Object.keys(this.props.selectedParticipant))
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
@@ -25,7 +24,7 @@ class SlideList extends Component {
         <UncontrolledAccordion defaultOpen={['0', '1', '2']} stayOpen >
           {
             Object.keys(this.props.slideTypes).map(function (slide, index){
-              let slideType = this.props.slideType[index];
+              let slideType = this.props.slideTypes[index];
               let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
               console.log(this.props.selectedParticipant)
