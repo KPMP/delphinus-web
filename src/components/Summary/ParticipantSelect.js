@@ -23,6 +23,7 @@ class ParticipantSelect extends Component {
 
     async handleSelectedParticipant(participantId){
       await this.props.setSelectedParticipant(participantId)
+      console.log(this.props.setSelectedParticipant(participantId))
     }
 
     handleClick = () => {
