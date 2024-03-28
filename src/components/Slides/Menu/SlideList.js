@@ -17,6 +17,7 @@ class SlideList extends Component {
 
 	render() {
     console.log(this.props.slideType)
+    console.log(Object.keys(this.props.selectedParticipant))
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
