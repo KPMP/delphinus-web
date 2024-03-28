@@ -50,11 +50,13 @@ export const getParticipantSlides = (participantId, props) => {
 
           // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
-
-        for (let i = 0; i < data.length; i++){
-          console.log(data[i]);
-          dispatch(setSelectedParticipant({id: participantId, slide: data[i], selectedSlide:data[i]}));
+        let newData = {}
+        for(const [key, value] of Object.entries(result.data)){
+          let newValue = participantSelectSorter(value);
+          newData[key] = newValue
         }
+
+        dispatch(setSelectedParticipant({id: participantId, slides: newData, selectedSlide:newData["(LM) Light Microscopy"][0]}));
         // dispatch(setSelectedParticipant({id: participantId, slides: data[index], selectedSlide: data[0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
