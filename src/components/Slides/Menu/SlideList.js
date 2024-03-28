@@ -4,8 +4,6 @@ import {
 	noSlidesFound,
 } from '../slideHelpers.js';
 import PropTypes from 'prop-types';
-
-
 import Header from './Header';
 import AccordionListContainer from './AccordionListContainer.js';
 
@@ -23,15 +21,15 @@ class SlideList extends Component {
 				<Col id="slides-col">
         <UncontrolledAccordion defaultOpen={['0', '1', '2']} stayOpen >
           {
-            Object.keys(this.props.slideTypes).map(function (slide, index){
-              let slideType = this.props.slideTypes[index];
+            this.props.slideTypes.map(function (slide, index){
+              let slideType = this.props.slideTypes;
               let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
               console.log(this.props.selectedParticipant)
               console.log(slideType)
               console.log(index)
               return (
-                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType[index]} accordionId={index} targetId={index} />
+                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
               )
             }, this)
           }
