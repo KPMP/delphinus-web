@@ -27,18 +27,19 @@ class SlideViewer extends Component {
 			overlayLabel: [],
 			renderLabels: true,
 			gridOverlay: null,
-      loaded: false
+      loaded: false,
+      slideTypes: []
 		}
 	}
 
 	async componentDidMount() {
-    // await this.props.selectedParticipant.selectedSlide.slideType
+    await this.props.selectedParticipant.selectedSlide.slideType
+    this.state.slideTypes.push(this.props.selectedParticipant.selectedSlide.slideType)
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
     this.setState({loaded: true})
-    
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -129,7 +130,7 @@ class SlideViewer extends Component {
 						horizontalRef={this.horizontalRef}
 						verticalRef={this.verticalRef}
 						selectedParticipant={this.props.selectedParticipant} 
-            slideType={this.props.selectedParticipant.selectedSlide.slideType}/>
+            slideTypes={this.state.slideTypes}/>
             :
             null
         }

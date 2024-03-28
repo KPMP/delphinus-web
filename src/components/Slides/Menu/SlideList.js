@@ -16,7 +16,7 @@ class SlideList extends Component {
 	}
 
 	render() {
-    console.log(this.props.slideType)
+    console.log(this.props.slideTypes)
     console.log(Object.keys(this.props.selectedParticipant))
 		return (
 			<div id="menu-slide-list">
@@ -24,15 +24,15 @@ class SlideList extends Component {
 				<Col id="slides-col">
         <UncontrolledAccordion defaultOpen={['0', '1', '2']} stayOpen >
           {
-            Object.keys(this.props.slideType).map(function (slide, index){
-              let slideType = this.props.slideType;
+            Object.keys(this.props.slideTypes).map(function (slide, index){
+              let slideType = this.props.slideType[index];
               let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
               console.log(this.props.selectedParticipant)
               console.log(slideType)
               console.log(index)
               return (
-                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
+                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType[index]} accordionId={index} targetId={index} />
               )
             }, this)
           }
