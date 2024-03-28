@@ -37,6 +37,7 @@ class SlideList extends Component {
 
 	render() {
 		let slideType = this.props.selectedParticipant.selectedSlide.slideType;
+    console.log(slideType)
     console.log(this.state.loaded)
 		return (
 			<div id="menu-slide-list">
