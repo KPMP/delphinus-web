@@ -26,7 +26,8 @@ class SlideViewer extends Component {
 			overlayDivs: '',
 			overlayLabel: [],
 			renderLabels: true,
-			gridOverlay: null
+			gridOverlay: null,
+      loaded: false
 		}
 	}
 
@@ -36,6 +37,7 @@ class SlideViewer extends Component {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
+    this.setState({loaded: true})
     
 	}
 
@@ -114,8 +116,10 @@ class SlideViewer extends Component {
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />
 				}
 				<div id="slide-viewer" className="container-fluid">
-
-					<Menu
+        
+        {
+          this.state.loaded ? 
+          <Menu
 						handleShowGridToggle={this.handleShowGridToggle}
 						handleShowLabelToggle={this.handleShowLabelToggle}
 						handleCancelGridPropertiesClick={this.handleCancelGridPropertiesClick}
@@ -127,6 +131,10 @@ class SlideViewer extends Component {
 						verticalRef={this.verticalRef}
 						selectedParticipant={this.props.selectedParticipant} 
             slideType={this.props.selectedParticipant.selectedSlide.slideType}/>
+            :
+            null
+        }
+					
 
 					<div className="osd-div" ref={node => { this.el = node; }}>
 						<div className={`openseadragon ${(this.state.showGrid) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
