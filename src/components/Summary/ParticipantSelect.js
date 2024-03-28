@@ -21,13 +21,13 @@ class ParticipantSelect extends Component {
         this.setState({buttonDisabled: false});
     };
 
-    // async handleSelectedParticipant(participantId){
-    //   await this.props.setSelectedParticipant(participantId)
-    // }
+    async handleSelectedParticipant(participantId){
+      await this.props.setSelectedParticipant(participantId)
+    }
 
     handleClick = () => {
-      // this.handleSelectedParticipant(this.state.participantId);
-      this.props.setSelectedParticipant(this.state.participantId)
+      this.handleSelectedParticipant(this.state.participantId);
+      // this.props.setSelectedParticipant(this.state.participantId)
     };
 
     componentDidMount() {
