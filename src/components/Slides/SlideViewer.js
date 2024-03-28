@@ -106,6 +106,7 @@ class SlideViewer extends Component {
 	}
 
 	render() {
+    console.log(this.props.selectedParticipant.selectedSlide.slideType);
 		return (
 			<div>
 				{(this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
