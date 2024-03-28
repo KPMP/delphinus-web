@@ -49,6 +49,7 @@ export const getParticipantSlides = (participantId, props) => {
           data.push(slides)
           // dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
+        console.log(data)
         dispatch(setSelectedParticipant({id: participantId, slides: data, selectedSlide: data[0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
