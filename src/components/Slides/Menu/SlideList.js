@@ -32,12 +32,12 @@ class SlideList extends Component {
 
   async componentDidMount() {
     await this.props.slideType
+    console.log(this.props.slideType)
     this.setState({loaded: true})
   }
 
 	render() {
 		let slideType = this.props.selectedParticipant.selectedSlide.slideType;
-    console.log(slideType)
     console.log(this.state.loaded)
 		return (
 			<div id="menu-slide-list">
