@@ -29,7 +29,7 @@ class SlideList extends Component {
               console.log(slideType)
               console.log(index)
               return (
-                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType[index]} accordionId={index} targetId={index} />
+                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
               )
             }, this)
           }
