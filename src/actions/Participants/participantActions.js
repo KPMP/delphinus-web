@@ -31,17 +31,14 @@ export const getParticipantSlides = (participantId, props) => {
 			.then(result => {
         if (result.data["(LM) Light Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(LM) Light Microscopy"])
-          console.log(slides)
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(IF) Immunofluorescence"] != null){
           let slides = participantSelectSorter(result.data["(IF) Immunofluorescence"])
-          console.log(slides)
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         if (result.data["(EM) Electron Microscopy"] != null){
           let slides = participantSelectSorter(result.data["(EM) Electron Microscopy"])
-          console.log(slides)
           dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
         }
         console.log(result.data)
