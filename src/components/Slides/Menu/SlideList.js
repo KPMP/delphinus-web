@@ -17,6 +17,7 @@ class SlideList extends Component {
 
   async componentDidMount() {
     await this.props.slideType
+    console.log(this.props.slideType)
   }
 
 	render() {
