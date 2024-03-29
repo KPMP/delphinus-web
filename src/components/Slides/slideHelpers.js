@@ -37,6 +37,7 @@ const getSlideIndex = (slideArray, selectedSlide) => {
 
 export const getNextSlide = (slideArray, selectedSlide) => {
     let slideIndex = getSlideIndex(slideArray, selectedSlide);
+    console.log(slideIndex)
     if (slideIndex === -1) {
         return selectedSlide;
     }
