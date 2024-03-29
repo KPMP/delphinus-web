@@ -28,14 +28,11 @@ class SlideViewer extends Component {
 			renderLabels: true,
 			gridOverlay: null,
       loaded: false,
-      slideTypes: []
 		}
 	}
 
 	async componentDidMount() {
     await this.props.selectedParticipant.selectedSlide.slideType
-    this.state.slideTypes.push(this.props.selectedParticipant.selectedSlide.slideType)
-    console.log(this.state.slideTypes)
     
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			await this.renderOverlayLabels();
@@ -131,8 +128,7 @@ class SlideViewer extends Component {
 						horizontal='500'
 						horizontalRef={this.horizontalRef}
 						verticalRef={this.verticalRef}
-						selectedParticipant={this.props.selectedParticipant} 
-            slideTypes={this.state.slideTypes}/>
+						selectedParticipant={this.props.selectedParticipant}/>
             :
             null
         }

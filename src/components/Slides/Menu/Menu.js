@@ -22,7 +22,7 @@ class Menu extends Component {
 	}
 
 	render() {
-    console.log("Checking slide type in menu " + this.props.slideTypes)
+    console.log("Checking slide type in menu " + this.props.selectedParticipant.selectedSlide.slideType)
 		return (
 			<div id="side-menu">
 				<BurgerMenu id={"bm-menu-wrap"} width={"33%"} isOpen={this.state.isOpen} noOverlay customBurgerIcon={<FontAwesomeIcon icon={faBars} />}
@@ -37,8 +37,8 @@ class Menu extends Component {
 						verticalRef={this.props.verticalRef}
 						horizontal={this.props.horizontal}
 						vertical={this.props.vertical}
-						toggleMenu={this.toggleMenu} 
-            slideTypes={this.props.slideTypes}/>
+						toggleMenu={this.toggleMenu}
+            selectedParticipant={this.props.selectedParticipant}/>
 				</BurgerMenu>
 				<Link id="btn-home" to={process.env.PUBLIC_URL}>
 					<FontAwesomeIcon icon={faHome} size="2x" />
