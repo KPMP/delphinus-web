@@ -1,6 +1,6 @@
 import actionNames from '../actionNames';
 import axios from 'axios';
-import participantSelectSorter, { slideTypeSorter } from '../../components/Summary/participantSelectSorter';
+import participantSelectSorter from '../../components/Summary/participantSelectSorter';
 import { sendMessageToBackend } from '../Error/errorActions';
 
 export const setSelectedParticipant = (participant) => {
@@ -15,6 +15,13 @@ export const setSelectedSlide = (slide) => {
 		type: actionNames.SET_SELECTED_SLIDE,
 		payload: slide
 	}
+}
+
+export const setSelectedAccordion = (accordion) => {
+  return {
+    type: actionNames.SET_SELECTED_ACCORDION,
+    payload: accordion
+  }
 }
 
 export const setParticipants = (participants) => {
