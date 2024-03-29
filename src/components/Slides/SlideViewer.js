@@ -128,7 +128,8 @@ class SlideViewer extends Component {
 						horizontal='500'
 						horizontalRef={this.horizontalRef}
 						verticalRef={this.verticalRef}
-						selectedParticipant={this.props.selectedParticipant}/>
+						selectedParticipant={this.props.selectedParticipant}
+            selectedAccordion={this.props.selectedAccordion}/>
             :
             null
         }

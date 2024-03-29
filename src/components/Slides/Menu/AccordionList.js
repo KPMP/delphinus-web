@@ -12,8 +12,9 @@ class AccordionList extends Component {
 		this.handleSelectSlide = this.handleSelectSlide.bind(this);
 	}
 
-  handleSelectSlide(slide) {
+  handleSelectSlide(accordion, slide) {
 		this.props.setSelectedSlide(slide);
+    this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
 	}
 
@@ -30,7 +31,7 @@ class AccordionList extends Component {
                     let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
                     let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
                     return (
-                      <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
+                      <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(this.props.slideType, slide)}>
                         <Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
                         <Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
                       </Row>
