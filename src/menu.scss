@@ -222,10 +222,8 @@ $menu-header-height: 80px;
 			overflow: auto;
 		}
 
-		// #menu-slide-list-slides {
-		// 	max-height: calc(100vh - (#{$header-height} + #{$menu-header-height}));
-		// 	min-height: calc(100vh - (#{$header-height} + #{$menu-header-height}));
-		// 	overflow: auto;
+		#menu-slide-list-slides {
+			
 			
 			.slide-highlighted {
 				background-color: rgba(230, 241, 255, 1);
