@@ -24,7 +24,7 @@ class AccordionList extends Component {
                 {this.props.slideType}
               </AccordionHeader>
               <AccordionBody accordionId={this.props.accordionId}>
-              <div id="menu-slide-list-slides">
+              {/* <div id="menu-slide-list-slides"> */}
                 {
                   this.props.selectedParticipant.slides[this.props.slideType].map(function (slide, index) {
                     let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
@@ -37,7 +37,7 @@ class AccordionList extends Component {
                     )
                   }, this)
                 }
-            </div>
+            {/* </div> */}
         </AccordionBody>
       </AccordionItem>
     )
