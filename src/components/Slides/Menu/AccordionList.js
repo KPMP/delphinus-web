@@ -18,7 +18,6 @@ class AccordionList extends Component {
 	}
 
   render() {
-    console.log(this.props.slideType)
     return (
       <AccordionItem>
               <AccordionHeader targetId={this.props.targetId}>
@@ -27,7 +26,7 @@ class AccordionList extends Component {
               <AccordionBody accordionId={this.props.accordionId}>
               <div id="menu-slide-list-slides">
                 {
-                  this.props.slideType.map(function (slide, index) {
+                  this.props.selectedParticipant.slides[this.props.slideType].map(function (slide, index) {
                     let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
                     let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
                     return (
