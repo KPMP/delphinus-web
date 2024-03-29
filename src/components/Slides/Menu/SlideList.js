@@ -14,13 +14,14 @@ class SlideList extends Component {
 	}
 
 	render() {
+    console.log(this.props)
     console.log(this.props.selectedParticipant)
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
         <UncontrolledAccordion defaultOpen={0} stayOpen >
-          {
+          {/* {
             this.props.slideTypes.map(function (slide, index){
               let slideType = this.props.slideTypes[index]
               let toggleMenu = this.props.toggleMenu;
@@ -29,7 +30,7 @@ class SlideList extends Component {
                 <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
               )
             }, this)
-          }
+          } */}
       </UncontrolledAccordion>
 				</Col>
 			</div>
