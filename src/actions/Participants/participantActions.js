@@ -35,7 +35,6 @@ export const getParticipantSlides = (participantId, props) => {
           let newValue = participantSelectSorter(value);
           newData[key] = newValue
         }
-        console.log(newData)
         dispatch(setSelectedParticipant({id: participantId, slides: newData, selectedSlide:newData["(LM) Light Microscopy"][0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
