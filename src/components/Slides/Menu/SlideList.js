@@ -28,7 +28,7 @@ class SlideList extends Component {
               return (
                 <AccordionListContainer 
                   toggleMenu={toggleMenu} s
-                  electedAccordion={this.props.selectedAccordion} 
+                  selectedAccordion={this.props.selectedAccordion} 
                   selectedParticipant={selectedParticipant} 
                   slideType={slideType} 
                   accordionId={strIndex} 

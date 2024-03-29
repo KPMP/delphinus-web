@@ -12,16 +12,20 @@ class AccordionList extends Component {
 		this.handleSelectSlide = this.handleSelectSlide.bind(this);
 	}
 
-  handleSelectSlide(accordion, slide) {
-		this.props.setSelectedSlide(slide);
+  handleSelectedAccordion(accordion){
     this.props.setSelectedAccordion(accordion)
+  }
+
+  handleSelectSlide(slide) {
+		this.props.setSelectedSlide(slide);
 		this.props.toggleMenu(true);
 	}
 
   render() {
+    console.log(this.props.selectedAccordion)
     return (
       <AccordionItem>
-              <AccordionHeader targetId={this.props.targetId}>
+              <AccordionHeader targetId={this.props.targetId} onClick={() => this.handleSelectAccordion(this.props.slideType)}>
                 {this.props.slideType}
               </AccordionHeader>
               <AccordionBody accordionId={this.props.accordionId}>
@@ -31,7 +35,7 @@ class AccordionList extends Component {
                     let highlightedClass = this.props.selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
                     let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
                     return (
-                      <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(this.props.slideType, slide)}>
+                      <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide)}>
                         <Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
                         <Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
                       </Row>
