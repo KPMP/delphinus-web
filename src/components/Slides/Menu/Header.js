@@ -31,7 +31,7 @@ class Header extends Component {
 		this.textInput.current.focus();
 	}
 	handleNextSlide() {
-		let nextSlide = getNextSlide(this.props.selectedParticipant.slides, this.props.selectedParticipant.selectedSlide);
+		let nextSlide = getNextSlide(this.props.selectedParticipant.slides["(LM) Light Microscopy"], this.props.selectedParticipant.selectedSlide);
 		this.props.setSelectedSlide(nextSlide);
 		this.props.toggleMenu(true);
 	}
