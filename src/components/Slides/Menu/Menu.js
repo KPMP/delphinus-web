@@ -22,7 +22,7 @@ class Menu extends Component {
 	}
 
 	render() {
-    console.log("Result data " + this.props.selectedParticipant)
+    console.log(this.props.selectedParticipant)
     console.log("Checking slide type in menu " + this.props.selectedParticipant.selectedSlide.slideType)
 		return (
 			<div id="side-menu">
