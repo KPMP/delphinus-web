@@ -18,14 +18,15 @@ class SlideList extends Component {
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-        <UncontrolledAccordion defaultOpen={0} stayOpen >
+        <UncontrolledAccordion defaultOpen="0" stayOpen >
           {
             Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
               let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
               let toggleMenu = this.props.toggleMenu;
               let selectedParticipant = this.props.selectedParticipant;
+              let strIndex = index.toString()
               return (
-                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={index} targetId={index} />
+                <AccordionListContainer toggleMenu={toggleMenu} selectedParticipant={selectedParticipant} slideType={slideType} accordionId={strIndex} targetId={strIndex} />
               )
             }, this)
           }
