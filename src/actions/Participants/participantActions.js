@@ -1,8 +1,7 @@
 import actionNames from '../actionNames';
 import axios from 'axios';
-import participantSelectSorter from '../../components/Summary/participantSelectSorter';
+import participantSelectSorter, { slideTypeSorter } from '../../components/Summary/participantSelectSorter';
 import { sendMessageToBackend } from '../Error/errorActions';
-import { set } from 'lodash';
 
 export const setSelectedParticipant = (participant) => {
     return {
@@ -35,7 +34,14 @@ export const getParticipantSlides = (participantId, props) => {
           let newValue = participantSelectSorter(value);
           newData[key] = newValue
         }
-        dispatch(setSelectedParticipant({id: participantId, slides: newData, selectedSlide:newData["(LM) Light Microscopy"][0]}));
+        let sortedData = {}
+        let keys = Object.keys(newData)
+        keys.sort()
+        keys.reverse()
+        for (let key of keys) {
+          sortedData[key] = newData[key]
+        }
+        dispatch(setSelectedParticipant({id: participantId, slides: sortedData, selectedSlide:sortedData["(LM) Light Microscopy"][0]}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
