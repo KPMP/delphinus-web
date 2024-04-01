@@ -14,7 +14,7 @@ class AccordionList extends Component {
 	}
 
   handleSelectedAccordion(accordion){
-    this.props.setSelectedAccordion(accordion)
+    this.props.selectedParticipant.selectedAccordion.push(this.props.setSelectedAccordion(accordion))
   }
 
   handleSelectSlide(slide, accordion) {
@@ -24,6 +24,7 @@ class AccordionList extends Component {
 	}
 
   render() {
+    console.log(this.props.selectedParticipant.selectedAccordion)
     return (
       <AccordionItem>
               <AccordionHeader targetId={this.props.targetId} onClick={() => this.handleSelectedAccordion(this.props.slideType)}>
