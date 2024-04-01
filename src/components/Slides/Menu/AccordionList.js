@@ -10,6 +10,7 @@ class AccordionList extends Component {
   constructor(props) {
 		super(props);
 		this.handleSelectSlide = this.handleSelectSlide.bind(this);
+    this.handleSelectedAccordion = this.handleSelectedAccordion.bind(this);
 	}
 
   handleSelectedAccordion(accordion){
