@@ -25,7 +25,7 @@ class AccordionList extends Component {
     console.log(this.props.selectedParticipant)
     return (
       <AccordionItem>
-              <AccordionHeader targetId={this.props.targetId} onClick={() => this.handleSelectAccordion(this.props.slideType)}>
+              <AccordionHeader targetId={this.props.targetId} onClick={() => this.handleSelectedAccordion(this.props.slideType)}>
                 {this.props.slideType}
               </AccordionHeader>
               <AccordionBody accordionId={this.props.accordionId}>
