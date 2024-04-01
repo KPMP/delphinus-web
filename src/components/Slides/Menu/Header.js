@@ -37,7 +37,7 @@ class Header extends Component {
     //slideTypes = ["(LM) Light Microscopy", "(IF) Immunofluresce", "(EM) Electron Microscopy"]
     if (this.state.slidePosition === this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]].length){
       this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1, slidePosition: 0})
-      let nextSlide = getNextSlide(this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]][this.state.slidePosition], this.props.selectedParticipant.selectedSlide);
+      let nextSlide = this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]][this.state.slidePosition];
       this.props.setSelectedSlide(nextSlide);
     }
     console.log("Slide pos after increase " + this.state.slidePosition.toString())
