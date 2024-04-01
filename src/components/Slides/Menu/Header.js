@@ -14,6 +14,7 @@ import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.j
 import GridProperties from './GridProperties.js';
 import PropTypes from 'prop-types';
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
+import { slide } from 'react-burger-menu';
 
 class Header extends Component {
 	constructor(props) {
@@ -23,6 +24,7 @@ class Header extends Component {
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
 		this.focusTextInput = this.focusTextInput.bind(this);
+    this.handleNextSlide = this.handleNextSlide.bind(this);
 	}
 
 	focusTextInput() {
@@ -30,25 +32,27 @@ class Header extends Component {
 		// Note: we're accessing "current" to get the DOM node
 		this.textInput.current.focus();
 	}
-	handleNextSlide = () => {
-    this.setState({slidePosition: this.state.slidePosition + 1})
-    console.log("Slide pos " + this.state.slidePosition.toString())
+	async handleNextSlide() {
+    let slidePosition = this.state.slidePosition + 1
+    let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+    console.log("Slide pos " + slidePosition.toString())
     console.log(this.props.selectedParticipant.slides)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides)
     slideTypes.sort()
     slideTypes.reverse()
     console.log(slideTypes)
     //slideTypes = ["(LM) Light Microscopy", "(IF) Immunofluresce", "(EM) Electron Microscopy"]
-    console.log(this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]])
-    if (this.state.slidePosition === this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]].length){
-      console.log("Slide pos inside of if statement " + this.state.slidePosition.toString());
-      this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1})
-      let nextSlide = this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]][this.state.slidePosition];
-      this.setState({slidePosition: 0})
+    console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]])
+    if (slidePosition === this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length){
+      console.log("Slide pos inside of if statement " + slidePosition.toString());
+      currentSlideTypeIndex += 1;
+      let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+      slidePosition = 0
       this.props.setSelectedSlide(nextSlide);
     }
-    console.log("Slide pos after increase " + this.state.slidePosition.toString())
+    console.log("Slide pos after increase " + slidePosition.toString())
     console.log(this.props.selectedParticipant.selectedSlide)
+    this.setState({slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex})
 		this.props.toggleMenu(true);
 	}
 
