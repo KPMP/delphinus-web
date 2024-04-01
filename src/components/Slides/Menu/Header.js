@@ -30,7 +30,7 @@ class Header extends Component {
 		// Note: we're accessing "current" to get the DOM node
 		this.textInput.current.focus();
 	}
-	handleNextSlide() {
+	handleNextSlide = () => {
     this.setState({slidePosition: this.state.slidePosition + 1})
     console.log("Slide pos " + this.state.slidePosition.toString())
     console.log(this.props.selectedParticipant.slides)
