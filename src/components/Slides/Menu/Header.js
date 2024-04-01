@@ -61,7 +61,6 @@ class Header extends Component {
 	}
 
 	render() {
-    console.log(this.props.selectedParticipant)
 		return (
 			<div className="menu-slide-list-header">
 				<Row>
