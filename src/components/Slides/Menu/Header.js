@@ -41,8 +41,9 @@ class Header extends Component {
     console.log(this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]])
     if (this.state.slidePosition === this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]].length){
       console.log("Slide pos inside of if statement " + this.state.slidePosition.toString());
-      this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1, slidePosition: 0})
+      this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1})
       let nextSlide = this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]][this.state.slidePosition];
+      this.setState({slidePosition: 0})
       this.props.setSelectedSlide(nextSlide);
     }
     console.log("Slide pos after increase " + this.state.slidePosition.toString())
