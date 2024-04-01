@@ -27,8 +27,7 @@ class SlideList extends Component {
               let strIndex = index.toString()
               return (
                 <AccordionListContainer 
-                  toggleMenu={toggleMenu} s
-                  selectedAccordion={this.props.selectedAccordion} 
+                  toggleMenu={toggleMenu}
                   selectedParticipant={selectedParticipant} 
                   slideType={slideType} 
                   accordionId={strIndex} 

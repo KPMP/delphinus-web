@@ -22,7 +22,7 @@ class AccordionList extends Component {
 	}
 
   render() {
-    console.log(this.props.selectedParticipant.selectedAccordion)
+    console.log(this.props.selectedParticipant)
     return (
       <AccordionItem>
               <AccordionHeader targetId={this.props.targetId} onClick={() => this.handleSelectAccordion(this.props.slideType)}>
