@@ -14,7 +14,7 @@ class AccordionList extends Component {
 	}
 
   handleSelectedAccordion(accordion){
-    this.props.selectedParticipant.selectedAccordion.push(this.props.setSelectedAccordion(accordion))
+    this.props.setSelectedAccordion(accordion)
   }
 
   handleSelectSlide(slide, accordion) {
