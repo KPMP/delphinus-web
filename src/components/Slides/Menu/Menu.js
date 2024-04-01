@@ -37,8 +37,7 @@ class Menu extends Component {
 						horizontal={this.props.horizontal}
 						vertical={this.props.vertical}
 						toggleMenu={this.toggleMenu}
-            selectedParticipant={this.props.selectedParticipant}
-            selectedAccordion={this.props.selectedAccordion}/>
+            selectedParticipant={this.props.selectedParticipant} />
 				</BurgerMenu>
 				<Link id="btn-home" to={process.env.PUBLIC_URL}>
 					<FontAwesomeIcon icon={faHome} size="2x" />
