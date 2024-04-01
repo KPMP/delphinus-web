@@ -48,6 +48,7 @@ class Header extends Component {
       currentSlideTypeIndex += 1;
       console.log(slideTypes[currentSlideTypeIndex]);
       let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+      console.log(nextSlide)
       slidePosition = 0
       this.props.setSelectedSlide(nextSlide);
     }
