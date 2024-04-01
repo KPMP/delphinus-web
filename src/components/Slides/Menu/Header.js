@@ -33,6 +33,7 @@ class Header extends Component {
 	handleNextSlide() {
     console.log("Slide pos " + this.state.slidePosition.toString())
     this.setState({slidePosition: this.state.slidePosition + 1})
+    console.log(this.props.selectedParticipant.slides)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides)
     slideTypes.sort()
     slideTypes.reverse()
