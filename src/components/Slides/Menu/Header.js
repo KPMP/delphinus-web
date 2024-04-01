@@ -18,7 +18,7 @@ import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelp
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false }
+		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0 }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
@@ -31,12 +31,18 @@ class Header extends Component {
 		this.textInput.current.focus();
 	}
 	handleNextSlide() {
-		let nextSlide = getNextSlide(this.props.selectedParticipant.slides["(LM) Light Microscopy"], this.props.selectedParticipant.selectedSlide);
-		this.props.setSelectedSlide(nextSlide);
+    this.setState({slidePosition: this.state.slidePosition + 1})
+    let slideTypes = Object.keys(this.props.selectedParticipant.slides)
+    //slideTypes = ["(LM) Light Microscopy", "(IF) Immunofluresce", "(EM) Electron Microscopy"]
+    if (this.state.slidePosition === this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]].length){
+      this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1})
+      let nextSlide = getNextSlide(this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]], this.props.selectedParticipant.selectedSlide);
+      this.props.setSelectedSlide(nextSlide);
+    }
 		this.props.toggleMenu(true);
 	}
 
-	handlePreviousSlide() {
+	handlePreviousSlide(position) {
 		let previousSlide = getPreviousSlide(this.props.selectedParticipant.slides["(LM) Light Microscopy"], this.props.selectedParticipant.selectedSlide);
 		this.props.setSelectedSlide(previousSlide);
 		this.props.toggleMenu(true);
