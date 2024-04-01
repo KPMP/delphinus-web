@@ -31,14 +31,17 @@ class Header extends Component {
 		this.textInput.current.focus();
 	}
 	handleNextSlide() {
+    console.log("Slide pos " + this.state.slidePosition.toString())
     this.setState({slidePosition: this.state.slidePosition + 1})
     let slideTypes = Object.keys(this.props.selectedParticipant.slides)
     //slideTypes = ["(LM) Light Microscopy", "(IF) Immunofluresce", "(EM) Electron Microscopy"]
     if (this.state.slidePosition === this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]].length){
-      this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1})
+      this.setState({currentSlideTypeIndex: this.state.currentSlideTypeIndex + 1, slidePosition: 0})
       let nextSlide = getNextSlide(this.props.selectedParticipant.slides[slideTypes[this.state.currentSlideTypeIndex]], this.props.selectedParticipant.selectedSlide);
       this.props.setSelectedSlide(nextSlide);
     }
+    console.log("Slide pos after increase" + this.state.slidePosition.toString())
+    console.log(this.props.selectedParticipant.selectedSlide)
 		this.props.toggleMenu(true);
 	}
 
