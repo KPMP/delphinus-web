@@ -31,8 +31,8 @@ class Header extends Component {
 		this.textInput.current.focus();
 	}
 	handleNextSlide() {
-    console.log("Slide pos " + this.state.slidePosition.toString())
     this.setState({slidePosition: this.state.slidePosition + 1})
+    console.log("Slide pos " + this.state.slidePosition.toString())
     console.log(this.props.selectedParticipant.slides)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides)
     slideTypes.sort()
