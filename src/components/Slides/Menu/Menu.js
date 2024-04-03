@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { slide as BurgerMenu } from 'react-burger-menu';
-import SlideListContainer from './SlideListContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import AccordionListContainer from './AccordionListContainer';
 
 class Menu extends Component {
 
@@ -26,7 +26,7 @@ class Menu extends Component {
 			<div id="side-menu">
 				<BurgerMenu id={"bm-menu-wrap"} width={"33%"} isOpen={this.state.isOpen} noOverlay customBurgerIcon={<FontAwesomeIcon icon={faBars} />}
 					customCrossIcon={false} >
-					<SlideListContainer
+					<AccordionListContainer
 						showGrid={this.props.showGrid}
 						showGridLabel={this.props.showGridLabel}
 						handleShowGridToggle={this.props.handleShowGridToggle}
