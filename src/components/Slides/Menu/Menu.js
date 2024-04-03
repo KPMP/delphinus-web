@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { slide as BurgerMenu } from 'react-burger-menu';
+import SlideListContainer from './SlideListContainer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import SlideListContainer from './SlideListContainer';
 
 class Menu extends Component {
 

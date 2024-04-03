@@ -18,7 +18,7 @@ import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelp
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0, activeAccordion: null }
+		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0 }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
@@ -61,8 +61,8 @@ class Header extends Component {
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        activeAccordion: activeAccordionTab
     });
+    this.props.setSelectedAccordion(activeAccordionTab)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
 }
