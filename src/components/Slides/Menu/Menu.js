@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AccordionListContainer from './AccordionListContainer';
+import SlideListContainer from './SlideListContainer';
 
 class Menu extends Component {
 
@@ -26,7 +26,7 @@ class Menu extends Component {
 			<div id="side-menu">
 				<BurgerMenu id={"bm-menu-wrap"} width={"33%"} isOpen={this.state.isOpen} noOverlay customBurgerIcon={<FontAwesomeIcon icon={faBars} />}
 					customCrossIcon={false} >
-					<AccordionListContainer
+					<SlideListContainer
 						showGrid={this.props.showGrid}
 						showGridLabel={this.props.showGridLabel}
 						handleShowGridToggle={this.props.handleShowGridToggle}
