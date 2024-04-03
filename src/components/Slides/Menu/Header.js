@@ -18,7 +18,7 @@ import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelp
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0, activeAccordion: null }
+		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0 }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
@@ -43,13 +43,10 @@ class Header extends Component {
         currentSlideTypeIndex += 1;
         slidePosition = 0;
         if (currentSlideTypeIndex >= slideTypes.length) {
-            currentSlideTypeIndex = 0; // Reset to the beginning if reached the end
+            currentSlideTypeIndex = 0;
         }
     }
-
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-
-    // Determine which accordion tab to open based on the selected slide
     let activeAccordionTab;
     if (nextSlide === "(LM) Light Microscopy") {
         activeAccordionTab = "lmAccordion";
@@ -59,15 +56,13 @@ class Header extends Component {
     }
     else if (nextSlide === "(EM) Electron Microscopy"){
         activeAccordionTab = "emAccordion"
-    } // Add more conditions as needed for other slide types
+    }
 
-    // Update the state to open the appropriate accordion tab
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        activeAccordion: activeAccordionTab // Set the active accordion tab based on the selected slide
     });
-
+    this.props.setSelectedAccordion(activeAccordionTab)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
 }
@@ -84,7 +79,7 @@ handlePreviousSlide() {
   if (slidePosition < 0) {
       currentSlideTypeIndex -= 1;
       if (currentSlideTypeIndex < 0) {
-          currentSlideTypeIndex = slideTypes.length - 1; // Reset to the end if reached the beginning
+          currentSlideTypeIndex = slideTypes.length - 1;
       }
       slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
   }
@@ -99,13 +94,11 @@ handlePreviousSlide() {
     }
     else if (previousSlide === "(EM) Electron Microscopy"){
         activeAccordionTab = "emAccordion"
-    } // Add more conditions as needed for other slide types
-
-    // Update the state to open the appropriate accordion tab
+    } 
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        activeAccordion: activeAccordionTab // Set the active accordion tab based on the selected slide
+        activeAccordion: activeAccordionTab 
     });
   this.props.setSelectedSlide(previousSlide);
   this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
@@ -132,6 +125,7 @@ handlePreviousSlide() {
 	}
 
 	render() {
+    console.log(this.props)
 		return (
 			<div className="menu-slide-list-header">
 				<Row>
