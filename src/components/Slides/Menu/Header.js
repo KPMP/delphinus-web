@@ -14,7 +14,6 @@ import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.j
 import GridProperties from './GridProperties.js';
 import PropTypes from 'prop-types';
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
-import { slide } from 'react-burger-menu';
 
 class Header extends Component {
 	constructor(props) {
@@ -25,6 +24,7 @@ class Header extends Component {
 		this.textInput = React.createRef();
 		this.focusTextInput = this.focusTextInput.bind(this);
     this.handleNextSlide = this.handleNextSlide.bind(this);
+    this.handlePreviousSlide = this.handlePreviousSlide.bind(this);
 	}
 
 	focusTextInput() {
@@ -32,7 +32,7 @@ class Header extends Component {
 		// Note: we're accessing "current" to get the DOM node
 		this.textInput.current.focus();
 	}
-  async handleNextSlide() {
+  handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
     console.log("Slide pos " + slidePosition.toString());
@@ -63,11 +63,34 @@ class Header extends Component {
 }
 
 
-	handlePreviousSlide(position) {
-		let previousSlide = getPreviousSlide(this.props.selectedParticipant.slides["(LM) Light Microscopy"], this.props.selectedParticipant.selectedSlide);
-		this.props.setSelectedSlide(previousSlide);
-		this.props.toggleMenu(true);
-	}
+handlePreviousSlide() {
+  let slidePosition = this.state.slidePosition - 1;
+  let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+  console.log("Slide pos " + slidePosition.toString());
+  console.log(this.props.selectedParticipant.slides);
+  let slideTypes = Object.keys(this.props.selectedParticipant.slides);
+  slideTypes.sort();
+  slideTypes.reverse();
+  console.log(slideTypes);
+  
+  if (slidePosition < 0) {
+      currentSlideTypeIndex -= 1;
+      if (currentSlideTypeIndex < 0) {
+          currentSlideTypeIndex = slideTypes.length - 1; // Reset to the end if reached the beginning
+      }
+      slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
+  }
+
+  let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+  console.log(nextSlide);
+  this.props.setSelectedSlide(nextSlide);
+
+  console.log("Slide pos after decrease " + slidePosition.toString());
+  console.log(this.props.selectedParticipant.selectedSlide);
+  this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
+  this.props.toggleMenu(true);
+}
+
 
 	handleDownload() {
 
