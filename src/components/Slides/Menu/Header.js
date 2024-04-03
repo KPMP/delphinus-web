@@ -32,31 +32,36 @@ class Header extends Component {
 		// Note: we're accessing "current" to get the DOM node
 		this.textInput.current.focus();
 	}
-	async handleNextSlide() {
-    let slidePosition = this.state.slidePosition + 1
+  async handleNextSlide() {
+    let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    console.log("Slide pos " + slidePosition.toString())
-    console.log(this.props.selectedParticipant.slides)
-    let slideTypes = Object.keys(this.props.selectedParticipant.slides)
-    slideTypes.sort()
-    slideTypes.reverse()
-    console.log(slideTypes)
-    //slideTypes = ["(LM) Light Microscopy", "(IF) Immunofluresce", "(EM) Electron Microscopy"]
-    console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]])
-    if (slidePosition === this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length){
-      console.log("Slide pos inside of if statement " + slidePosition.toString());
-      currentSlideTypeIndex += 1;
-      console.log(slideTypes[currentSlideTypeIndex]);
-      slidePosition = 0
-      let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-      console.log(nextSlide)
-      this.props.setSelectedSlide(nextSlide);
+    console.log("Slide pos " + slidePosition.toString());
+    console.log(this.props.selectedParticipant.slides);
+    let slideTypes = Object.keys(this.props.selectedParticipant.slides);
+    slideTypes.sort();
+    slideTypes.reverse();
+    console.log(slideTypes);
+    
+    if (slidePosition === this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length) {
+        console.log("Slide pos inside of if statement " + slidePosition.toString());
+        currentSlideTypeIndex += 1;
+        console.log(slideTypes[currentSlideTypeIndex]);
+        slidePosition = 0;
+        if (currentSlideTypeIndex >= slideTypes.length) {
+            currentSlideTypeIndex = 0; // Reset to the beginning if reached the end
+        }
     }
-    console.log("Slide pos after increase " + slidePosition.toString())
-    console.log(this.props.selectedParticipant.selectedSlide)
-    this.setState({slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex})
-		this.props.toggleMenu(true);
-	}
+
+    let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+    console.log(nextSlide);
+    this.props.setSelectedSlide(nextSlide);
+
+    console.log("Slide pos after increase " + slidePosition.toString());
+    console.log(this.props.selectedParticipant.selectedSlide);
+    this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
+    this.props.toggleMenu(true);
+}
+
 
 	handlePreviousSlide(position) {
 		let previousSlide = getPreviousSlide(this.props.selectedParticipant.slides["(LM) Light Microscopy"], this.props.selectedParticipant.selectedSlide);
