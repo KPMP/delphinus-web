@@ -10,7 +10,7 @@ import {
 	faCaretDown
 } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'reactstrap';
-import { getNextSlide, getPreviousSlide, downloadSlide } from '../slideHelpers.js';
+import { downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
 import PropTypes from 'prop-types';
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
@@ -18,7 +18,7 @@ import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelp
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0 }
+		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0, activeAccordion: null }
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
@@ -35,17 +35,12 @@ class Header extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    console.log("Slide pos " + slidePosition.toString());
-    console.log(this.props.selectedParticipant.slides);
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
     slideTypes.sort();
     slideTypes.reverse();
-    console.log(slideTypes);
     
     if (slidePosition === this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length) {
-        console.log("Slide pos inside of if statement " + slidePosition.toString());
         currentSlideTypeIndex += 1;
-        console.log(slideTypes[currentSlideTypeIndex]);
         slidePosition = 0;
         if (currentSlideTypeIndex >= slideTypes.length) {
             currentSlideTypeIndex = 0; // Reset to the beginning if reached the end
@@ -53,25 +48,38 @@ class Header extends Component {
     }
 
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-    console.log(nextSlide);
-    this.props.setSelectedSlide(nextSlide);
 
-    console.log("Slide pos after increase " + slidePosition.toString());
-    console.log(this.props.selectedParticipant.selectedSlide);
-    this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
+    // Determine which accordion tab to open based on the selected slide
+    let activeAccordionTab;
+    if (nextSlide === "(LM) Light Microscopy") {
+        activeAccordionTab = "lmAccordion";
+    } 
+    else if (nextSlide === "(IF) Immunofluorescence") {
+        activeAccordionTab = "ifAccordion";
+    }
+    else if (nextSlide === "(EM) Electron Microscopy"){
+        activeAccordionTab = "emAccordion"
+    } // Add more conditions as needed for other slide types
+
+    // Update the state to open the appropriate accordion tab
+    this.setState({ 
+        slidePosition: slidePosition, 
+        currentSlideTypeIndex: currentSlideTypeIndex,
+        activeAccordion: activeAccordionTab // Set the active accordion tab based on the selected slide
+    });
+
+    this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
 }
+
 
 
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-  console.log("Slide pos " + slidePosition.toString());
-  console.log(this.props.selectedParticipant.slides);
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
   slideTypes.sort();
   slideTypes.reverse();
-  console.log(slideTypes);
   
   if (slidePosition < 0) {
       currentSlideTypeIndex -= 1;
@@ -81,12 +89,25 @@ handlePreviousSlide() {
       slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
   }
 
-  let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-  console.log(nextSlide);
-  this.props.setSelectedSlide(nextSlide);
+  let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+  let activeAccordionTab;
+    if (previousSlide === "(LM) Light Microscopy") {
+        activeAccordionTab = "lmAccordion";
+    } 
+    else if (previousSlide === "(IF) Immunofluorescence") {
+        activeAccordionTab = "ifAccordion";
+    }
+    else if (previousSlide === "(EM) Electron Microscopy"){
+        activeAccordionTab = "emAccordion"
+    } // Add more conditions as needed for other slide types
 
-  console.log("Slide pos after decrease " + slidePosition.toString());
-  console.log(this.props.selectedParticipant.selectedSlide);
+    // Update the state to open the appropriate accordion tab
+    this.setState({ 
+        slidePosition: slidePosition, 
+        currentSlideTypeIndex: currentSlideTypeIndex,
+        activeAccordion: activeAccordionTab // Set the active accordion tab based on the selected slide
+    });
+  this.props.setSelectedSlide(previousSlide);
   this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
   this.props.toggleMenu(true);
 }
