@@ -1,51 +1,50 @@
 import React, { Component } from 'react';
-import { Col, Accordion, AccordionItem, AccordionButton, AccordionPanel } from 'reactstrap'; // Import AccordionItem, AccordionButton, and AccordionPanel
+import { Col, Accordion} from 'reactstrap';
 import {
-  noSlidesFound,
+	noSlidesFound,
 } from '../slideHelpers.js';
 import PropTypes from 'prop-types';
 import Header from './Header';
 import AccordionListContainer from './AccordionListContainer.js';
 
 class SlideList extends Component {
-  componentDidUpdate() {
-    noSlidesFound(this.props.selectedParticipant);
-  }
+	componentDidUpdate() {
+		noSlidesFound(this.props.selectedParticipant);
+	}
 
-  render() {
-    const { selectedParticipant, toggleMenu } = this.props;
+	render() {
+    console.log(this.props)
+		return (
+			<div id="menu-slide-list">
+				<Header {...this.props} />
+				<Col id="slides-col">
+        <Accordion toggle={this.props.selectedParticipant.selectedAccordion} open={this.props.selectedParticipant.selectedAccordion} defaultOpen="0" stayOpen>
+          {
+            Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
+              let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
+              let toggleMenu = this.props.toggleMenu;
+              let selectedParticipant = this.props.selectedParticipant;
+              // let strIndex = index.toString()
+              return (
+                <AccordionListContainer 
+                  toggleMenu={toggleMenu}
+                  selectedParticipant={selectedParticipant} 
+                  slideType={slideType} 
+                  accordionId={slideType} 
+                  targetId={slideType} />
+              )
+            }, this)
+          }
+      </Accordion>
+				</Col>
+			</div>
+		);
 
-    return (
-      <div id="menu-slide-list">
-        <Header {...this.props} />
-        <Col id="slides-col">
-          <Accordion>
-            {Object.keys(selectedParticipant.slides).map((slideType, index) => (
-              <AccordionItem key={slideType}>
-                <AccordionButton>
-                  {slideType}
-                </AccordionButton>
-                <AccordionPanel>
-                  <AccordionListContainer
-                    toggleMenu={toggleMenu}
-                    selectedParticipant={selectedParticipant}
-                    slideType={slideType}
-                    accordionId={slideType}
-                    targetId={slideType}
-                  />
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </Col>
-      </div>
-    );
-  }
+	}
 }
 
 SlideList.propTypes = {
-  selectedParticipant: PropTypes.object.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
-};
+	selectedParticipant: PropTypes.object.isRequired,
+}
 
 export default SlideList;
