@@ -32,7 +32,7 @@ class SlideList extends Component {
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-        <Accordion toggle={this.toggle} open={open} defaultOpen="0" stayOpen>
+        <Accordion toggle={this.toggle} open={open} defaultOpen={[this.props.selectedParticipant.selectedAccordion]} stayOpen>
           {
             Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
               let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
