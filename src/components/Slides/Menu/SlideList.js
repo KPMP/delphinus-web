@@ -8,6 +8,10 @@ import Header from './Header';
 import AccordionListContainer from './AccordionListContainer.js';
 
 class SlideList extends Component {
+  constructor(props){
+    super(props);
+    this.state = {currentSlideTypeIndex: 0, slidePosition: 0}
+  };
 
 	componentDidUpdate() {
 		noSlidesFound(this.props.selectedParticipant);
@@ -17,7 +21,7 @@ class SlideList extends Component {
     console.log(this.props)
 		return (
 			<div id="menu-slide-list">
-				<Header {...this.props} />
+				<Header currentSlideTypeIndex={this.state.currentSlideTypeIndex} slidePosition={this.state.slidePosition} {...this.props} />
 				<Col id="slides-col">
         <UncontrolledAccordion defaultOpen={["0"]} stayOpen>
           {

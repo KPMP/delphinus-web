@@ -18,7 +18,7 @@ import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelp
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0 }
+		this.state = { showGridProperties: false, currentSlideTypeIndex: this.props.currentSlideTypeIndex, slidePosition: this.props.slidePosition}
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
@@ -35,6 +35,8 @@ class Header extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+    console.log(slidePosition)
+    console.log(currentSlideTypeIndex)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
     slideTypes.sort();
     slideTypes.reverse();
@@ -47,22 +49,11 @@ class Header extends Component {
         }
     }
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-    let activeAccordionTab;
-    if (nextSlide === "(LM) Light Microscopy") {
-        activeAccordionTab = "lmAccordion";
-    } 
-    else if (nextSlide === "(IF) Immunofluorescence") {
-        activeAccordionTab = "ifAccordion";
-    }
-    else if (nextSlide === "(EM) Electron Microscopy"){
-        activeAccordionTab = "emAccordion"
-    }
 
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
     });
-    this.props.setSelectedAccordion(activeAccordionTab)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
 }
@@ -72,6 +63,8 @@ class Header extends Component {
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+  console.log(slidePosition)
+  console.log(currentSlideTypeIndex)
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
   slideTypes.sort();
   slideTypes.reverse();
@@ -85,20 +78,9 @@ handlePreviousSlide() {
   }
 
   let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-  let activeAccordionTab;
-    if (previousSlide === "(LM) Light Microscopy") {
-        activeAccordionTab = "lmAccordion";
-    } 
-    else if (previousSlide === "(IF) Immunofluorescence") {
-        activeAccordionTab = "ifAccordion";
-    }
-    else if (previousSlide === "(EM) Electron Microscopy"){
-        activeAccordionTab = "emAccordion"
-    } 
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        activeAccordion: activeAccordionTab 
     });
   this.props.setSelectedSlide(previousSlide);
   this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
@@ -125,7 +107,6 @@ handlePreviousSlide() {
 	}
 
 	render() {
-    console.log(this.props)
 		return (
 			<div className="menu-slide-list-header">
 				<Row>
