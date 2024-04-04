@@ -52,7 +52,7 @@ class Header extends Component {
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
     });
-    this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition])
+    this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
 }
@@ -79,7 +79,7 @@ handlePreviousSlide() {
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
     });
-  this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition])
+  this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
   this.props.setSelectedSlide(previousSlide);
   this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
   this.props.toggleMenu(true);
