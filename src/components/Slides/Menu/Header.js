@@ -18,7 +18,7 @@ import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelp
 class Header extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { showGridProperties: false, currentSlideTypeIndex: this.props.currentSlideTypeIndex, slidePosition: this.props.slidePosition}
+		this.state = { showGridProperties: false, currentSlideTypeIndex: 0, slidePosition: 0}
 		this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
 		this.textInput = React.createRef();
@@ -35,8 +35,6 @@ class Header extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    console.log(slidePosition)
-    console.log(currentSlideTypeIndex)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
     slideTypes.sort();
     slideTypes.reverse();
@@ -63,8 +61,6 @@ class Header extends Component {
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-  console.log(slidePosition)
-  console.log(currentSlideTypeIndex)
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
   slideTypes.sort();
   slideTypes.reverse();
@@ -107,6 +103,7 @@ handlePreviousSlide() {
 	}
 
 	render() {
+    console.log(this.props)
 		return (
 			<div className="menu-slide-list-header">
 				<Row>
