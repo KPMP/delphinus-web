@@ -8,31 +8,17 @@ import Header from './Header';
 import AccordionListContainer from './AccordionListContainer.js';
 
 class SlideList extends Component {
-  constructor(props){
-    super(props)
-    this.state = {open: this.props.selectedParticipant.selectedAccordion}
-  }
-
 	componentDidUpdate() {
 		noSlidesFound(this.props.selectedParticipant);
 	}
 
-  toggle = (slideType) => {
-    if(this.state.open === slideType){
-      this.setState({open: ""})
-    }else{
-      this.setState({open: slideType})
-    }
-  }
-
 	render() {
-    const { open } = this.state;
     console.log(this.props)
 		return (
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-        <Accordion toggle={this.toggle} open={open} defaultOpen="0" stayOpen>
+        <Accordion open={this.props.selectedParticipant.selectedAccordion} defaultOpen={["0"]} stayOpen>
           {
             Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
               let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
