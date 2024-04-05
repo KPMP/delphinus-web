@@ -211,7 +211,7 @@ handlePreviousSlide() {
 					<Accordion toggle={this.toggle} open={openItems} stayOpen>
 						{
 							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
-								const slideType = Object.keys(selectedParticipant.slides)[accordionIndex];
+								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
