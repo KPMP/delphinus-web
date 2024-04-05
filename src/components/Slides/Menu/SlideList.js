@@ -131,11 +131,18 @@ handlePreviousSlide() {
 		}
 	}
 
-  handleSelectSlide(slide, accordion, slideTypeArray) {
+  getSlideIndex = (slideArray, selectedSlide) => {
+    return slideArray.findIndex((slide) => {
+        return slide.id === selectedSlide.id;
+    }, this);
+};
+
+  handleSelectSlide(slide, accordion, slideArray) {
 		this.props.setSelectedSlide(slide);
     this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
-    console.log(slideTypeArray)
+    console.log(slideArray)
+    console.log("Slide position " + this.getSlideIndex(slideArray, this.props.selectedParticipant.selectedSlide).toString())
     // this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
 	}
 
