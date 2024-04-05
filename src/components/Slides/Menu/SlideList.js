@@ -84,7 +84,7 @@ class SlideList extends Component {
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        openItems: openItems
+        openItems: this.state.openItems.push(openItems)
     });
     this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
@@ -117,11 +117,10 @@ handlePreviousSlide() {
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        openItems: openItems
+        openItems: this.state.openItems.push(openItems)
     });
   this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
   this.props.setSelectedSlide(previousSlide);
-  this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
   this.props.toggleMenu(true);
   console.log(openItems)
 }
