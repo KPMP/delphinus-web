@@ -8,9 +8,10 @@ import Header from './Header';
 import AccordionListContainer from './AccordionListContainer.js';
 
 class SlideList extends Component {
-  constructor(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
+			open: this.props.selectedParticipant.selectedAccordion,
 			openItems: [] // Array to store open accordion items
 		};
 	}
@@ -19,7 +20,7 @@ class SlideList extends Component {
 		noSlidesFound(this.props.selectedParticipant);
 	}
 
-  toggle = (slideType) => {
+	toggle = (slideType) => {
 		const { openItems } = this.state;
 		if (openItems.includes(slideType)) {
 			this.setState({ openItems: openItems.filter(item => item !== slideType) });
@@ -29,34 +30,32 @@ class SlideList extends Component {
 	}
 
 	render() {
-    console.log(this.props)
-    const { openItems } = this.state.openItems; 
+		const { openItems } = this.state;
 		return (
 			<div id="menu-slide-list">
-				<Header openItems={openItems} {...this.props} />
+				<Header {...this.props} />
 				<Col id="slides-col">
-        <Accordion toggle={this.toggle} open={openItems} stayOpen>
-          {
-            Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
-              let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
-              let toggleMenu = this.props.toggleMenu;
-              let selectedParticipant = this.props.selectedParticipant;
-              let strIndex = index.toString()
-              return (
-                <AccordionListContainer 
-                  toggleMenu={toggleMenu}
-                  selectedParticipant={selectedParticipant} 
-                  slideType={slideType} 
-                  accordionId={strIndex} 
-                  targetId={strIndex} />
-              )
-            }, this)
-          }
-      </Accordion >
+					<Accordion toggle={this.toggle} open={openItems} stayOpen>
+						{
+							Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
+								const slideType = Object.keys(this.props.selectedParticipant.slides)[index];
+								const toggleMenu = this.props.toggleMenu;
+								const selectedParticipant = this.props.selectedParticipant;
+								return (
+									<AccordionListContainer
+										key={slideType}
+										toggleMenu={toggleMenu}
+										selectedParticipant={selectedParticipant}
+										slideType={slideType}
+										accordionId={slideType}
+										targetId={slideType} />
+								);
+							}, this)
+						}
+					</Accordion>
 				</Col>
 			</div>
 		);
-
 	}
 }
 
