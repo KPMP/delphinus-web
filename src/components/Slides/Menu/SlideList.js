@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Accordion, Row, AccordionItem, AccordionHeader, AccordionBody} from 'reactstrap';
 import {
+  getNextSlide,
 	noSlidesFound,
 } from '../slideHelpers.js';
 import PropTypes from 'prop-types';
@@ -141,8 +142,8 @@ handlePreviousSlide() {
 		this.props.setSelectedSlide(slide);
     this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
-    console.log(slideArray)
-    console.log("Slide position " + this.getSlideIndex(slideArray, this.props.selectedParticipant.selectedSlide).toString())
+    let nextSlide = getNextSlide(slideArray, this.props.selectedParticipant.selectedSlide)
+    console.log(nextSlide)
     // this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
 	}
 
