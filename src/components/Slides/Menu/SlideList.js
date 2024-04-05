@@ -21,13 +21,12 @@ import {
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
 import { downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
-import { slide } from 'react-burger-menu';
 
 class SlideList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: this.props.selectedParticipant.selectedAccordion,
+			open: "",
       openItems: [],
       showGridProperties: false, 
       currentSlideTypeIndex: 0, 
@@ -64,6 +63,7 @@ class SlideList extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+    let openItems = this.state.openItems
     console.log(slidePosition)
     console.log(currentSlideTypeIndex)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
@@ -78,14 +78,17 @@ class SlideList extends Component {
         }
     }
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+    openItems = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType
 
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
+        openItems: openItems
     });
     this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
+    console.log(openItems)
 }
 
 
@@ -93,6 +96,7 @@ class SlideList extends Component {
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+  let openItems = this.state.openItems
   console.log(slidePosition)
   console.log(currentSlideTypeIndex)
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
@@ -105,17 +109,20 @@ handlePreviousSlide() {
           currentSlideTypeIndex = slideTypes.length - 1;
       }
       slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
+      openItems = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType
   }
 
   let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
+        openItems: openItems
     });
   this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
   this.props.setSelectedSlide(previousSlide);
   this.setState({ slidePosition: slidePosition, currentSlideTypeIndex: currentSlideTypeIndex });
   this.props.toggleMenu(true);
+  console.log(openItems)
 }
 
 
@@ -136,12 +143,6 @@ handlePreviousSlide() {
 			this.setState({ showGridProperties: true })
 		}
 	}
-
-  getSlideIndex = (slideArray, selectedSlide) => {
-    return slideArray.findIndex((slide) => {
-        return slide.id === selectedSlide.id;
-    }, this);
-};
 
   handleSelectSlide(slide, accordion, slideIndex) {
 		this.props.setSelectedSlide(slide);
