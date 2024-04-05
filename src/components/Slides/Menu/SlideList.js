@@ -142,7 +142,7 @@ handlePreviousSlide() {
 		this.props.setSelectedSlide(slide);
     this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
-    let nextSlide = getNextSlide(slideArray, this.props.selectedParticipant.selectedSlide)
+    let nextSlide = getNextSlide(slideArray, slide)
     console.log(nextSlide)
     // this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
 	}
@@ -211,7 +211,7 @@ handlePreviousSlide() {
 					<Accordion toggle={this.toggle} open={openItems} stayOpen>
 						{
 							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
-								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
+								const slideType = Object.keys(selectedParticipant.slides)[accordionIndex];
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
