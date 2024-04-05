@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Accordion} from 'reactstrap';
+import { Col, Accordion, UncontrolledAccordion} from 'reactstrap';
 import {
 	noSlidesFound,
 } from '../slideHelpers.js';
@@ -18,7 +18,7 @@ class SlideList extends Component {
 			<div id="menu-slide-list">
 				<Header {...this.props} />
 				<Col id="slides-col">
-        <Accordion open={this.props.selectedParticipant.selectedAccordion} defaultOpen={["0"]} stayOpen>
+        <UncontrolledAccordion defaultOpen={["0"]} stayOpen>
           {
             Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
               let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
@@ -35,7 +35,7 @@ class SlideList extends Component {
               )
             }, this)
           }
-      </Accordion>
+      </UncontrolledAccordion >
 				</Col>
 			</div>
 		);
