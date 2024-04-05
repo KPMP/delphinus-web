@@ -15,7 +15,7 @@ class SlideList extends Component {
 			openItems: [] // Array to store open accordion items
 		};
 	}
-  
+
 	componentDidUpdate() {
 		noSlidesFound(this.props.selectedParticipant);
 	}
@@ -34,7 +34,7 @@ class SlideList extends Component {
     const { openItems } = this.state; 
 		return (
 			<div id="menu-slide-list">
-				<Header {...this.props} />
+				<Header openItems={this.state.openItems} {...this.props} />
 				<Col id="slides-col">
         <Accordion toggle={this.toggle} open={openItems} stayOpen>
           {
