@@ -32,7 +32,7 @@ class SlideList extends Component {
       showGridProperties: false, 
       currentSlideTypeIndex: 0, 
       slidePosition: 0,
-      slideIndex: 0
+      slideIndex: 0,
 		};
     this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
@@ -147,7 +147,9 @@ handlePreviousSlide() {
 		this.props.setSelectedSlide(slide);
     this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
-    this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
+    this.setState({slidePosition: slideIndex})
+    console.log(this.state.currentSlideTypeIndex)
+    console.log(this.state.slidePosition)
 	}
 
 	render() {
