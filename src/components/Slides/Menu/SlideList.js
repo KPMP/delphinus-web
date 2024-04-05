@@ -56,11 +56,11 @@ class SlideList extends Component {
                     <AccordionBody accordionId={accordionIndex} >
                       <div id="menu-slide-list-slides">
                         {
-                          selectedParticipant.slides[this.props.slideType].map(function (slide, slideIndex) {
+                          selectedParticipant.slides[slideType].map(function (slide, slideIndex) {
                             let highlightedClass = selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
                             let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
                             return (
-                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, this.props.slideType)}>
+                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, slideType)}>
                                 <Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
                                 <Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
                               </Row>
