@@ -31,12 +31,13 @@ class SlideList extends Component {
 
 	render() {
     console.log(this.props)
-    const { openItems } = this.state; 
+    const { openItems } = this.state.openItems; 
+    const { open } = this.state.open
 		return (
 			<div id="menu-slide-list">
 				<Header openItems={this.state.openItems} {...this.props} />
 				<Col id="slides-col">
-        <Accordion toggle={this.toggle(this.state.open)} open={openItems} stayOpen>
+        <Accordion toggle={this.toggle(open)} open={openItems} stayOpen>
           {
             Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
               let slideType = Object.keys(this.props.selectedParticipant.slides)[index]
