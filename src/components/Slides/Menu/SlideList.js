@@ -14,6 +14,7 @@ class SlideList extends Component {
 		super(props);
 		this.state = {
 			open: this.props.selectedParticipant.selectedAccordion,
+      openItems: []
 		};
     this.handleSelectSlide = this.handleSelectSlide.bind(this);
 	}
