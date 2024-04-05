@@ -21,6 +21,7 @@ import {
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
 import { downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
+import { slide } from 'react-burger-menu';
 
 class SlideList extends Component {
 	constructor(props) {
@@ -63,6 +64,8 @@ class SlideList extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+    console.log(slidePosition)
+    console.log(currentSlideTypeIndex)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
     slideTypes.sort();
     slideTypes.reverse();
@@ -90,6 +93,8 @@ class SlideList extends Component {
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+  console.log(slidePosition)
+  console.log(currentSlideTypeIndex)
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
   slideTypes.sort();
   slideTypes.reverse();
@@ -138,13 +143,11 @@ handlePreviousSlide() {
     }, this);
 };
 
-  handleSelectSlide(slide, accordion, slideArray) {
+  handleSelectSlide(slide, accordion, slideIndex) {
 		this.props.setSelectedSlide(slide);
     this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
-    let nextSlide = getNextSlide(slideArray, slide)
-    console.log(nextSlide)
-    // this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
+    this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
 	}
 
 	render() {
@@ -225,7 +228,7 @@ handlePreviousSlide() {
                             let highlightedClass = selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
                             let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
                             return (
-                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, slideType, selectedParticipant.slides[slideType])}>
+                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, slideType, slideIndex)}>
                                 <Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
                                 <Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
                               </Row>
