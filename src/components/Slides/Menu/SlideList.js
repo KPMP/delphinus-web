@@ -141,6 +141,7 @@ handlePreviousSlide() {
 
 	render() {
 		const { openItems } = this.state;
+    console.log(this.props)
 		return (
 			<div id="menu-slide-list">
 				<div className="menu-slide-list-header">
