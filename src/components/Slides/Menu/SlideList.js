@@ -136,7 +136,7 @@ handlePreviousSlide() {
     this.props.setSelectedAccordion(accordion)
 		this.props.toggleMenu(true);
     console.log(slideIndex)
-    this.setState({currentSlideTypeIndex: slideIndex})
+    this.setState({currentSlideTypeIndex: slideIndex, slidePosition: slideIndex})
 	}
 
 	render() {
