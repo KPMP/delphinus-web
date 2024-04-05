@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { Col, Accordion} from 'reactstrap';
+import { Col, Accordion, Row, AccordionItem, AccordionHeader, AccordionBody} from 'reactstrap';
 import {
 	noSlidesFound,
 } from '../slideHelpers.js';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import AccordionListContainer from './AccordionListContainer.js';
+import {
+	getStainImageName
+} from '../slideHelpers.js';
 
 class SlideList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			open: this.props.selectedParticipant.selectedAccordion,
-			openItems: [],
-      number: 0
 		};
+    this.handleSelectSlide = this.handleSelectSlide.bind(this);
 	}
 
 	componentDidUpdate() {
@@ -30,27 +31,45 @@ class SlideList extends Component {
 		}
 	}
 
+  handleSelectSlide(slide, accordion) {
+		this.props.setSelectedSlide(slide);
+    this.props.setSelectedAccordion(accordion)
+		this.props.toggleMenu(true);
+	}
+
 	render() {
 		const { openItems } = this.state;
 		return (
 			<div id="menu-slide-list">
 				<Header number={this.state.number} {...this.props} />
-        {console.log(this.state.number)}
 				<Col id="slides-col">
 					<Accordion toggle={this.toggle} open={openItems} stayOpen>
 						{
-							Object.keys(this.props.selectedParticipant.slides).map(function (slide, index){
-								const slideType = Object.keys(this.props.selectedParticipant.slides)[index];
-								const toggleMenu = this.props.toggleMenu;
+							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
+								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
-									<AccordionListContainer
-										key={slideType}
-										toggleMenu={toggleMenu}
-										selectedParticipant={selectedParticipant}
-										slideType={slideType}
-										accordionId={slideType}
-										targetId={slideType} />
+                  <AccordionItem>
+                    <AccordionHeader targetId={accordionIndex}>
+                      {slideType}
+                    </AccordionHeader>
+                    <AccordionBody accordionId={accordionIndex} >
+                      <div id="menu-slide-list-slides">
+                        {
+                          selectedParticipant.slides[this.props.slideType].map(function (slide, slideIndex) {
+                            let highlightedClass = selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
+                            let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
+                            return (
+                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, this.props.slideType)}>
+                                <Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
+                                <Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
+                              </Row>
+                            )
+                          },this)
+                        }
+                      </div>
+                    </AccordionBody>
+                  </AccordionItem>
 								);
 							}, this)
 						}
