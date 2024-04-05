@@ -12,16 +12,20 @@ class AccordionList extends Component {
 		this.handleSelectSlide = this.handleSelectSlide.bind(this);
 	}
 
+  handleSelectedAccordion(accordion){
+    this.props.setSelectedAccordion(accordion)
+  }
+
   handleSelectSlide(slide, accordion) {
 		this.props.setSelectedSlide(slide);
-    this.props.setSelectedAccordion(accordion)
+    this.handleSelectedAccordion(accordion);
 		this.props.toggleMenu(true);
 	}
 
   render() {
     return (
       <AccordionItem>
-              <AccordionHeader targetId={this.props.targetId}>
+              <AccordionHeader onClick={() => this.handleSelectedAccordion(this.props.slideType)} targetId={this.props.targetId}>
                 {this.props.slideType}
               </AccordionHeader>
               <AccordionBody accordionId={this.props.accordionId}>
