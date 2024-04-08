@@ -64,13 +64,13 @@ class SlideList extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    let openItems = [...this.state.openItems]; // Copy the current openItems array
+    let openItems = [...this.state.openItems];
     console.log(slidePosition);
     console.log(currentSlideTypeIndex);
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
     slideTypes.sort();
     slideTypes.reverse();
-  
+
     if (slidePosition === this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length) {
       currentSlideTypeIndex += 1;
       slidePosition = 0;
@@ -78,7 +78,7 @@ class SlideList extends Component {
         currentSlideTypeIndex = 0;
       }
     }
-    openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [...openItems, slideTypes[currentSlideTypeIndex]];
+    openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [slideTypes[currentSlideTypeIndex]];
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
     this.setState({
       slidePosition: slidePosition,
@@ -90,6 +90,7 @@ class SlideList extends Component {
     this.props.toggleMenu(true);
     console.log(this.state);
   }
+  
   
   handlePreviousSlide() {
     let slidePosition = this.state.slidePosition - 1;
