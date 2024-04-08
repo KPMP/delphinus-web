@@ -39,6 +39,7 @@ class SlideList extends Component {
     this.handleNextSlide = this.handleNextSlide.bind(this);
     this.handlePreviousSlide = this.handlePreviousSlide.bind(this);
     this.handleSelectSlide = this.handleSelectSlide.bind(this);
+    this.handleSelectAccordion = this.handleSelectAccordion.bind(this)
 	}
 
 	componentDidUpdate() {
@@ -76,9 +77,8 @@ class SlideList extends Component {
       if (currentSlideTypeIndex >= slideTypes.length) {
         currentSlideTypeIndex = 0;
       }
-      openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [...openItems, slideTypes[currentSlideTypeIndex]]; // Add the next slideType into the openItems array if it's not already included
     }
-  
+    openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [...openItems, slideTypes[currentSlideTypeIndex]];
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
     this.setState({
       slidePosition: slidePosition,
@@ -107,9 +107,9 @@ class SlideList extends Component {
         currentSlideTypeIndex = slideTypes.length - 1;
       }
       slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
-      openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [...openItems, slideTypes[currentSlideTypeIndex]]; // Add the previous slideType into the openItems array if it's not already included
     }
-  
+
+    openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [...openItems, slideTypes[currentSlideTypeIndex]];
     let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
     this.setState({
       slidePosition: slidePosition,
@@ -122,7 +122,10 @@ class SlideList extends Component {
     console.log(this.state);
   }
   
-
+  handleSelectAccordion(accordion){
+    this.setState({openItems: [...accordion]})
+    console.log(this.state.openItems)
+  }
 
 	handleDownload() {
 
@@ -219,7 +222,7 @@ class SlideList extends Component {
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
-                    <AccordionHeader targetId={accordionIndex}>
+                    <AccordionHeader onClick={() => this.handleSelectAccordion(slideType)} targetId={accordionIndex}>
                       {slideType}
                     </AccordionHeader>
                     <AccordionBody accordionId={accordionIndex} >
