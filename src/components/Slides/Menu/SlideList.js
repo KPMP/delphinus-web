@@ -54,11 +54,11 @@ class SlideList extends Component {
           openItems: [...prevState.openItems, slideTypeIndex]
       }));
     }
-    
+
 		
-    // else {
-		// 	this.setState({ openItems: [...openItems, slideTypeIndex] });
-		// }
+    else {
+			this.setState({ openItems: [...openItems, slideTypeIndex] });
+		}
     console.log(openItems)
 	}
 
@@ -90,7 +90,14 @@ class SlideList extends Component {
         currentSlideTypeIndex: currentSlideTypeIndex,
     });
     this.props.setSelectedAccordion(...this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
-    this.toggle(currentSlideTypeIndex)
+    const { openItems } = this.state;
+    const openAccordion = openItems.includes(currentSlideTypeIndex);
+
+    if(!openAccordion){
+      this.setState( prevState => ({
+          openItems: [...prevState.openItems, currentSlideTypeIndex]
+      }));
+    }
     console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
@@ -157,10 +164,14 @@ handlePreviousSlide() {
 	}
 
   handleSelectAccordion(accordionIndex) {
-    const {openItems} = this.state;
-    if (openItems.includes(accordionIndex)) {
+    const { openItems } = this.state;
+    
+		if (openItems.includes(accordionIndex)) {
 			this.setState({ openItems: openItems.filter(item => item !== accordionIndex) });
-		} 
+		} else {
+			this.setState({ openItems: [...openItems, accordionIndex] });
+		}
+    console.log(openItems)
     console.log(this.state.openItems);
     this.props.setSelectedAccordion(accordionIndex)
     this.props.toggleMenu(true)
@@ -226,7 +237,7 @@ handlePreviousSlide() {
 
 			</div>
 				<Col id="slides-col">
-					<Accordion toggle={this.toggle} open={openItems} stayOpen>
+					<Accordion toggle={this.handleSelectAccordion} open={openItems} stayOpen>
 						{
 							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
 								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
