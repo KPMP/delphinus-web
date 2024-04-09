@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Accordion, Row, AccordionItem, AccordionHeader, AccordionBody} from 'reactstrap';
 import {
-  getNextSlide,
 	noSlidesFound,
 } from '../slideHelpers.js';
 import PropTypes from 'prop-types';
@@ -47,7 +46,7 @@ class SlideList extends Component {
 	}
 
 	toggle = (slideTypeIndex) => {
-		const { openItems } = this.state;
+		const { openItems } = this.state.openItems;
     
 		if (openItems.includes(slideTypeIndex)) {
 			this.setState({ openItems: openItems.filter(item => item !== slideTypeIndex) });
@@ -157,7 +156,7 @@ handlePreviousSlide() {
   }
 
 	render() {
-		const { openItems } = this.state;
+		const { openItems } = this.state.openItems;
 		return (
 			<div id="menu-slide-list">
 				<div className="menu-slide-list-header">
