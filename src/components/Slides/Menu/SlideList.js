@@ -87,6 +87,7 @@ class SlideList extends Component {
         // openItems: openItems
     });
     this.props.setSelectedAccordion(...this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
+    this.toggle(currentSlideTypeIndex)
     console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
@@ -150,12 +151,9 @@ handlePreviousSlide() {
     this.handleSelectAccordion(accordion)
 		this.props.toggleMenu(true);
     this.setState({slidePosition: slideIndex})
-    console.log(this.state.currentSlideTypeIndex)
-    console.log(this.state.slidePosition)
 	}
 
   handleSelectAccordion(accordion) {
-    console.log(accordion)
     this.props.setSelectedAccordion(accordion)
     this.props.toggleMenu(true)
   }
@@ -225,7 +223,6 @@ handlePreviousSlide() {
 						{
 							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
 								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
-                console.log(slideType)
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
