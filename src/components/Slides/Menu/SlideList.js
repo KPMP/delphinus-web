@@ -47,8 +47,8 @@ class SlideList extends Component {
 	}
 
 	toggle = (slideType) => {
-    console.log(slideType)
 		const { openItems } = this.state;
+    console.log(openItems)
 		if (openItems.includes(slideType)) {
 			this.setState({ openItems: openItems.filter(item => item !== slideType) });
 		} else {
@@ -79,19 +79,16 @@ class SlideList extends Component {
         }
     }
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-    // openItems = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType
 
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        // openItems: openItems
     });
     this.props.setSelectedAccordion(...this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.toggle(currentSlideTypeIndex)
     console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
-    // console.log(openItems)
 }
 
 
@@ -160,7 +157,6 @@ handlePreviousSlide() {
 
 	render() {
 		const { openItems } = this.state;
-    console.log(this.props)
 		return (
 			<div id="menu-slide-list">
 				<div className="menu-slide-list-header">
