@@ -56,9 +56,9 @@ class SlideList extends Component {
     }
     
 		
-    else {
-			this.setState({ openItems: [...openItems, slideTypeIndex] });
-		}
+    // else {
+		// 	this.setState({ openItems: [...openItems, slideTypeIndex] });
+		// }
     console.log(openItems)
 	}
 
