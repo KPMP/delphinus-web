@@ -144,11 +144,14 @@ handlePreviousSlide() {
 		}
 	}
 
-  handleSelectSlide(slide, accordion, slideIndex) {
+  handleSelectSlide(slide, accordion, slideIndex, accordionIndex) {
 		this.props.setSelectedSlide(slide);
     this.handleSelectAccordion(accordion)
 		this.props.toggleMenu(true);
-    this.setState({slidePosition: slideIndex})
+    this.setState({currentSlideTypeIndex: accordionIndex, slidePosition: slideIndex})
+    console.log(this.state.currentSlideTypeIndex);
+    console.log(this.state.slidePosition)
+
 	}
 
   handleSelectAccordion(accordion) {
@@ -233,7 +236,7 @@ handlePreviousSlide() {
                             let highlightedClass = selectedParticipant.selectedSlide.id === slide.id ? " slide-highlighted" : "";
                             let thumbnailSrc = "img/thumbnail_stain_" + getStainImageName(slide.stain.type) + ".png";
                             return (
-                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, slideType, slideIndex)}>
+                              <Row className={"slide-menu-item " + highlightedClass} onClick={() => this.handleSelectSlide(slide, slideType, slideIndex, accordionIndex)}>
                                 <Col xs={{ size: "auto" }} className="no-padding"><img className="thumbnail noselect" src={thumbnailSrc} alt="" /></Col>
                                 <Col xs={{ size: "auto" }} className="slide-name">{slide.slideName}</Col>
                               </Row>
