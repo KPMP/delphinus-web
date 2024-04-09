@@ -164,14 +164,14 @@ handlePreviousSlide() {
 
 	}
 
-  handleSelectAccordion(accordionIndex) {
-    console.log(accordionIndex)
+  handleSelectAccordion = (accordion) => {
+    console.log(accordion)
     let openItems = this.state.openItems;
     
-		if (openItems.includes(accordionIndex)) {
-			this.setState({ openItems: openItems.filter(item => item !== accordionIndex) });
+		if (openItems.includes(accordion)) {
+			this.setState({ openItems: openItems.filter(item => item !== accordion) });
 		} else {
-			this.setState({ openItems: [...openItems, accordionIndex] });
+			this.setState({ openItems: [...openItems, accordion] });
 		}
     console.log(openItems)
     console.log(this.state.openItems);
