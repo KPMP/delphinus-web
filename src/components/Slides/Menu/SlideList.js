@@ -48,7 +48,7 @@ class SlideList extends Component {
 	toggle = (slideTypeIndex) => {
 		const { openItems } = this.state.openItems;
     
-		if (!openItems.includes(slideTypeIndex)) {
+		if (openItems.includes(slideTypeIndex) === false) {
 			this.setState({ openItems: [...openItems, slideTypeIndex] });
 		}
     console.log(openItems)
