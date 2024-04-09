@@ -48,12 +48,13 @@ class SlideList extends Component {
 
 	toggle = (slideType) => {
 		const { openItems } = this.state;
-    console.log(openItems)
+    
 		if (openItems.includes(slideType)) {
 			this.setState({ openItems: openItems.filter(item => item !== slideType) });
 		} else {
 			this.setState({ openItems: [...openItems, slideType] });
 		}
+    console.log(openItems)
 	}
 
   focusTextInput() {
