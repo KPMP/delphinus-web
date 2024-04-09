@@ -46,9 +46,11 @@ class SlideList extends Component {
 	}
 
 	toggle = (slideTypeIndex) => {
-		const { openItems } = this.state.openItems;
+		const { openItems } = this.state;
     
-		if (openItems.includes(slideTypeIndex) === false) {
+		if (openItems.includes(slideTypeIndex)) {
+			this.setState({ openItems: openItems.filter(item => item !== slideTypeIndex) });
+		} else {
 			this.setState({ openItems: [...openItems, slideTypeIndex] });
 		}
     console.log(openItems)
@@ -154,7 +156,7 @@ handlePreviousSlide() {
   }
 
 	render() {
-		const { openItems } = this.state.openItems;
+		const { openItems } = this.state;
 		return (
 			<div id="menu-slide-list">
 				<div className="menu-slide-list-header">
