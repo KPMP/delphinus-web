@@ -155,6 +155,7 @@ handlePreviousSlide() {
 	}
 
   handleSelectAccordion(accordion) {
+    console.log(accordion)
     this.props.setSelectedAccordion(accordion)
     this.props.toggleMenu(true)
   }
@@ -228,7 +229,7 @@ handlePreviousSlide() {
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
-                    <AccordionHeader targetId={accordionIndex}>
+                    <AccordionHeader onClick={() => this.handleSelectAccordion(slideType)} targetId={accordionIndex}>
                       {slideType}
                     </AccordionHeader>
                     <AccordionBody accordionId={accordionIndex} >
