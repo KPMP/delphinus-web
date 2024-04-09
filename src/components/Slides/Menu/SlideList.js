@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Accordion, Row, AccordionItem, AccordionHeader, AccordionBody} from 'reactstrap';
 import {
+  getNextSlide,
 	noSlidesFound,
 } from '../slideHelpers.js';
 import PropTypes from 'prop-types';
@@ -39,7 +40,6 @@ class SlideList extends Component {
     this.handleNextSlide = this.handleNextSlide.bind(this);
     this.handlePreviousSlide = this.handlePreviousSlide.bind(this);
     this.handleSelectSlide = this.handleSelectSlide.bind(this);
-    this.handleSelectAccordion = this.handleSelectAccordion.bind(this)
 	}
 
 	componentDidUpdate() {
@@ -64,69 +64,67 @@ class SlideList extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    let openItems = [...this.state.openItems];
-    console.log(slidePosition);
-    console.log(currentSlideTypeIndex);
+    let openItems = [...this.state.openItems]
+    console.log(slidePosition)
+    console.log(currentSlideTypeIndex)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
     slideTypes.sort();
     slideTypes.reverse();
-
+    
     if (slidePosition === this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length) {
-      currentSlideTypeIndex += 1;
-      slidePosition = 0;
-      if (currentSlideTypeIndex >= slideTypes.length) {
-        currentSlideTypeIndex = 0;
-      }
+        currentSlideTypeIndex += 1;
+        slidePosition = 0;
+        if (currentSlideTypeIndex >= slideTypes.length) {
+            currentSlideTypeIndex = 0;
+        }
     }
-    openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [slideTypes[currentSlideTypeIndex]];
     let nextSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-    this.setState({
-      slidePosition: slidePosition,
-      currentSlideTypeIndex: currentSlideTypeIndex,
-      openItems: openItems,
+    openItems = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType
+
+    this.setState({ 
+        slidePosition: slidePosition, 
+        currentSlideTypeIndex: currentSlideTypeIndex,
+        openItems: openItems
     });
-    this.props.setSelectedAccordion(slideTypes[currentSlideTypeIndex]);
+    this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
-    console.log(this.state);
-  }
+    console.log(openItems)
+}
+
+
+
+handlePreviousSlide() {
+  let slidePosition = this.state.slidePosition - 1;
+  let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
+  let openItems = [...this.state.openItems]
+  console.log(slidePosition)
+  console.log(currentSlideTypeIndex)
+  let slideTypes = Object.keys(this.props.selectedParticipant.slides);
+  slideTypes.sort();
+  slideTypes.reverse();
   
-  
-  handlePreviousSlide() {
-    let slidePosition = this.state.slidePosition - 1;
-    let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    let openItems = [...this.state.openItems]; // Copy the current openItems array
-    console.log(slidePosition);
-    console.log(currentSlideTypeIndex);
-    let slideTypes = Object.keys(this.props.selectedParticipant.slides);
-    slideTypes.sort();
-    slideTypes.reverse();
-  
-    if (slidePosition < 0) {
+  if (slidePosition < 0) {
       currentSlideTypeIndex -= 1;
       if (currentSlideTypeIndex < 0) {
-        currentSlideTypeIndex = slideTypes.length - 1;
+          currentSlideTypeIndex = slideTypes.length - 1;
       }
       slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
-    }
+      openItems = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType
+  }
 
-    openItems = openItems.includes(slideTypes[currentSlideTypeIndex]) ? openItems : [...openItems, slideTypes[currentSlideTypeIndex]];
-    let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
-    this.setState({
-      slidePosition: slidePosition,
-      currentSlideTypeIndex: currentSlideTypeIndex,
-      openItems: openItems,
+  let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
+    this.setState({ 
+        slidePosition: slidePosition, 
+        currentSlideTypeIndex: currentSlideTypeIndex,
+        openItems: this.state.openItems.push(openItems)
     });
-    this.props.setSelectedAccordion(slideTypes[currentSlideTypeIndex]);
-    this.props.setSelectedSlide(previousSlide);
-    this.props.toggleMenu(true);
-    console.log(this.state);
-  }
-  
-  handleSelectAccordion(accordion){
-    this.setState({openItems: [...accordion]})
-    console.log(this.state.openItems)
-  }
+  this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
+  this.props.setSelectedSlide(previousSlide);
+  this.props.toggleMenu(true);
+  console.log(openItems)
+}
+
 
 	handleDownload() {
 
@@ -223,7 +221,7 @@ class SlideList extends Component {
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
-                    <AccordionHeader onClick={() => this.handleSelectAccordion(slideType)} targetId={accordionIndex}>
+                    <AccordionHeader targetId={accordionIndex}>
                       {slideType}
                     </AccordionHeader>
                     <AccordionBody accordionId={accordionIndex} >
