@@ -48,7 +48,7 @@ class SlideList extends Component {
 	}
 
 	toggle (slideTypeIndex) {
-		const { openItems } = this.state;
+		let openItems = this.state.openItems;
     const openAccordion = openItems.includes(slideTypeIndex);
 
     if(!openAccordion){
