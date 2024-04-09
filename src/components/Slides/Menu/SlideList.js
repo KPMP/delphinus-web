@@ -147,12 +147,17 @@ handlePreviousSlide() {
 
   handleSelectSlide(slide, accordion, slideIndex) {
 		this.props.setSelectedSlide(slide);
-    this.props.setSelectedAccordion(accordion)
+    this.handleSelectAccordion(accordion)
 		this.props.toggleMenu(true);
     this.setState({slidePosition: slideIndex})
     console.log(this.state.currentSlideTypeIndex)
     console.log(this.state.slidePosition)
 	}
+
+  handleSelectAccordion(accordion) {
+    this.props.setSelectedAccordion(accordion)
+    this.props.toggleMenu(true)
+  }
 
 	render() {
 		const { openItems } = this.state;
@@ -219,6 +224,7 @@ handlePreviousSlide() {
 						{
 							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
 								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
+                console.log(slideType)
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
