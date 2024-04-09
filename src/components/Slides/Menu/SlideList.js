@@ -67,6 +67,8 @@ class SlideList extends Component {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
+    let openItems = this.state.openItems;
+    const openAccordion = openItems.includes(currentSlideTypeIndex);
     slideTypes.sort();
     slideTypes.reverse();
     
@@ -84,8 +86,7 @@ class SlideList extends Component {
         currentSlideTypeIndex: currentSlideTypeIndex,
     });
     this.props.setSelectedAccordion(...this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
-    const { openItems } = this.state;
-    const openAccordion = openItems.includes(currentSlideTypeIndex);
+  
 
     if(!openAccordion){
       this.setState( prevState => ({
@@ -163,7 +164,7 @@ handlePreviousSlide() {
   }
 
 	render() {
-		const { openItems } = this.state;
+		let openItems = this.state.openItems
 		return (
 			<div id="menu-slide-list">
 				<div className="menu-slide-list-header">
