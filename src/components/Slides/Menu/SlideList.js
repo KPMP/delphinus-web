@@ -46,13 +46,13 @@ class SlideList extends Component {
 		noSlidesFound(this.props.selectedParticipant);
 	}
 
-	toggle = (slideType) => {
+	toggle = (slideTypeIndex) => {
 		const { openItems } = this.state;
     
-		if (openItems.includes(slideType)) {
-			this.setState({ openItems: openItems.filter(item => item !== slideType) });
+		if (openItems.includes(slideTypeIndex)) {
+			this.setState({ openItems: openItems.filter(item => item !== slideTypeIndex) });
 		} else {
-			this.setState({ openItems: [...openItems, slideType] });
+			this.setState({ openItems: [...openItems, slideTypeIndex] });
 		}
     console.log(openItems)
 	}
@@ -65,7 +65,6 @@ class SlideList extends Component {
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-    // let openItems = [...this.state.openItems]
     console.log(slidePosition)
     console.log(currentSlideTypeIndex)
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
@@ -97,7 +96,6 @@ class SlideList extends Component {
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
-  let openItems = [...this.state.openItems]
   console.log(slidePosition)
   console.log(currentSlideTypeIndex)
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
@@ -110,19 +108,18 @@ handlePreviousSlide() {
           currentSlideTypeIndex = slideTypes.length - 1;
       }
       slidePosition = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]].length - 1;
-      openItems = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType
   }
 
   let previousSlide = this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition];
     this.setState({ 
         slidePosition: slidePosition, 
         currentSlideTypeIndex: currentSlideTypeIndex,
-        openItems: this.state.openItems.push(openItems)
     });
   this.props.setSelectedAccordion(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
+  this.toggle(currentSlideTypeIndex)
+  console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
   this.props.setSelectedSlide(previousSlide);
   this.props.toggleMenu(true);
-  console.log(openItems)
 }
 
 
