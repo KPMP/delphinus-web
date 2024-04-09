@@ -54,11 +54,9 @@ class SlideList extends Component {
           openItems: [...prevState.openItems, slideTypeIndex]
       }));
     }
-
-		
-    else {
-			this.setState({ openItems: [...openItems, slideTypeIndex] });
-		}
+    // else {
+		// 	this.setState({ openItems: [...openItems, slideTypeIndex] });
+		// }
     console.log(openItems)
 	}
 
@@ -245,7 +243,7 @@ handlePreviousSlide() {
 								const selectedParticipant = this.props.selectedParticipant;
 								return (
                   <AccordionItem>
-                    <AccordionHeader onClick={() => this.handleSelectAccordion(slideType)} targetId={accordionIndex}>
+                    <AccordionHeader targetId={accordionIndex}>
                       {slideType}
                     </AccordionHeader>
                     <AccordionBody accordionId={accordionIndex} >
