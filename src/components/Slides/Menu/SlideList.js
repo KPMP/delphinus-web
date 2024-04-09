@@ -27,7 +27,7 @@ class SlideList extends Component {
 		super(props);
 		this.state = {
 			open: "",
-      openItems: [],
+      openItems: [0],
       showGridProperties: false, 
       currentSlideTypeIndex: 0, 
       slidePosition: 0,
