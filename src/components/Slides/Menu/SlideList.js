@@ -153,7 +153,7 @@ handlePreviousSlide() {
 
   handleSelectSlide(slide, accordion, slideIndex, accordionIndex) {
 		this.props.setSelectedSlide(slide);
-    this.handleSelectAccordion(accordionIndex)
+    // this.handleSelectAccordion(accordionIndex)
 		this.props.toggleMenu(true);
     this.setState({currentSlideTypeIndex: accordionIndex, slidePosition: slideIndex})
     this.props.setSelectedAccordion(accordion)
