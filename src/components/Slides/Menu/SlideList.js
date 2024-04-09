@@ -161,6 +161,7 @@ handlePreviousSlide() {
     if (openItems.includes(accordionIndex)) {
 			this.setState({ openItems: openItems.filter(item => item !== accordionIndex) });
 		} 
+    console.log(this.state.openItems);
     this.props.setSelectedAccordion(accordionIndex)
     this.props.toggleMenu(true)
   }
