@@ -55,11 +55,10 @@ class SlideList extends Component {
       }));
     }
     
-		// if (openItems.includes(slideTypeIndex)) {
-		// 	this.setState({ openItems: openItems.filter(item => item !== slideTypeIndex) });
-		// } else {
-		// 	this.setState({ openItems: [...openItems, slideTypeIndex] });
-		// }
+		
+    else {
+			this.setState({ openItems: [...openItems, slideTypeIndex] });
+		}
     console.log(openItems)
 	}
 
@@ -157,8 +156,12 @@ handlePreviousSlide() {
 
 	}
 
-  handleSelectAccordion(accordion) {
-    this.props.setSelectedAccordion(accordion)
+  handleSelectAccordion(accordionIndex) {
+    const {openItems} = this.state;
+    if (openItems.includes(accordionIndex)) {
+			this.setState({ openItems: openItems.filter(item => item !== accordionIndex) });
+		} 
+    this.props.setSelectedAccordion(accordionIndex)
     this.props.toggleMenu(true)
   }
 
