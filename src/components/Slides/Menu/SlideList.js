@@ -47,19 +47,12 @@ class SlideList extends Component {
 
 	toggle = (slideTypeIndex) => {
 		const { openItems } = this.state.openItems;
-    const openAccordion = openItems.includes(slideTypeIndex);
-
-    if(!openAccordion){
-      this.setState( prevState => ({
-          openItems: [...prevState.openItems, slideTypeIndex]
-      }));
-    }
     
-		// if (openItems.includes(slideTypeIndex)) {
-		// 	this.setState({ openItems: openItems.filter(item => item !== slideTypeIndex) });
-		// } else {
-		// 	this.setState({ openItems: [...openItems, slideTypeIndex] });
-		// }
+		if (openItems.includes(slideTypeIndex)) {
+			this.setState({ openItems: openItems.filter(item => item !== slideTypeIndex) });
+		} else {
+			this.setState({ openItems: [...openItems, slideTypeIndex] });
+		}
     console.log(openItems)
 	}
 
