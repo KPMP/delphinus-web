@@ -17,6 +17,13 @@ export const setSelectedSlide = (slide) => {
 	}
 }
 
+export const setSelectedAccordion = (accordion) => {
+  return {
+    type: actionNames.SET_SELECTED_ACCORDION,
+    payload: accordion
+  }
+}
+
 export const setParticipants = (participants) => {
 	return {
 		type: actionNames.SET_PARTICIPANTS,
@@ -29,12 +36,23 @@ export const getParticipantSlides = (participantId, props) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
 		axios.get('/api/v1/slides/' + participantId, config)
 			.then(result => {
-				let slides = participantSelectSorter(result.data);
-				dispatch(setSelectedParticipant({id: participantId, slides: slides, selectedSlide: slides[0]}));
+        let newData = {}
+        for(const [key, value] of Object.entries(result.data)){
+          let newValue = participantSelectSorter(value);
+          newData[key] = newValue
+        }
+        let sortedData = {}
+        let keys = Object.keys(newData)
+        keys.sort()
+        keys.reverse()
+        for (let key of keys) {
+          sortedData[key] = newData[key]
+        }
+        dispatch(setSelectedParticipant({id: participantId, slides: sortedData, selectedSlide:sortedData["(LM) Light Microscopy"][0], selectedAccordion: "(LM) Light Microscopy"}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
-				console.log("We were unable to get a list of slides for  " + participantId);
+				console.log("We were unable to get a list of slides for " + participantId);
 				dispatch(sendMessageToBackend(err));
 			});
 	}

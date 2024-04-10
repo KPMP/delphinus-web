@@ -24,17 +24,21 @@ class SlideViewer extends Component {
 			showGrid: false,
 			showGridLabel: false,
 			overlayDivs: '',
-			overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
+			overlayLabel: [],
 			renderLabels: true,
-			gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay
+			gridOverlay: null,
+      loaded: false,
 		}
 	}
 
 	async componentDidMount() {
+    await this.props.selectedParticipant.selectedSlide.slideType
+    
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
+    this.setState({loaded: true})
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -48,8 +52,14 @@ class SlideViewer extends Component {
 	}
 
 	async renderOverlayLabels() {
-		await this.setState({ overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel, gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay, 
-			renderLabels: false });
+    if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy"){
+      await this.setState({
+        overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
+        gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
+        renderLabels: false,
+        }
+      )
+    }
 		await this.setState({renderLabels: true});
 	}
 
@@ -105,8 +115,10 @@ class SlideViewer extends Component {
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />
 				}
 				<div id="slide-viewer" className="container-fluid">
-
-					<Menu
+        
+        {
+          this.state.loaded ? 
+          <Menu
 						handleShowGridToggle={this.handleShowGridToggle}
 						handleShowLabelToggle={this.handleShowLabelToggle}
 						handleCancelGridPropertiesClick={this.handleCancelGridPropertiesClick}
@@ -116,7 +128,11 @@ class SlideViewer extends Component {
 						horizontal='500'
 						horizontalRef={this.horizontalRef}
 						verticalRef={this.verticalRef}
-						selectedParticipant={this.props.selectedParticipant} />
+						selectedParticipant={this.props.selectedParticipant}/>
+            :
+            null
+        }
+					
 
 					<div className="osd-div" ref={node => { this.el = node; }}>
 						<div className={`openseadragon ${(this.state.showGrid) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
