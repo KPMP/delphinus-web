@@ -67,6 +67,8 @@ class SlideList extends Component {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
     let slideTypes = Object.keys(this.props.selectedParticipant.slides);
+    let openItems = this.state.openItems;
+    const openAccordion = openItems.includes(currentSlideTypeIndex);
     slideTypes.sort();
     slideTypes.reverse();
     
@@ -96,6 +98,8 @@ handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
   let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
   let slideTypes = Object.keys(this.props.selectedParticipant.slides);
+  let openItems = this.state.openItems;
+  const openAccordion = openItems.includes(currentSlideTypeIndex);
   slideTypes.sort();
   slideTypes.reverse();
   
