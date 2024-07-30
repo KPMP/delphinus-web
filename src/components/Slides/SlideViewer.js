@@ -32,13 +32,13 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidMount() {
-    await this.props.selectedParticipant.selectedSlide.slideType
-    
-		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			await this.renderOverlayLabels();
-			this.initSeaDragon();
-		}
-    this.setState({loaded: true})
+		await this.props.selectedParticipant.selectedSlide.slideType
+		
+			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
+				await this.renderOverlayLabels();
+				this.initSeaDragon();
+			}
+		this.setState({loaded: true})
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -52,15 +52,23 @@ class SlideViewer extends Component {
 	}
 
 	async renderOverlayLabels() {
-    if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy"){
-      await this.setState({
-        overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
-        gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
-        renderLabels: false,
-        }
-      )
-    }
-		await this.setState({renderLabels: true});
+		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
+			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
+			await this.setState({
+				overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
+				gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
+				renderLabels: false,
+				}
+			)
+			await this.setState({renderLabels: true});
+		}
+		else {
+			await this.setState({
+				overlayLabel: [],
+				gridOverlay: null,
+				renderLabels: false,
+			})
+		}
 	}
 
 	initSeaDragon() {
