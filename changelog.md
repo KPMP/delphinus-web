@@ -2,6 +2,11 @@
 
 ## Release 1.4 [unreleased]
 Brief summary of what's in this release:
+- upgraded version of Node
+- addressed some vulnerabilities
+- added the accordions for groups of slide types (light microscopy, electron microscopy, etc)
+- added logic to turn off the grid overlay when slide type cannot support it
+- added logic to take user back to main page when they haven't selected a slide
 
 
 ### Breaking changes
