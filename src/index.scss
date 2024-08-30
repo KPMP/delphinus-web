@@ -2,6 +2,35 @@
 @import "common-values.scss";
 @import "grid.scss";
 
+@import "../node_modules/bootstrap/scss/functions";
+
+$accordion-button-active-color: black;
+$accordion-button-color: black;
+$bs-border-color: #dee2e6;
+$accordion-icon-width: .8125rem;
+$accordion-body-padding-y: 0rem;
+$accordion-body-padding-x: 0rem;
+
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
+// import accordion component with variable overrides applied
+@import "../node_modules/bootstrap/scss/_accordion.scss";
+
+.accordion{
+  --bs-accordion-border-color: #dee2e6;
+}
+
+.accordion-item:first-of-type(.collapsed) .accordion-button {
+  --bs-accordion-color: $accordion-button-color
+  --bs-accorion-border-color: $accordion-button-color
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.125);
+}
+
+.accordion-button:not(.collapsed)::after {
+  background-color: #e7f1ff;
+  --bs-accordion-btn-color: $accordion-button-color;
+  --bs-accordion-active-color: $accordion-button-active-color;
+}
 
 // Temporary classes
 .content-warning {
@@ -149,7 +178,6 @@ canvas {
 		
 		.participant-select-dropdown {
 			line-height: 15.4333px;
-			padding-right: 15px;
 			width: 230px;
 		}
 
@@ -366,4 +394,8 @@ canvas {
 
 .error-header {
 	font-size: 20px;
+}
+
+#grid-control {
+	text-wrap: nowrap;
 }

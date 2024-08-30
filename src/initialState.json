@@ -1,6 +1,6 @@
 {
 
   "participants": [],
-  "selectedParticipant": {"id": "", "slides": [], "selectedSlide": ""}
+  "selectedParticipant": {"id": "", "slides": [], "selectedSlide": "", "selectedAccordion": ""}
 
 }
