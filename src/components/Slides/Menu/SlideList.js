@@ -31,6 +31,7 @@ class SlideList extends Component {
       currentSlideTypeIndex: 0, 
       slidePosition: 0,
       slideIndex: 0,
+      showCheckbox: true
 		};
     this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
@@ -90,7 +91,11 @@ class SlideList extends Component {
     this.props.toggleMenu(true);
 }
 
-
+    handleShowGridCheckbox(slideType){
+        if (slideType == "(EM) Electron Microscopy" || slideType == "(IF) Immunofluorescence"){
+            this.setState({showCheckbox: false})
+        }
+    }
 
 handlePreviousSlide() {
   let slidePosition = this.state.slidePosition - 1;
@@ -143,6 +148,7 @@ handlePreviousSlide() {
 		this.props.toggleMenu(true);
     this.setState({currentSlideTypeIndex: accordionIndex, slidePosition: slideIndex})
     this.props.setSelectedAccordion(accordion)
+    this.handleShowGridCheckbox(accordion);
 	}
 
   handleSelectAccordion(accordion) {
@@ -173,22 +179,24 @@ handlePreviousSlide() {
 						<FontAwesomeIcon icon={faChevronRight} className="clickable hoverable" onClick={() => this.handleNextSlide()} size="lg" />
 					</Col>
 					<Col xs={{ size: 5, offset: 2 }}>
-						<div className='float-end' id="grid-control">
-							<FontAwesomeIcon
-								icon={(this.props.showGrid) ? faCheckSquare : faSquare}
-								className="clickable hoverable gridCheckbox"
-								onClick={this.props.handleShowGridToggle}
-								size="lg" />
+                    {
+                    this.state.showCheckbox ? 
+                        <div className='float-end' id="grid-control">
+					    		<FontAwesomeIcon
+					    			icon={(this.props.showGrid) ? faCheckSquare : faSquare}
+					    			className="clickable hoverable gridCheckbox"
+					    			onClick={this.props.handleShowGridToggle}
+					    			size="lg" />
 
-							<span>GRID</span>
-							<FontAwesomeIcon
-								icon={faCaretDown}
-								className="clickable hoverable gridPropertiesCaret"
-								onClick={this.handleShowGridProperties}
-								size="lg"
-							/>
-
-						</div>
+					    		<span>GRID</span>
+					    		<FontAwesomeIcon
+					    			icon={faCaretDown}
+					    			className="clickable hoverable gridPropertiesCaret"
+					    			onClick={this.handleShowGridProperties}
+					    			size="lg"
+					    		/>
+					    	</div> : null}
+						
 					</Col>
 					<Col xs="1">
 						<div className="float-end">
