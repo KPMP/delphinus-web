@@ -86,7 +86,8 @@ class SlideList extends Component {
     });
 
     this.props.setSelectedAccordion(...this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
-    this.handleShowGridCheckbox(...this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
+    console.log(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
+    this.handleShowGridCheckbox(this.props.selectedParticipant.slides[slideTypes[currentSlideTypeIndex]][slidePosition].slideType)
     this.toggle(currentSlideTypeIndex)
     this.props.setSelectedSlide(nextSlide);
     this.props.toggleMenu(true);
