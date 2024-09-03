@@ -93,7 +93,7 @@ class SlideList extends Component {
 }
 
     handleShowGridCheckbox(slideType){
-        if (slideType == "(EM) Electron Microscopy" || slideType == "(IF) Immunofluorescence"){
+        if (slideType === "(EM) Electron Microscopy" || slideType === "(IF) Immunofluorescence"){
             this.setState({showCheckbox: false})
         }else{
             this.setState({showCheckbox:true})
