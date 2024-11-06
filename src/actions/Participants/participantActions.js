@@ -48,7 +48,8 @@ export const getParticipantSlides = (participantId, props) => {
         for (let key of keys) {
           sortedData[key] = newData[key]
         }
-        dispatch(setSelectedParticipant({id: participantId, slides: sortedData, selectedSlide:sortedData["(LM) Light Microscopy"][0], selectedAccordion: "(LM) Light Microscopy"}));
+		let defaultSlideType = ("(LM) Light Microscopy" in sortedData) ? "(LM) Light Microscopy" : keys[0]
+        dispatch(setSelectedParticipant({id: participantId, slides: sortedData, selectedSlide:sortedData[defaultSlideType][0], selectedAccordion: defaultSlideType}));
 				props.history.push(process.env.PUBLIC_URL + "/slides");
 			})
 			.catch(err => {
