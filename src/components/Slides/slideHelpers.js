@@ -10,11 +10,6 @@ export const downloadSlide = (downloadFileName) => {
         downloadLink.setAttribute("download", downloadFileName);
         downloadLink.setAttribute("href", image);
 
-
-        // For some reason, we need to click the button again in firefox for the download to happen
-        if (navigator.userAgent.match(/Firefox/g)) {
-            downloadLink.click();
-        }
     }
 
     if (isIE) {
