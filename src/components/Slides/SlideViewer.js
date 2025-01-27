@@ -27,7 +27,7 @@ class SlideViewer extends Component {
 			overlayLabel: [],
 			renderLabels: true,
 			gridOverlay: null,
-            metadata: getMetadataForSlide(this.props.selectedParticipant.selectedSlide.id, this.props.selectedParticipant.selectedSlide.slideName),
+            metadata: {},
       loaded: false,
 		}
 	}
@@ -44,7 +44,7 @@ class SlideViewer extends Component {
 
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-            console.log(this.state.metadata)
+            this.setState({metadata: getMetadataForSlide(this.props.selectedParticipant.selectedSlide.id, this.props.selectedParticipant.selectedSlide.slideName)})
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
