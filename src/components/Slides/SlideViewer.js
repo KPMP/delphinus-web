@@ -55,8 +55,8 @@ class SlideViewer extends Component {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
 			await this.setState({
-				overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
-				gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
+				overlayLabel: this.state.metadata.overlayLabel,
+				gridOverlay: this.state.metadata.overlay,
 				renderLabels: false,
 				}
 			)
