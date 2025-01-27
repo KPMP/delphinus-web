@@ -31,6 +31,13 @@ export const setParticipants = (participants) => {
 	}
 }
 
+export const setSelectedMetadata = (metadata) => {
+    return {
+        type: actionNames.SET_SELECTED_METADATA,
+        payload: metadata
+    }
+}
+
 export const getParticipantSlides = (participantId, props) => {
 	return (dispatch) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
@@ -72,4 +79,19 @@ export const getAllParticipants = () => {
 				dispatch(sendMessageToBackend(err));
 			});
 	}
+}
+
+export const getMetadataForSlide = (participantId, slideName) => {
+    return (dispatch) => {
+        var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
+        axios.get("/api/v1/metadata/" + participantId + "/" + slideName, config)
+            .then(result => {
+                let metadata = result.data;
+                dispatch(setSelectedMetadata(metadata));
+            })
+            .catch(err => {
+                console.log("We were unable to get the metadata for " + participantId + " and " + slideName);
+                dispatch(sendMessageToBackend(err));
+            });
+    }
 }

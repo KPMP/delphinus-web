@@ -20,6 +20,7 @@ import {
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
 import { downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
+import getMetadataForSlide from "../../../actions/Participants/participantActions.js";
 
 class SlideList extends Component {
 	constructor(props) {
@@ -31,7 +32,8 @@ class SlideList extends Component {
       currentSlideTypeIndex: 0, 
       slidePosition: 0,
       slideIndex: 0,
-      showCheckbox: true
+      showCheckbox: true,
+      metadata: {},
 		};
     this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
@@ -64,6 +66,15 @@ class SlideList extends Component {
 		// Note: we're accessing "current" to get the DOM node
 		this.textInput.current.focus();
 	}
+
+    handleSlideMetadata(participantId, slideName) {
+        if (this.props.handleShowGridToggle) {
+            let metadata = getMetadataForSlide(participantId, slideName);
+            this.setState({metadata: metadata});
+        }
+       
+    }
+    
   handleNextSlide() {
     let slidePosition = this.state.slidePosition + 1;
     let currentSlideTypeIndex = this.state.currentSlideTypeIndex;
@@ -148,11 +159,13 @@ handlePreviousSlide() {
 	}
 
   handleSelectSlide(slide, accordion, slideIndex, accordionIndex) {
+    console.log(slide);
 		this.props.setSelectedSlide(slide);
 		this.props.toggleMenu(true);
     this.setState({currentSlideTypeIndex: accordionIndex, slidePosition: slideIndex})
     this.props.setSelectedAccordion(accordion)
     this.handleShowGridCheckbox(accordion);
+    this.handleSlideMetadata(this.props.selectedParticipant.id, slide.slideName);
 	}
 
   handleSelectAccordion(accordion) {
@@ -233,6 +246,8 @@ handlePreviousSlide() {
 							Object.keys(this.props.selectedParticipant.slides).map(function (slide, accordionIndex){
 								const slideType = Object.keys(this.props.selectedParticipant.slides)[accordionIndex];
 								const selectedParticipant = this.props.selectedParticipant;
+
+
 								return (
                   <AccordionItem>
                     <AccordionHeader targetId={accordionIndex}>
