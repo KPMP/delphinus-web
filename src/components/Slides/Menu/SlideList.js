@@ -20,7 +20,7 @@ import {
 import { handleGoogleAnalyticsEvent } from '../../../helpers/googleAnalyticsHelper.js';
 import { downloadSlide } from '../slideHelpers.js';
 import GridProperties from './GridProperties.js';
-import getMetadataForSlide from "../../../actions/Participants/participantActions.js";
+import { getMetadataForSlide } from '../../../actions/Participants/participantActions.js';
 
 class SlideList extends Component {
 	constructor(props) {
