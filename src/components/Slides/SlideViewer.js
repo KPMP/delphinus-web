@@ -6,7 +6,7 @@ import { noSlidesFound } from './slideHelpers';
 import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
 import DivOverlays from './DivOverlays';
-
+import { getMetadataForSlide } from '../../actions/Participants/participantActions';
 class SlideViewer extends Component {
 	constructor(props) {
 		super(props);
@@ -27,6 +27,7 @@ class SlideViewer extends Component {
 			overlayLabel: [],
 			renderLabels: true,
 			gridOverlay: null,
+            metadata: getMetadataForSlide(this.props.selectedParticipant.selectedSlide.id, this.props.selectedParticipant.selectedSlide.slideName),
       loaded: false,
 		}
 	}
@@ -54,6 +55,7 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
+                
 			await this.setState({
 				overlayLabel: this.state.metadata.overlayLabel,
 				gridOverlay: this.state.metadata.overlay,
