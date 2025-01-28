@@ -36,7 +36,7 @@ class SlideViewer extends Component {
 		await this.props.selectedParticipant.selectedSlide.slideType
         let metadata = await getMetadataForSlide(this.props.selectedParticipant.selectedSlide.id, this.props.selectedParticipant.selectedSlide.slideName);
         this.setState({metadata: metadata});
-        console.log(metadata)
+        console.log(this.state.metadata)
 		
 			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 				await this.renderOverlayLabels();
