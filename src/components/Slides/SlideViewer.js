@@ -34,9 +34,6 @@ class SlideViewer extends Component {
 	async componentDidMount() {
 
 		await this.props.selectedParticipant.selectedSlide.slideType
-        let metadata = await this.props.setSelectedMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-        this.setState({metadata: metadata});
-        // console.log(this.state.metadata)
 		
 			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 				await this.renderOverlayLabels();
@@ -45,10 +42,14 @@ class SlideViewer extends Component {
 		this.setState({loaded: true})
 	}
 
+    async handleSlideMetadata(participantId, slideName){
+        let metadata = await this.props.setSlideMetadata(participantId, slideName);
+        this.setState({metadata: metadata});
+        console.log(this.state.metadata);
+    }
+
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-            
-            console.log(this.state.metadata)
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
@@ -60,6 +61,7 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
+                await this.handleSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)
                 
 			await this.setState({
 				renderLabels: false,
@@ -124,11 +126,9 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-                {this.setState({metadata: this.props.setSelectedMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)})}
-                {console.log(this.state.metadata)}
-				{(this.state.metadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
+				{/* {(this.state.metadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.metadata.overlayLabel} />
-				}
+				} */}
 				<div id="slide-viewer" className="container-fluid">
         
         {
