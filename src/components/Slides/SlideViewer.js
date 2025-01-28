@@ -34,6 +34,9 @@ class SlideViewer extends Component {
 
 	async componentDidMount() {
 		await this.props.selectedParticipant.selectedSlide.slideType
+        let metadata = await getMetadataForSlide(this.props.selectedParticipant.selectedSlide.id, this.props.selectedParticipant.selectedSlide.slideName);
+        this.setState({metadata: metadata});
+        console.log(metadata)
 		
 			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 				await this.renderOverlayLabels();
@@ -44,7 +47,7 @@ class SlideViewer extends Component {
 
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-            this.setState({metadata: getMetadataForSlide(this.props.selectedParticipant.selectedSlide.id, this.props.selectedParticipant.selectedSlide.slideName)})
+            
             console.log(this.state.metadata)
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
