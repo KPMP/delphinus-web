@@ -8,6 +8,8 @@ export const selectedParticipant = (state = {}, action) => {
             return {...state, selectedSlide: action.payload};
         case actionNames.SET_SELECTED_ACCORDION:
             return {...state, selectedAccordion: action.payload}
+        case actionNames.SET_SELECTED_METADATA:
+            return {...state, selectedMetadata: action.payload}
         default:
             return state;
     }
