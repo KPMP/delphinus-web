@@ -56,7 +56,7 @@ class App extends Component {
 						<NavBar/>
 						<Switch>
 							<Route exact path='/slides' component={Slides}/>
-							<Route exact path='/oops' component={Oops} />
+							{/* <Route exact path='/oops' component={Oops} /> */}
 							<Route exact path='/notRegistered' component={NotRegistered} />
 							<Route exact path='/permissionDenied' component={PermissionDenied} />
 							<Route exact path='/' component={Summary}/>

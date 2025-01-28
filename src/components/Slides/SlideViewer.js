@@ -6,7 +6,6 @@ import { noSlidesFound } from './slideHelpers';
 import Menu from './Menu/Menu';
 import PropTypes from 'prop-types';
 import DivOverlays from './DivOverlays';
-import { getMetadataForSlide } from '../../actions/Participants/participantActions';
 class SlideViewer extends Component {
 	constructor(props) {
 		super(props);
@@ -33,6 +32,7 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidMount() {
+        
 		await this.props.selectedParticipant.selectedSlide.slideType
         let metadata = await this.props.setSelectedMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         this.setState({metadata: metadata});
