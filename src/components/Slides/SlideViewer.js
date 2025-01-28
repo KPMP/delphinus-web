@@ -124,6 +124,7 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
+                {this.setState({metadata: this.props.setSelectedMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)})}
                 {console.log(this.state.metadata)}
 				{(this.state.metadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.metadata.overlayLabel} />
