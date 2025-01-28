@@ -62,8 +62,6 @@ class SlideViewer extends Component {
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 
 			await this.setState({
-				overlayLabel: this.state.metadata.overlayLabel,
-				gridOverlay: this.state.metadata.overlay,
 				renderLabels: false,
 				}
 			)
@@ -126,8 +124,8 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-				{(this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
-					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />
+				{(this.state.metadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
+					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.metadata.overlayLabel} />
 				}
 				<div id="slide-viewer" className="container-fluid">
         
