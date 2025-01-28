@@ -91,7 +91,7 @@ export const getMetadataForSlide = (participantId, slideName) => {
             })
             .catch(err => {
                 console.log("We were unable to get the metadata for " + participantId + " and " + slideName);
-                // dispatch(sendMessageToBackend(err));
+                dispatch(sendMessageToBackend(err));
             });
     }
 }
