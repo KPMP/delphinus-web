@@ -44,6 +44,7 @@ class SlideViewer extends Component {
 
     async handleSlideMetadata(participantId, slideName){
         let metadata = await this.props.setSlideMetadata(participantId, slideName);
+        console.log(metadata);
         this.setState({metadata: metadata});
         console.log(this.state.metadata);
     }
