@@ -34,7 +34,7 @@ class SlideViewer extends Component {
 	async componentDidMount() {
 
 		await this.props.selectedParticipant.selectedSlide.slideType
-        let metadata = await this.props.setSelectedMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName))
+        let metadata = await this.props.setSelectedMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         this.setState({metadata: metadata});
         // console.log(this.state.metadata)
 		
