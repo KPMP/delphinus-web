@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import SlideViewer from './SlideViewer';
 import { sendMessageToBackend } from '../../actions/Error/errorActions';
+import { getMetadataForSlide, setSelectedMetadata } from '../../actions/Participants/participantActions';
 
 const mapStateToProps = (state, props) =>
 ({
@@ -10,6 +11,9 @@ const mapStateToProps = (state, props) =>
 
 const mapDispatchToProps = (dispatch, props) =>
 ({
+    setSelectedMetadata(participantId, slideName) {
+        dispatch(getMetadataForSlide(participantId, slideName));
+    },
     handleError(error) {
         dispatch(sendMessageToBackend(error));
     }
