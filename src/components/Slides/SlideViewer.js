@@ -61,7 +61,10 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
-                await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)
+                if (!this.state.metadataLoaded) {
+                    await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+                    this.setState({ metadataLoaded: true });
+                }
                 
 			if (this.props.selectedParticipant.selectedMetadata) {
 				await this.setState({
