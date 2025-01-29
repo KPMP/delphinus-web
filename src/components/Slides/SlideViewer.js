@@ -62,7 +62,6 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
-                console.log(this.props);
                 await this.handleSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)
                 
 			await this.setState({
@@ -128,9 +127,9 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-				{/* {(this.state.metadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
-					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.metadata.overlayLabel} />
-				} */}
+				{(this.props.selectedMetadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
+					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedMetadata.overlayLabel} />
+				}
 				<div id="slide-viewer" className="container-fluid">
         
         {
