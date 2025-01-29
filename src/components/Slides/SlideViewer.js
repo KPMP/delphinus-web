@@ -26,8 +26,8 @@ class SlideViewer extends Component {
 			overlayLabel: [],
 			renderLabels: true,
 			gridOverlay: null,
-            metadata: {},
-      loaded: false,
+            metadataLoaded: false,
+            loaded: false,
 		}
 	}
 
@@ -41,8 +41,11 @@ class SlideViewer extends Component {
 		this.setState({ loaded: true });
 	}
 
-	async handleSlideMetadata(participantId, slideName){
-        let metadata = await this.props.setSlideMetadata(participantId, slideName);
+	async loadMetadata() {
+        if (!this.state.metadataLoaded) {
+            await this.props.getMetadataForSlide(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+            this.setState({metadataLoaded: true });
+        }
     }
 
 	async componentDidUpdate(prevProps, prevState) {
