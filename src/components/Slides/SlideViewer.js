@@ -32,17 +32,16 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidMount() {
-
-		await this.props.selectedParticipant.selectedSlide.slideType
+		await this.props.selectedParticipant.selectedSlide.slideType;
 		
-			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-				await this.renderOverlayLabels();
-				this.initSeaDragon();
-			}
-		this.setState({loaded: true})
+		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
+			await this.renderOverlayLabels();
+			this.initSeaDragon();
+		}
+		this.setState({ loaded: true });
 	}
 
-    async handleSlideMetadata(participantId, slideName){
+	async handleSlideMetadata(participantId, slideName){
         let metadata = await this.props.setSlideMetadata(participantId, slideName);
     }
 
@@ -61,11 +60,12 @@ class SlideViewer extends Component {
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)
                 
-			await this.setState({
-				renderLabels: false,
-				}
-			)
-			await this.setState({renderLabels: true});
+			if (this.props.selectedParticipant.selectedMetadata) {
+				await this.setState({
+					renderLabels: false,
+				});
+				await this.setState({ renderLabels: true });
+			}
 		}
 		else {
 			await this.setState({
@@ -126,7 +126,7 @@ class SlideViewer extends Component {
 			<div>
                 {console.log(this.props)}
 
-				{this.state.loaded && this.props.selectedParticipant.selectedMetadata.overlayLabel.length >= 1 && this.state.renderLabels &&
+				{this.state.loaded && this.props.selectedParticipant.selectedMetadata?.overlayLabel?.length >= 1 && this.state.renderLabels &&
                 <DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedParticipant.selectedMetadata.overlayLabel} />}
 				<div id="slide-viewer" className="container-fluid">
         
