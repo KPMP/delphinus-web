@@ -127,9 +127,9 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-				{/* {(this.props.selectedMetadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
-					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedMetadata.overlayLabel} />
-				} */}
+				{(this.props.selectedParticipant.selectedMetadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
+					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedParticipant.selectedMetadata.overlayLabel} />
+				}
                 {console.log(this.props)}
 				<div id="slide-viewer" className="container-fluid">
         
