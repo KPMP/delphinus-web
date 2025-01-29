@@ -86,10 +86,8 @@ export const getMetadataForSlide = (participantId, slideName) => {
         var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
         axios.get("/api/v1/metadata/" + participantId + "/" + slideName, config)
             .then(result => {
-                let metadata = {}
-                metadata = result.data;
+                let metadata = result.data;
                 dispatch(setSelectedMetadata(metadata));
-                return metadata;
             })
             .catch(err => {
                 console.log("We were unable to get the metadata for " + participantId + " and " + slideName);
