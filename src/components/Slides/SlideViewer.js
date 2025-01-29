@@ -44,9 +44,6 @@ class SlideViewer extends Component {
 
     async handleSlideMetadata(participantId, slideName){
         let metadata = await this.props.setSlideMetadata(participantId, slideName);
-        console.log(metadata);
-        this.setState({metadata: metadata});
-        console.log(this.state.metadata);
     }
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -62,7 +59,7 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
-                await this.handleSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)
+                await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName)
                 
 			await this.setState({
 				renderLabels: false,
@@ -129,9 +126,8 @@ class SlideViewer extends Component {
 			<div>
                 {console.log(this.props)}
 
-				{/* {(this.props.selectedParticipant.selectedMetadata.overlayLabel.length >= 1 && this.state.renderLabels) &&
-					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedParticipant.selectedMetadata.overlayLabel} />
-				} */}
+				{this.state.loaded && this.props.selectedParticipant.selectedMetadata.overlayLabel.length >= 1 && this.state.renderLabels &&
+                <DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedParticipant.selectedMetadata.overlayLabel} />}
 				<div id="slide-viewer" className="container-fluid">
         
         {
