@@ -43,10 +43,8 @@ class SlideViewer extends Component {
 	}
 
 	async loadMetadata() {
-        if (!this.state.metadataLoaded) {
-            await this.props.getMetadataForSlide(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-            this.setState({ metadataLoaded: true, currentSlideName: this.props.selectedParticipant.selectedSlide.slideName });
-        }
+        await this.props.getMetadataForSlide(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+        this.setState({ metadataLoaded: true, currentSlideName: this.props.selectedParticipant.selectedSlide.slideName });
     }
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -64,8 +62,7 @@ class SlideViewer extends Component {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
-                    await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-                    this.setState({ metadataLoaded: true, currentSlideName: this.props.selectedParticipant.selectedSlide.slideName });
+                    this.loadMetadata();
                 }
                 
 			if (this.props.selectedParticipant.selectedMetadata) {
