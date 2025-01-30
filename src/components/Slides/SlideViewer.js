@@ -53,7 +53,10 @@ class SlideViewer extends Component {
             this.setState({ 
                 metadataLoaded: true, 
                 currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
-                slideMetadata: metadata 
+                slideMetadata: metadata,
+                gridOverlay: metadata.overlayLabel,
+                overLay: metadata.overlay
+
             });
             console.log(this.state.slideMetadata);
         }
