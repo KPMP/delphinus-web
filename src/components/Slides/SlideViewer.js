@@ -104,7 +104,7 @@ class SlideViewer extends Component {
 			showNavigator: true,
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
-			tileSources: 'deepZoomImages/' + slideId + '.dzi',
+			tileSources: 'data/deepZoomImages/' + slideId + '.dzi',
 			overlays: this.state.gridOverlay
 		});
 	}
@@ -133,7 +133,6 @@ class SlideViewer extends Component {
 		return (
 			<div>
                 {console.log(this.props)}
-
 				{this.state.metadataLoaded && this.props.selectedParticipant.selectedMetadata?.overlayLabel?.length >= 1 && this.state.renderLabels &&
                 <DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.props.selectedParticipant.selectedMetadata.overlayLabel} />}
 				<div id="slide-viewer" className="container-fluid">
