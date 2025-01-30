@@ -44,20 +44,23 @@ class SlideViewer extends Component {
 	}
 
 	async loadMetadata() {
-        console.log("Loading metadata...");
-        await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-        const metadata = this.props.selectedParticipant.selectedMetadata;
-        console.log("Metadata fetched:", metadata);
-        if(metadata !== undefined){
-            this.setState({ 
-                metadataLoaded: true, 
-                currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
-                slideMetadata: metadata,
-                gridOverlay: metadata.overlay,
-                overlayLabel: metadata.overlayLabel,
-                renderLabels: false
-            });
+        if(this.state.showGrid === true){
+            console.log("Loading metadata...");
+            await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+            const metadata = this.props.selectedParticipant.selectedMetadata;
+            console.log("Metadata fetched:", metadata);
+            if(metadata !== undefined){
+                this.setState({ 
+                    metadataLoaded: true, 
+                    currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
+                    slideMetadata: metadata,
+                    gridOverlay: metadata.overlay,
+                    overlayLabel: metadata.overlayLabel,
+                    renderLabels: false
+                });
+            }
         }
+        
     }
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -73,7 +76,7 @@ class SlideViewer extends Component {
 
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
-			!(this.props.selectedParticipant.selectedSlide?.removed === true) && this.state.showGrid === true){
+			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
                     await this.loadMetadata();
                 }
