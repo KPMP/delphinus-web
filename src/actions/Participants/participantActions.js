@@ -88,6 +88,7 @@ export const getMetadataForSlide = (participantId, slideName) => {
             .then(result => {
                 let metadata = result.data;
                 dispatch(setSelectedMetadata(metadata));
+                return metadata;
             })
             .catch(err => {
                 console.log("We were unable to get the metadata for " + participantId + " and " + slideName);
