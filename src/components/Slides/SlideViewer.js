@@ -64,12 +64,13 @@ class SlideViewer extends Component {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
-                    let metadata = await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-                    console.log(metadata);
+                    await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+                    console.log(await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlayLabel);
+                    console.log(await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlay);
                     this.setState({ metadataLoaded: true, 
                         currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
-                        overlayLabel: metadata.overlayLabel,
-                        gridOverlay: metadata.overlay,
+                        overlayLabel: await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlayLabel,
+                        gridOverlay: await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlay,
                         renderLabels: true });
                 }
 		}
