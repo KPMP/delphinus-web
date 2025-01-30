@@ -49,14 +49,9 @@ class SlideViewer extends Component {
         const metadata = this.props.selectedParticipant.selectedMetadata;
         console.log("Metadata fetched:", metadata);
         if(metadata !== undefined){
-            console.log(metadata);
             this.setState({ 
                 metadataLoaded: true, 
                 currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
-                slideMetadata: metadata,
-                gridOverlay: metadata.overlayLabel,
-                overLay: metadata.overlay
-
             });
             console.log(this.state.slideMetadata);
         }
@@ -78,14 +73,13 @@ class SlideViewer extends Component {
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
                     await this.loadMetadata();
+                    this.setState({
+                        overlayLabel: this.props.selectedParticipant.selectedMetadata.overlayLabel,
+                        gridOverlay: this.props.selectedParticipant.selectedMetadata.overlay,
+                        renderLabels: false
+                    });
                 }
-                
-			if (this.props.selectedParticipant.selectedMetadata) {
-				await this.setState({
-					renderLabels: false,
-				});
 				await this.setState({ renderLabels: true });
-			}
 		}
 		else {
 			await this.setState({
