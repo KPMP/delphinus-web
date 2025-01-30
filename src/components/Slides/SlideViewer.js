@@ -71,16 +71,10 @@ class SlideViewer extends Component {
 		}
 	}
 
-    // componentWillUnmount() {
-    //     if (this.viewer) {
-    //         this.viewer.destroy();
-    //     }
-    // }
-
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
-                if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
+                if ((!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName)&& this.state.showGrid === true) {
                     await this.loadMetadata();
                 }
                 
