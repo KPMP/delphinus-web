@@ -29,7 +29,6 @@ class SlideViewer extends Component {
             metadataLoaded: false,
             loaded: false,
             currentSlideName: '',
-            slideMetadata: {}
 		}
 	}
 
@@ -51,11 +50,11 @@ class SlideViewer extends Component {
         if(metadata !== undefined){
             this.setState({ 
                 metadataLoaded: true, 
-                slideMetadata: metadata,
                 gridOverlay: metadata.overlay,
                 overlayLabel: metadata.overlayLabel,
                 renderLabels: false
             });
+            console.log(this.state.overlayLabel);
         }
     }
 
