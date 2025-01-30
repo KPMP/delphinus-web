@@ -45,12 +45,9 @@ class SlideViewer extends Component {
 
 	async loadMetadata() {
         console.log("Loading metadata...");
-        let metadata;
-        while(!metadata){
-            await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-            metadata = this.props.selectedParticipant.selectedMetadata;
-            console.log("Metadata fetched:", metadata);
-        }
+        await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+        const metadata = this.props.selectedParticipant.selectedMetadata;
+        console.log("Metadata fetched:", metadata);
         if(metadata !== undefined){
             this.setState({ 
                 metadataLoaded: true, 
@@ -70,13 +67,15 @@ class SlideViewer extends Component {
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
-		}
+            if(this.state.showGrid){
+                this.loadMetadata();
+		    }
+        }
 	}
 
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
-                
 				await this.setState({ renderLabels: true });
 		}
 		else {
@@ -118,7 +117,6 @@ class SlideViewer extends Component {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
-            this.loadMetadata();
 		}
 	}
 
