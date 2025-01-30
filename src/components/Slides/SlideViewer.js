@@ -44,27 +44,24 @@ class SlideViewer extends Component {
 	}
 
 	async loadMetadata() {
-        if(this.state.showGrid === true){
-            console.log("Loading metadata...");
-            await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-            const metadata = this.props.selectedParticipant.selectedMetadata;
-            console.log("Metadata fetched:", metadata);
-            if(metadata !== undefined){
-                this.setState({ 
-                    metadataLoaded: true, 
-                    slideMetadata: metadata,
-                    gridOverlay: metadata.overlay,
-                    overlayLabel: metadata.overlayLabel,
-                    renderLabels: false
-                });
-            }
+        console.log("Loading metadata...");
+        await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+        const metadata = this.props.selectedParticipant.selectedMetadata;
+        console.log("Metadata fetched:", metadata);
+        if(metadata !== undefined){
+            this.setState({ 
+                metadataLoaded: true, 
+                slideMetadata: metadata,
+                gridOverlay: metadata.overlay,
+                overlayLabel: metadata.overlayLabel,
+                renderLabels: false
+            });
         }
-        
     }
 
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant ||
-            (prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) || this.state.showGrid) {
+            prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
@@ -75,10 +72,7 @@ class SlideViewer extends Component {
 
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
-			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
-                if (!this.state.metadataLoaded) {
-                    await this.loadMetadata();
-                }
+			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
                 
 				await this.setState({ renderLabels: true });
 		}
@@ -121,6 +115,7 @@ class SlideViewer extends Component {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
+            this.loadMetadata();
 		}
 	}
 
