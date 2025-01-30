@@ -65,15 +65,15 @@ class SlideViewer extends Component {
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
                     await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-                    console.log(await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName));
-                    console.log(await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlayLabel);
-                    console.log(await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlay);
-                    this.setState({ metadataLoaded: true, 
-                        currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
-                        overlayLabel: await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlayLabel,
-                        gridOverlay: await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName).overlay,
-                        renderLabels: true });
+                    this.setState({ metadataLoaded: true, currentSlideName: this.props.selectedParticipant.selectedSlide.slideName });
                 }
+                
+			if (this.props.selectedParticipant.selectedMetadata) {
+				await this.setState({
+					renderLabels: false,
+				});
+				await this.setState({ renderLabels: true });
+			}
 		}
 		else {
 			await this.setState({
