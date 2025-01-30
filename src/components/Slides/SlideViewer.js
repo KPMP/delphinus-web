@@ -69,7 +69,7 @@ class SlideViewer extends Component {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
-                    this.loadMetadata();
+                    await this.loadMetadata();
                 }
                 
 			if (this.props.selectedParticipant.selectedMetadata) {
