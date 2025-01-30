@@ -54,7 +54,8 @@ class SlideViewer extends Component {
                 currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
                 slideMetadata: metadata,
                 gridOverlay: metadata.overlay,
-                overlayLabel: metadata.overlayLabel
+                overlayLabel: metadata.overlayLabel,
+                renderLabels: false
             });
         }
     }
@@ -83,12 +84,7 @@ class SlideViewer extends Component {
                     await this.loadMetadata();
                 }
                 
-			if (this.props.selectedParticipant.selectedMetadata) {
-				await this.setState({
-					renderLabels: false,
-				});
 				await this.setState({ renderLabels: true });
-			}
 		}
 		else {
 			await this.setState({
