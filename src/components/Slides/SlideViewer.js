@@ -64,16 +64,14 @@ class SlideViewer extends Component {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
                 if (!this.state.metadataLoaded || this.props.selectedParticipant.selectedSlide.slideName !== this.state.currentSlideName) {
-                    await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-                    this.setState({ metadataLoaded: true, currentSlideName: this.props.selectedParticipant.selectedSlide.slideName });
+                    let metadata = await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+                    console.log(metadata);
+                    this.setState({ metadataLoaded: true, 
+                        currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
+                        overlayLabel: metadata.overlayLabel,
+                        gridOverlay: metadata.overlay,
+                        renderLabels: true });
                 }
-                
-			if (this.props.selectedParticipant.selectedMetadata) {
-				await this.setState({
-					renderLabels: false,
-				});
-				await this.setState({ renderLabels: true });
-			}
 		}
 		else {
 			await this.setState({
