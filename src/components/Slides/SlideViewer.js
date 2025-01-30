@@ -45,13 +45,15 @@ class SlideViewer extends Component {
 
 	async loadMetadata() {
         const metadata = await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
-        console.log(metadata);
-        this.setState({ 
-            metadataLoaded: true, 
-            currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
-            slideMetadata: metadata 
-        });
-        console.log(this.state.slideMetadata);
+        if(metadata !== undefined){
+            console.log(metadata);
+            this.setState({ 
+                metadataLoaded: true, 
+                currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
+                slideMetadata: metadata 
+            });
+            console.log(this.state.slideMetadata);
+        }
     }
 
 	async componentDidUpdate(prevProps, prevState) {
