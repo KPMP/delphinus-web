@@ -104,7 +104,7 @@ class SlideViewer extends Component {
 			showNavigator: true,
 			navigatorAutoFade: false,
 			navigatorId: 'osd-navigator',
-			tileSources: 'data/deepZoomImages/' + slideId + '.dzi',
+			tileSources: '/data/deepZoomImages/' + slideId + '.dzi',
 			overlays: this.state.gridOverlay
 		});
 	}
