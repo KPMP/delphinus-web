@@ -49,16 +49,13 @@ class SlideViewer extends Component {
         const metadata = this.props.selectedParticipant.selectedMetadata;
         console.log("Metadata fetched:", metadata);
         if(metadata !== undefined){
-            console.log(metadata);
             this.setState({ 
                 metadataLoaded: true, 
                 currentSlideName: this.props.selectedParticipant.selectedSlide.slideName, 
                 slideMetadata: metadata,
                 gridOverlay: metadata.overlay,
                 overlayLabel: metadata.overlayLabel
-
             });
-            console.log(this.state.slideMetadata);
         }
     }
 
@@ -72,6 +69,12 @@ class SlideViewer extends Component {
 			this.initSeaDragon();
 		}
 	}
+
+    componentWillUnmount() {
+        if (this.viewer) {
+            this.viewer.destroy();
+        }
+    }
 
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
