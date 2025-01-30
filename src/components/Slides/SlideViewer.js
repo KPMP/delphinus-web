@@ -43,7 +43,7 @@ class SlideViewer extends Component {
 	}
 
 	async loadMetadata() {
-        await this.props.getMetadataForSlide(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+        await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         this.setState({ metadataLoaded: true, currentSlideName: this.props.selectedParticipant.selectedSlide.slideName });
     }
 
