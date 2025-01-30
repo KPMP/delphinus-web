@@ -71,11 +71,11 @@ class SlideViewer extends Component {
 		}
 	}
 
-    componentWillUnmount() {
-        if (this.viewer) {
-            this.viewer.destroy();
-        }
-    }
+    // componentWillUnmount() {
+    //     if (this.viewer) {
+    //         this.viewer.destroy();
+    //     }
+    // }
 
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
