@@ -48,7 +48,7 @@ class SlideViewer extends Component {
         const metadata = this.props.selectedParticipant.selectedMetadata;
         console.log("Metadata fetched:", metadata);
         if(metadata !== undefined){
-            this.setState({ 
+            await this.setState({ 
                 metadataLoaded: true, 
                 gridOverlay: metadata.overlay,
                 overlayLabel: metadata.overlayLabel,
@@ -72,7 +72,7 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
-                if (!this.state.metadataLoaded && this.state.showGrid) {
+                if(!this.state.metadataLoaded && this.state.showGrid){
                     await this.loadMetadata();
                 }
 				await this.setState({ renderLabels: true });
