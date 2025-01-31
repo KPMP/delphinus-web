@@ -64,6 +64,7 @@ class SlideViewer extends Component {
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			this.initSeaDragon();
+            await this.renderOverlayLabels();
         }
 	}
 
@@ -114,7 +115,6 @@ class SlideViewer extends Component {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
-            await this.renderOverlayLabels()
 		}
 	}
 
