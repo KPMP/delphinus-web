@@ -56,6 +56,10 @@ class SlideViewer extends Component {
     }
 
 	async componentDidUpdate(prevProps, prevState) {
+        console.log("this.selectedParticipant: ")
+        console.log(this.props.selectedParticipant)
+        console.log('prev selectedParticipant: ')
+        console.log(prevProps.selectedParticipant)
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
             console.log("prevProps")
             console.log(prevProps.selectedParticipant.selectedSlide.slideName)
@@ -65,7 +69,9 @@ class SlideViewer extends Component {
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			this.initSeaDragon();
-            await this.renderOverlayLabels();
+            if(prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName){
+                await this.renderOverlayLabels();
+            }
         }
 	}
 
