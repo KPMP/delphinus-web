@@ -36,7 +36,7 @@ class SlideViewer extends Component {
 		await this.props.selectedParticipant.selectedSlide.slideType;
 		
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			await this.renderOverlayLabels();
+			this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 		this.setState({ loaded: true });
@@ -63,20 +63,18 @@ class SlideViewer extends Component {
             this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-            await this.renderOverlayLabels();
+            this.renderOverlayLabels();
 			this.initSeaDragon();
         }
         if(prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) {
-            await this.renderOverlayLabels();
+            this.renderOverlayLabels();
         }
 	}
 
-	async renderOverlayLabels() {
+	renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
-                if (!this.state.metadataLoaded) {
-                    this.loadMetadata();
-                }
+                this.loadMetadata();
 				this.setState({ renderLabels: true });
 		}
 		else {
