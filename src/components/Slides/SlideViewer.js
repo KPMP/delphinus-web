@@ -43,29 +43,18 @@ class SlideViewer extends Component {
 	}
 
 	async loadMetadata() {
-        console.log("Loading metadata...");
         await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         const metadata = this.props.selectedParticipant.selectedMetadata;
-        console.log("Metadata fetched:", metadata);
         await this.setState({ 
             metadataLoaded: true, 
             gridOverlay: metadata?.overlay,
             overlayLabel: metadata?.overlayLabel,
             renderLabels: false
         });
-        console.log(this.state.overlayLabel);
     }
 
 	async componentDidUpdate(prevProps, prevState) {
-        console.log("this.selectedParticipant: ")
-        console.log(this.props.selectedParticipant)
-        console.log('prev selectedParticipant: ')
-        console.log(prevProps.selectedParticipant)
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-            console.log("prevProps")
-            console.log(prevProps.selectedParticipant.selectedSlide.slideName)
-            console.log("this.props")
-            console.log(this.props.selectedParticipant.selectedSlide.slideName)
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
@@ -140,7 +129,6 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-                {console.log("render labels " + this.state.renderLabels)}
 				{this.state.metadataLoaded && this.state.overlayLabel?.length >= 1 && this.state.renderLabels &&
                 <DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />}
 				<div id="slide-viewer" className="container-fluid">
