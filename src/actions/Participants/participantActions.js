@@ -82,10 +82,10 @@ export const getAllParticipants = () => {
 }
 
 export const getMetadataForSlide = (participantId, slideName) => {
-    return async (dispatch) => {
+    return (dispatch) => {
         var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
         try {
-            const result = await axios.get(`/api/v1/metadata/${participantId}/${slideName}`, config);
+            const result = axios.get(`/api/v1/metadata/${participantId}/${slideName}`, config);
             let metadata = result.data;
             dispatch(setSelectedMetadata(metadata));
             return metadata;

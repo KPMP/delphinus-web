@@ -42,9 +42,9 @@ class SlideViewer extends Component {
 		this.setState({ loaded: true });
 	}
 
-	async loadMetadata() {
+	åloadMetadata() {
         console.log("Loading metadata...");
-        await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+        this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         const metadata = this.props.selectedParticipant.selectedMetadata;
         console.log("Metadata fetched:", metadata);
         if(metadata !== undefined){
@@ -59,15 +59,15 @@ class SlideViewer extends Component {
     }
 
 	async componentDidUpdate(prevProps, prevState) {
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant ||
-            prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) {
-			this.viewer.destroy();
+		if (prevProps.selectedParticipant !== this.props.selectedParticipant){
+            this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-            if(this.state.showGrid){
-                await this.renderOverlayLabels();
-            }
+            await this.renderOverlayLabels();
 			this.initSeaDragon();
+        }
+        if(prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) {
+            await this.renderOverlayLabels();
         }
 	}
 
@@ -77,14 +77,14 @@ class SlideViewer extends Component {
                 if (!this.state.metadataLoaded) {
                     await this.loadMetadata();
                 }
-				await this.setState({ renderLabels: true });
+				this.setState({ renderLabels: true });
 		}
 		else {
-			await this.setState({
-				overlayLabel: [],
-				gridOverlay: null,
-				renderLabels: false,
-			})
+			this.setState({
+                overlayLabel: [],
+                gridOverlay: null,
+                renderLabels: false,
+            })
 		}
 	}
 
