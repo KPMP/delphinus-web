@@ -64,9 +64,7 @@ class SlideViewer extends Component {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-            if(this.state.showGrid){
-                await this.renderOverlayLabels();
-            }
+            await this.renderOverlayLabels();
 			this.initSeaDragon();
         }
 	}
@@ -74,7 +72,7 @@ class SlideViewer extends Component {
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
-                if (!this.state.metadataLoaded) {
+                if (!this.state.metadataLoaded && this.state.showGrid) {
                     await this.loadMetadata();
                 }
 				await this.setState({ renderLabels: true });
