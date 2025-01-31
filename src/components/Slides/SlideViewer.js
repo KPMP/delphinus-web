@@ -42,7 +42,7 @@ class SlideViewer extends Component {
 		this.setState({ loaded: true });
 	}
 
-	åloadMetadata() {
+	loadMetadata() {
         console.log("Loading metadata...");
         this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         const metadata = this.props.selectedParticipant.selectedMetadata;
@@ -75,7 +75,7 @@ class SlideViewer extends Component {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
                 if (!this.state.metadataLoaded) {
-                    await this.loadMetadata();
+                    this.loadMetadata();
                 }
 				this.setState({ renderLabels: true });
 		}
