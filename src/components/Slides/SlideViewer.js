@@ -46,15 +46,13 @@ class SlideViewer extends Component {
         await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         const metadata = this.props.selectedParticipant.selectedMetadata;
         console.log("Metadata fetched:", metadata);
-        if(metadata !== undefined){
-            await this.setState({ 
-                metadataLoaded: true, 
-                gridOverlay: metadata.overlay,
-                overlayLabel: metadata.overlayLabel,
-                renderLabels: false
-            });
-            console.log(this.state.overlayLabel);
-        }
+        await this.setState({ 
+            metadataLoaded: true, 
+            gridOverlay: metadata?.overlay,
+            overlayLabel: metadata?.overlayLabel,
+            renderLabels: false
+        });
+        console.log(this.state.overlayLabel);
     }
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -64,7 +62,9 @@ class SlideViewer extends Component {
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			this.initSeaDragon();
-            await this.renderOverlayLabels();
+            if (!this.state.metadataLoaded){
+                await this.renderOverlayLabels();
+            }
         }
 	}
 
