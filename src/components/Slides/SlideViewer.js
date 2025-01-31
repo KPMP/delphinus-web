@@ -36,15 +36,15 @@ class SlideViewer extends Component {
 		await this.props.selectedParticipant.selectedSlide.slideType;
 		
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			this.renderOverlayLabels();
+			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 		this.setState({ loaded: true });
 	}
 
-	loadMetadata() {
+	async loadMetadata() {
         console.log("Loading metadata...");
-        this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
+        await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         const metadata = this.props.selectedParticipant.selectedMetadata;
         console.log("Metadata fetched:", metadata);
         if(metadata !== undefined){
@@ -63,26 +63,30 @@ class SlideViewer extends Component {
             this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-            this.renderOverlayLabels();
+            if(this.state.showGrid){
+                await this.renderOverlayLabels();
+            }
 			this.initSeaDragon();
         }
         if(prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) {
-            this.renderOverlayLabels();
+            await this.renderOverlayLabels();
         }
 	}
 
-	renderOverlayLabels() {
+	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
-                this.loadMetadata();
-				this.setState({ renderLabels: true });
+                if (!this.state.metadataLoaded) {
+                    await this.loadMetadata();
+                }
+				await this.setState({ renderLabels: true });
 		}
 		else {
-			this.setState({
-                overlayLabel: [],
-                gridOverlay: null,
-                renderLabels: false,
-            })
+			await this.setState({
+				overlayLabel: [],
+				gridOverlay: null,
+				renderLabels: false,
+			})
 		}
 	}
 
