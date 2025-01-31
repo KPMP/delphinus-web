@@ -56,15 +56,16 @@ class SlideViewer extends Component {
     }
 
 	async componentDidUpdate(prevProps, prevState) {
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant ||
-            prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName) {
+		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
+            console.log("prevProps")
+            console.log(prevProps.selectedParticipant.selectedSlide.slideName)
+            console.log("this.props")
+            console.log(this.props.selectedParticipant.selectedSlide.slideName)
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			this.initSeaDragon();
-            if (prevState.metadataLoaded === false){
-                await this.renderOverlayLabels();
-            }
+            await this.renderOverlayLabels();
         }
 	}
 
@@ -115,6 +116,7 @@ class SlideViewer extends Component {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
+            await this.renderOverlayLabels();
 		}
 	}
 
