@@ -86,6 +86,8 @@ class SlideViewer extends Component {
                 console.log("loading metadata")
                 await this.loadMetadata();
 				await this.setState({ renderLabels: true });
+                console.log("renderLabels in renderOverlayLabels: ")
+                console.log(this.state.renderLabels)
 		}
 		else {
 			await this.setState({
