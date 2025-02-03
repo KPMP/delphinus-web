@@ -58,7 +58,9 @@ class SlideViewer extends Component {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-			this.initSeaDragon();
+            if (prevProps.selectedParticipant.selectedSlide.id !== this.props.selectedSlide.id){
+                this.initSeaDragon();
+            }
         }
         if(prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName){
             await this.renderOverlayLabels();
