@@ -58,7 +58,7 @@ class SlideViewer extends Component {
         console.log(prevProps.selectedParticipant)
         console.log("this.props participant: ")
         console.log(this.props.selectedParticipant)
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
+		if (prevProps.selectedParticipant.id !== this.props.selectedParticipant.id) {
             console.log("destroying viewer")
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
