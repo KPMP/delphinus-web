@@ -37,7 +37,7 @@ class SlideViewer extends Component {
         await this.renderOverlayLabels();
 		
 		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			await this.initSeaDragon();
+			this.initSeaDragon();
 		}
 		this.setState({ loaded: true });
 	}
@@ -64,7 +64,7 @@ class SlideViewer extends Component {
             await this.renderOverlayLabels();
         }
         if (prevProps.selectedParticipant.selectedSlide.id !== this.props.selectedParticipant.selectedSlide.id){
-            await this.initSeaDragon();
+            this.initSeaDragon();
         }
 	}
 
@@ -83,7 +83,7 @@ class SlideViewer extends Component {
 		}
 	}
 
-	async initSeaDragon() {
+	initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
