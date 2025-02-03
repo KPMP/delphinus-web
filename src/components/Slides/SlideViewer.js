@@ -53,10 +53,14 @@ class SlideViewer extends Component {
             overlayLabel: metadata?.overlayLabel,
             renderLabels: false
         });
-        console.log("metdata loaded: " + this.state.metadataLoaded.toString());
-        console.log("gridOverlay: " + this.state.gridOverlay.toString());
-        console.log("overlayLabel: " + this.state.overlayLabel.toString());
-        console.log("renderLables: " + this.state.renderLabels.toString());
+        console.log("metdata loaded: ");
+        console.log(this.state.metadataLoaded);
+        console.log("gridOverlay: " );
+        console.log(this.state.gridOverlay);
+        console.log("overlayLabel: ");
+        console.log(this.state.overlayLabel)
+        console.log("renderLables: ");
+        console.log(this.state.renderLabels);
     }
 
 	async componentDidUpdate(prevProps, prevState) {
