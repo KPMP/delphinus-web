@@ -45,6 +45,8 @@ class SlideViewer extends Component {
 	async loadMetadata() {
         await this.props.setSlideMetadata(this.props.selectedParticipant.id, this.props.selectedParticipant.selectedSlide.slideName);
         const metadata = this.props.selectedParticipant.selectedMetadata;
+        console.log("metadata");
+        console.log(metadata);
         await this.setState({ 
             metadataLoaded: true, 
             gridOverlay: metadata?.overlay,
@@ -54,10 +56,6 @@ class SlideViewer extends Component {
     }
 
 	async componentDidUpdate(prevProps, prevState) {
-        console.log("prevProps participant: ")
-        console.log(prevProps.selectedParticipant)
-        console.log("this.props participant: ")
-        console.log(this.props.selectedParticipant)
 		if (prevProps.selectedParticipant.id !== this.props.selectedParticipant.id) {
             console.log("destroying viewer")
 			this.viewer.destroy();
@@ -74,8 +72,10 @@ class SlideViewer extends Component {
 	}
 
 	async renderOverlayLabels() {
+        console.log("inside renderOverlayLabels")
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
 			!(this.props.selectedParticipant.selectedSlide?.removed === true)) {
+                console.log("loading metadata")
                 await this.loadMetadata();
 				await this.setState({ renderLabels: true });
 		}
@@ -118,6 +118,7 @@ class SlideViewer extends Component {
 			this.setState({ showGrid: false, showGridLabel: false })
 		} else {
 			this.setState({ showGrid: true })
+            console.log("checkmark checked")
             await this.renderOverlayLabels();
 		}
 	}
