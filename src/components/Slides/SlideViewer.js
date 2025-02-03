@@ -58,12 +58,13 @@ class SlideViewer extends Component {
 			this.viewer.destroy();
 			this.viewer.navigator.destroy();
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-            if (prevProps.selectedParticipant.selectedSlide.id !== this.props.selectedParticipant.selectedSlide.id){
-                await this.initSeaDragon();
-            }
+            
         }
         if(prevProps.selectedParticipant.selectedSlide.slideName !== this.props.selectedParticipant.selectedSlide.slideName){
             await this.renderOverlayLabels();
+        }
+        if (prevProps.selectedParticipant.selectedSlide.id !== this.props.selectedParticipant.selectedSlide.id){
+            await this.initSeaDragon();
         }
 	}
 
