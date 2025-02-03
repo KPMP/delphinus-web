@@ -54,6 +54,8 @@ class SlideViewer extends Component {
     }
 
 	async componentDidUpdate(prevProps, prevState) {
+        console.log("prevProps participant: " + prevProps.selectedParticipant);
+        console.log("this.props participant: " + this.props.selectedParticipant);
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
             console.log("destroying viewer")
 			this.viewer.destroy();
