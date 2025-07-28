@@ -45,7 +45,7 @@ class SlideViewer extends Component {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
 		  console.log(this.viewer)
 			this.viewer.destroy();
-			this.viewer.navigator.destroy()
+			// this.viewer.navigator.destroy()
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
