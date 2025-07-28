@@ -22,7 +22,7 @@
     "jquery": "3.6.0",
     "kpmp-common-components": "1.2.13",
     "lodash": "4.17.21",
-    "openseadragon": "2.4.1",
+    "openseadragon": "5.0.1",
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-burger-menu": "3.0.9",
