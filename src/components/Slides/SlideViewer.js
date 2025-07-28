@@ -85,7 +85,7 @@ class SlideViewer extends Component {
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
-		  element: document.getElementById("osdId")
+		  element: document.getElementById("osdId"),
 			visibilityRatio: 0.5,
 			constrainDuringPan: false,
 			defaultZoomLevel: 1,
