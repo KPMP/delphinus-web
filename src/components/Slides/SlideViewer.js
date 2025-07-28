@@ -49,7 +49,7 @@ class SlideViewer extends Component {
         this.viewer = null;
 			}
 			if (!document.getElementById('osdId')) {
-        const wrapper = document.getElementById('osd-wrapper');
+        const wrapper = document.getElementById('osd-div');
         const osdDiv = document.createElement('div');
         osdDiv.id = 'osdId';
         wrapper.appendChild(osdDiv);
