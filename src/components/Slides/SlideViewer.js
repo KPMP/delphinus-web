@@ -44,8 +44,16 @@ class SlideViewer extends Component {
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
 		  console.log(this.viewer)
-			this.viewer.destroy();
-			// this.viewer.navigator.destroy()
+			if (this.viewer){
+			  this.viewer.destroy()
+        this.viewer = null;
+			}
+			if (!document.getElementById('osdId')) {
+        const wrapper = document.getElementById('osd-wrapper');
+        const osdDiv = document.createElement('div');
+        osdDiv.id = 'osdId';
+        wrapper.appendChild(osdDiv);
+      }
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
@@ -77,7 +85,7 @@ class SlideViewer extends Component {
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
-			id: "osdId",
+		  element: document.getElementById("osdId")
 			visibilityRatio: 0.5,
 			constrainDuringPan: false,
 			defaultZoomLevel: 1,
