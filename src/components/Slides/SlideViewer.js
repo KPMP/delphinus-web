@@ -16,6 +16,7 @@ class SlideViewer extends Component {
 
 		this.horizontalRef = React.createRef(500);
 		this.verticalRef = React.createRef(500);
+    this.viewerContainerRef = React.createRef();
 		this.handleShowGridToggle = this.handleShowGridToggle.bind(this)
 		this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this)
 		this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
@@ -85,7 +86,7 @@ class SlideViewer extends Component {
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
-		  element: document.getElementById("osdId"),
+		  element: this.viewerContainerRef.current,
 			visibilityRatio: 0.5,
 			constrainDuringPan: false,
 			defaultZoomLevel: 1,
