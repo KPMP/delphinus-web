@@ -33,7 +33,7 @@ class SlideViewer extends Component {
 
 	async componentDidMount() {
 		await this.props.selectedParticipant.selectedSlide.slideType
-		
+
 			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 				await this.renderOverlayLabels();
 				this.initSeaDragon();
@@ -43,8 +43,9 @@ class SlideViewer extends Component {
 
 	async componentDidUpdate(prevProps, prevState) {
 		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
+		  console.log(this.viewer)
 			this.viewer.destroy();
-			this.viewer.navigator.destroy();
+			this.viewer.navigator.destroy()
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
@@ -123,9 +124,9 @@ class SlideViewer extends Component {
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />
 				}
 				<div id="slide-viewer" className="container-fluid">
-        
+
         {
-          this.state.loaded ? 
+          this.state.loaded ?
           <Menu
 						handleShowGridToggle={this.handleShowGridToggle}
 						handleShowLabelToggle={this.handleShowLabelToggle}
@@ -140,7 +141,7 @@ class SlideViewer extends Component {
             :
             null
         }
-					
+
 
 					<div className="osd-div" ref={node => { this.el = node; }}>
 						<div className={`openseadragon ${(this.state.showGrid) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
