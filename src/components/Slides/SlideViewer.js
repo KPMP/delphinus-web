@@ -153,7 +153,7 @@ class SlideViewer extends Component {
 
 
 					<div className="osd-div" ref={node => { this.el = node; }}>
-						<div className={`openseadragon ${(this.state.showGrid) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
+            <div ref={this.viewerContainerRef} className={`openseadragon ${(this.state.showGrid) ? 'showGridlines' : 'hideGridlines'}`} id="osdId"></div>
 						<ul className="osd-toolbar">
 							<li><div className="osd-button" id="zoom-in"><FontAwesomeIcon icon={faPlus} /></div></li>
 							<li><div className="osd-button" id="zoom-out"><FontAwesomeIcon icon={faMinus} /></div></li>
