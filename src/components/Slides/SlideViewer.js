@@ -45,6 +45,7 @@ class SlideViewer extends Component {
 	async componentDidUpdate(prevProps) {
     if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
       if (this.viewer) {
+        console.log("destroying viewer")
         this.viewer.destroy();
         this.viewer = null;
       }
@@ -78,6 +79,7 @@ class SlideViewer extends Component {
 
 	initSeaDragon() {
 		let slideId = this.props.selectedParticipant.selectedSlide.id;
+		console.log("creating viewer")
 
 		OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 		this.viewer = OpenSeadragon({
@@ -99,6 +101,7 @@ class SlideViewer extends Component {
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
 			overlays: this.state.gridOverlay
 		});
+		console.log(this.viewer)
 	}
 
 	handleShowGridToggle() {
