@@ -135,20 +135,19 @@ class SlideViewer extends Component {
       fullPageButton: 'full-page',
       nextButton: 'next',
       previousButton: 'previous',
-      showNavigator: false, // Disable auto navigator creation
+      showNavigator: false, // disable automatic navigator
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
     });
 
-    // MANUALLY create navigator
-    new OpenSeadragon.Navigator({
-      viewer: this.viewer,
-      element: navigatorContainer,
-      autoFade: false,
-    });
-
+    // Attach navigator after viewer fully opens
     this.viewer.addHandler('open', () => {
-      console.log('[SlideViewer] OpenSeadragon viewer opened successfully for slideId:', slideId);
+      console.log('[SlideViewer] Viewer open - creating manual navigator');
+      new OpenSeadragon.Navigator({
+        viewer: this.viewer,
+        element: navigatorContainer,
+        autoFade: false,
+      });
     });
 
     this.viewer.addHandler('tile-load-failed', (event) => {
