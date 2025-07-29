@@ -132,7 +132,6 @@ class SlideViewer extends Component {
 			previousButton: 'previous',
 			showNavigator: true,
 			navigatorAutoFade: false,
-			navigatorId: 'osd-navigator',
 			tileSources: 'deepZoomImages/' + slideId + '.dzi',
 			navigatorElement: navigatorContainer,
 			overlays: this.state.gridOverlay
