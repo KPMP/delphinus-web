@@ -18,7 +18,7 @@ class SlideViewer extends Component {
     this.horizontalRef = React.createRef();
     this.verticalRef = React.createRef();
 
-    // Ref for OpenSeadragon container
+    // Refs for OpenSeadragon containers
     this.viewerContainerRef = React.createRef();
     this.navigatorRef = React.createRef();
 
@@ -71,7 +71,7 @@ class SlideViewer extends Component {
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
       await this.renderOverlayLabels();
 
-      // Defer init with setTimeout to ensure both refs are mounted
+      // Ensure DOM is updated before re-initializing
       console.log('[SlideViewer] Scheduling new viewer initialization (setTimeout)');
       setTimeout(() => {
         this.initSeaDragon();
@@ -113,7 +113,6 @@ class SlideViewer extends Component {
 
     if (!navigatorContainer) {
       console.error('[SlideViewer] initSeaDragon - navigator ref is null; retrying in 50ms');
-      // Retry shortly if navigator not yet mounted
       setTimeout(() => this.initSeaDragon(), 50);
       return;
     }
@@ -137,7 +136,7 @@ class SlideViewer extends Component {
       previousButton: 'previous',
       showNavigator: true,
       navigatorAutoFade: false,
-      navigatorElement: navigatorContainer, // pass ref directly
+      navigatorElement: navigatorContainer, // Use ref instead of ID
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
     });
@@ -221,7 +220,8 @@ class SlideViewer extends Component {
             </ul>
 
             <div className="osd-navigator-wrapper">
-              <div id="osd-navigator"></div>
+              {/* Attach navigatorRef here */}
+              <div ref={this.navigatorRef}></div>
             </div>
           </div>
         </div>
