@@ -53,23 +53,29 @@ class SlideViewer extends Component {
     if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
       console.log('[SlideViewer] componentDidUpdate - new participant detected');
 
-      // Destroy old viewer (do NOT clear DOM, keeps navigator intact)
+      // Destroy previous viewer
       if (this.viewer) {
         console.log('[SlideViewer] Destroying previous viewer');
         this.viewer.destroy();
         this.viewer = null;
       }
 
+      // Clear navigator DOM to avoid stale content
+      if (this.navigatorRef.current) {
+        console.log('[SlideViewer] Clearing navigator DOM');
+        this.navigatorRef.current.innerHTML = '';
+      }
+
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
       await this.renderOverlayLabels();
 
-      // Initialize after DOM updates
-      console.log('[SlideViewer] Scheduling new viewer initialization (setTimeout)');
+      console.log('[SlideViewer] Scheduling new viewer initialization');
       setTimeout(() => {
         this.initSeaDragon();
       }, 0);
     }
   }
+
 
   async renderOverlayLabels() {
     console.log('[SlideViewer] Rendering overlay labels');
@@ -96,24 +102,14 @@ class SlideViewer extends Component {
     console.log('[SlideViewer] initSeaDragon called');
     const slideId = this.props.selectedParticipant.selectedSlide.id;
     const container = this.viewerContainerRef.current;
-
-    if (!container) {
-      console.error('[SlideViewer] initSeaDragon - viewer container ref is null');
-      return;
-    }
-
     const navigatorContainer = this.navigatorRef.current;
-    if (!navigatorContainer) {
-      console.error('[SlideViewer] initSeaDragon - navigator ref is null; retrying in 50ms');
+
+    if (!container || !navigatorContainer) {
+      console.error('[SlideViewer] Viewer or navigator container missing; retrying');
       setTimeout(() => this.initSeaDragon(), 50);
       return;
     }
 
-    console.log('[SlideViewer] Initializing OpenSeadragon with slideId:', slideId);
-
-    OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
-
-    // Initialize viewer without auto navigator
     this.viewer = OpenSeadragon({
       element: container,
       visibilityRatio: 0.5,
@@ -127,34 +123,22 @@ class SlideViewer extends Component {
       fullPageButton: 'full-page',
       nextButton: 'next',
       previousButton: 'previous',
-      showNavigator: true,
-      navigatorElement: this.navigatorRef.current,
+      showNavigator: true,                       // built-in navigator
+      navigatorElement: navigatorContainer,      // explicitly attach
+      navigatorAutoFade: false,
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
     });
 
-    // Attach manual navigator after viewer is ready
-    // this.viewer.addHandler('open', () => {
-    //   console.log('[SlideViewer] Viewer open - creating manual navigator');
-
-    //   const navElem = this.navigatorRef.current;
-    //   if (!navElem) {
-    //     console.error('[SlideViewer] Navigator ref still null during open; retrying in 50ms');
-    //     setTimeout(() => this.initSeaDragon(), 50);
-    //     return;
-    //   }
-
-    //   new OpenSeadragon.Navigator({
-    //     viewer: this.viewer,
-    //     element: navElem,
-    //     autoFade: false,
-    //   });
-    // });
+    this.viewer.addHandler('open', () => {
+      console.log('[SlideViewer] Viewer opened for slideId:', slideId);
+    });
 
     this.viewer.addHandler('tile-load-failed', (event) => {
       console.error('[SlideViewer] Tile failed to load:', event);
     });
   }
+
 
   handleShowGridToggle() {
     this.setState(prev => ({
