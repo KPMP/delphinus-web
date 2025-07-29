@@ -18,7 +18,7 @@ class SlideViewer extends Component {
     this.horizontalRef = React.createRef();
     this.verticalRef = React.createRef();
 
-    // Refs for OpenSeadragon containers
+    // Refs for OSD containers
     this.viewerContainerRef = React.createRef();
     this.navigatorRef = React.createRef();
 
@@ -53,25 +53,17 @@ class SlideViewer extends Component {
     if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
       console.log('[SlideViewer] componentDidUpdate - new participant detected');
 
-      // Destroy old viewer
+      // Destroy old viewer (do NOT clear DOM, keeps navigator intact)
       if (this.viewer) {
         console.log('[SlideViewer] Destroying previous viewer');
         this.viewer.destroy();
         this.viewer = null;
       }
 
-      // Clear container
-      if (this.viewerContainerRef.current) {
-        console.log('[SlideViewer] Clearing viewer container innerHTML');
-        this.viewerContainerRef.current.innerHTML = '';
-      } else {
-        console.warn('[SlideViewer] viewerContainerRef is null!');
-      }
-
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
       await this.renderOverlayLabels();
 
-      // Ensure DOM is updated before re-initializing
+      // Initialize after DOM updates
       console.log('[SlideViewer] Scheduling new viewer initialization (setTimeout)');
       setTimeout(() => {
         this.initSeaDragon();
@@ -104,13 +96,13 @@ class SlideViewer extends Component {
     console.log('[SlideViewer] initSeaDragon called');
     const slideId = this.props.selectedParticipant.selectedSlide.id;
     const container = this.viewerContainerRef.current;
-    const navigatorContainer = this.navigatorRef.current;
 
     if (!container) {
       console.error('[SlideViewer] initSeaDragon - viewer container ref is null');
       return;
     }
 
+    const navigatorContainer = this.navigatorRef.current;
     if (!navigatorContainer) {
       console.error('[SlideViewer] initSeaDragon - navigator ref is null; retrying in 50ms');
       setTimeout(() => this.initSeaDragon(), 50);
@@ -121,7 +113,7 @@ class SlideViewer extends Component {
 
     OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 
-    // Initialize viewer WITHOUT auto navigator
+    // Initialize viewer without auto navigator
     this.viewer = OpenSeadragon({
       element: container,
       visibilityRatio: 0.5,
@@ -135,17 +127,25 @@ class SlideViewer extends Component {
       fullPageButton: 'full-page',
       nextButton: 'next',
       previousButton: 'previous',
-      showNavigator: false, // disable automatic navigator
+      showNavigator: false, // disable built-in navigator
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
     });
 
-    // Attach navigator after viewer fully opens
+    // Attach manual navigator after viewer is ready
     this.viewer.addHandler('open', () => {
       console.log('[SlideViewer] Viewer open - creating manual navigator');
+
+      const navElem = this.navigatorRef.current;
+      if (!navElem) {
+        console.error('[SlideViewer] Navigator ref still null during open; retrying in 50ms');
+        setTimeout(() => this.initSeaDragon(), 50);
+        return;
+      }
+
       new OpenSeadragon.Navigator({
         viewer: this.viewer,
-        element: navigatorContainer,
+        element: navElem,
         autoFade: false,
       });
     });
@@ -225,7 +225,7 @@ class SlideViewer extends Component {
             </ul>
 
             <div className="osd-navigator-wrapper">
-              {/* Attach navigatorRef here */}
+              {/* Navigator always present */}
               <div ref={this.navigatorRef}></div>
             </div>
           </div>
