@@ -20,6 +20,7 @@ class SlideViewer extends Component {
 
     // Ref for OpenSeadragon container
     this.viewerContainerRef = React.createRef();
+    this.navigatorRef = React.createRef();
 
     this.handleShowGridToggle = this.handleShowGridToggle.bind(this);
     this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this);
