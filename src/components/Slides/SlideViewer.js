@@ -18,7 +18,6 @@ class SlideViewer extends Component {
     this.horizontalRef = React.createRef();
     this.verticalRef = React.createRef();
 
-    // Refs for OSD containers
     this.viewerContainerRef = React.createRef();
     this.navigatorRef = React.createRef();
 
@@ -53,21 +52,21 @@ class SlideViewer extends Component {
     if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
       console.log('[SlideViewer] componentDidUpdate - new participant detected');
 
-      // Destroy previous viewer
+      // Destroy previous viewer completely
       if (this.viewer) {
         console.log('[SlideViewer] Destroying previous viewer');
         this.viewer.destroy();
         this.viewer = null;
       }
 
-      // Clear navigator DOM to avoid stale content
+      // Clear viewer and navigator DOM
+      if (this.viewerContainerRef.current) {
+        console.log('[SlideViewer] Clearing viewer container DOM');
+        this.viewerContainerRef.current.innerHTML = '';
+      }
       if (this.navigatorRef.current) {
         console.log('[SlideViewer] Clearing navigator DOM');
         this.navigatorRef.current.innerHTML = '';
-      }
-      if (this.viewerContainerRef.current){
-        console.log("[SlideViewer] Clearing viewerContainer DOM")
-        this.viewerContainerRef.current.innerHTML = '';
       }
 
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
@@ -79,7 +78,6 @@ class SlideViewer extends Component {
       }, 0);
     }
   }
-
 
   async renderOverlayLabels() {
     console.log('[SlideViewer] Rendering overlay labels');
@@ -114,21 +112,18 @@ class SlideViewer extends Component {
       return;
     }
 
+    // Debug container dimensions
+    console.log('[SlideViewer] Container dimensions:',
+      container.offsetWidth, container.offsetHeight);
+
+    OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
+
     this.viewer = OpenSeadragon({
       element: container,
       visibilityRatio: 0.5,
       constrainDuringPan: false,
-      defaultZoomLevel: 1,
-      minZoomLevel: 0.5,
-      maxZoomLevel: 120,
-      zoomInButton: 'zoom-in',
-      zoomOutButton: 'zoom-out',
-      homeButton: 'reset',
-      fullPageButton: 'full-page',
-      nextButton: 'next',
-      previousButton: 'previous',
-      showNavigator: true,                       // built-in navigator
-      navigatorElement: navigatorContainer,      // explicitly attach
+      showNavigator: true,
+      navigatorElement: navigatorContainer,
       navigatorAutoFade: false,
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
@@ -136,13 +131,14 @@ class SlideViewer extends Component {
 
     this.viewer.addHandler('open', () => {
       console.log('[SlideViewer] Viewer opened for slideId:', slideId);
+      // Force fit to viewport on new load
+      this.viewer.viewport.goHome(true);
     });
 
     this.viewer.addHandler('tile-load-failed', (event) => {
       console.error('[SlideViewer] Tile failed to load:', event);
     });
   }
-
 
   handleShowGridToggle() {
     this.setState(prev => ({
@@ -189,8 +185,9 @@ class SlideViewer extends Component {
           ) : null}
 
           <div className="osd-div">
+            {/* Force React to remount container when slide ID changes */}
             <div
-              key={this.props.selectedParticipant.selectedSlide.id}  // force remount on slide change
+              key={this.props.selectedParticipant.selectedSlide.id}
               ref={this.viewerContainerRef}
               className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`}
               id="osdId"
@@ -215,8 +212,7 @@ class SlideViewer extends Component {
             </ul>
 
             <div className="osd-navigator-wrapper">
-              {/* Navigator always present */}
-              <div ref={this.navigatorRef}></div>
+              <div id="osd-navigator" ref={this.navigatorRef}></div>
             </div>
           </div>
         </div>
