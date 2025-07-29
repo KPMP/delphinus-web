@@ -121,6 +121,7 @@ class SlideViewer extends Component {
 
     OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 
+    // Initialize viewer WITHOUT auto navigator
     this.viewer = OpenSeadragon({
       element: container,
       visibilityRatio: 0.5,
@@ -134,11 +135,16 @@ class SlideViewer extends Component {
       fullPageButton: 'full-page',
       nextButton: 'next',
       previousButton: 'previous',
-      showNavigator: true,
-      navigatorAutoFade: false,
-      navigatorElement: navigatorContainer, // Use ref instead of ID
+      showNavigator: false, // Disable auto navigator creation
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
+    });
+
+    // MANUALLY create navigator
+    new OpenSeadragon.Navigator({
+      viewer: this.viewer,
+      element: navigatorContainer,
+      autoFade: false,
     });
 
     this.viewer.addHandler('open', () => {
