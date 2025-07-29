@@ -18,10 +18,8 @@ class SlideViewer extends Component {
     this.horizontalRef = React.createRef();
     this.verticalRef = React.createRef();
 
+    this.viewerContainerRef = React.createRef();
     this.navigatorRef = React.createRef();
-
-    // We'll hold the viewer container node here manually via callback ref
-    this.viewerContainerRef = null;
 
     this.state = {
       showGrid: false,
@@ -31,25 +29,20 @@ class SlideViewer extends Component {
       renderLabels: true,
       gridOverlay: null,
       loaded: false,
-      readyToInit: false, // Flag to coordinate initSeaDragon timing
     };
 
     this.handleShowGridToggle = this.handleShowGridToggle.bind(this);
     this.handleShowLabelToggle = this.handleShowLabelToggle.bind(this);
     this.handleCancelGridPropertiesClick = this.handleCancelGridPropertiesClick.bind(this);
-    this.onViewerContainerRef = this.onViewerContainerRef.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log('[SlideViewer] componentDidMount - initializing viewer');
     if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-      this.renderOverlayLabels().then(() => {
-        // Set flag to init after initial mount
-        this.setState({ readyToInit: true, loaded: true });
-      });
-    } else {
-      this.setState({ loaded: true });
+      await this.renderOverlayLabels();
+      this.initSeaDragon();
     }
+    this.setState({ loaded: true });
   }
 
   async componentDidUpdate(prevProps) {
@@ -64,19 +57,9 @@ class SlideViewer extends Component {
 
       await this.renderOverlayLabels();
 
-      // Signal that we want to initialize viewer once container remounts
-      this.setState({ readyToInit: true });
-    }
-  }
-
-  onViewerContainerRef(node) {
-    this.viewerContainerRef = node;
-
-    // If container is mounted AND ready flag is set, init viewer
-    if (node && this.state.readyToInit) {
-      console.log('[SlideViewer] Viewer container mounted and ready, initializing viewer');
-      this.initSeaDragon();
-      this.setState({ readyToInit: false }); // reset flag to avoid re-init
+      console.log('[SlideViewer] Scheduling initSeaDragon after container remount');
+      // Use a delay so React can remount container before init
+      setTimeout(() => this.initSeaDragon(), 50);
     }
   }
 
@@ -103,17 +86,16 @@ class SlideViewer extends Component {
 
   initSeaDragon() {
     const slideId = this.props.selectedParticipant.selectedSlide.id;
-    const container = this.viewerContainerRef;
+    const container = this.viewerContainerRef.current;
     const navigatorContainer = this.navigatorRef.current;
 
     if (!container || !navigatorContainer) {
-      console.warn('[SlideViewer] initSeaDragon - container or navigator ref missing, retrying in 50ms');
+      console.warn('[SlideViewer] initSeaDragon: container or navigator missing, retrying in 50ms');
       setTimeout(() => this.initSeaDragon(), 50);
       return;
     }
 
     console.log('[SlideViewer] Initializing OpenSeadragon with slideId:', slideId);
-    console.log('[SlideViewer] Container dimensions:', container.offsetWidth, container.offsetHeight);
 
     OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
 
@@ -121,16 +103,25 @@ class SlideViewer extends Component {
       element: container,
       visibilityRatio: 0.5,
       constrainDuringPan: false,
+      defaultZoomLevel: 1,
+      minZoomLevel: 0.5,
+      maxZoomLevel: 120,
+      zoomInButton: 'zoom-in',
+      zoomOutButton: 'zoom-out',
+      homeButton: 'reset',
+      fullPageButton: 'full-page',
+      nextButton: 'next',
+      previousButton: 'previous',
       showNavigator: true,
-      navigatorElement: navigatorContainer,
       navigatorAutoFade: false,
+      navigatorElement: navigatorContainer,
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay,
     });
 
     this.viewer.addHandler('open', () => {
       console.log('[SlideViewer] Viewer opened for slideId:', slideId);
-      this.viewer.viewport.goHome(true); // Ensure proper zoom and pan reset
+      this.viewer.viewport.goHome(true);
     });
 
     this.viewer.addHandler('tile-load-failed', (event) => {
@@ -183,10 +174,10 @@ class SlideViewer extends Component {
           ) : null}
 
           <div className="osd-div">
-            {/* key to force remount on slide change */}
+            {/* key forces React to remount this div on slide change */}
             <div
               key={this.props.selectedParticipant.selectedSlide.id}
-              ref={this.onViewerContainerRef}
+              ref={this.viewerContainerRef}
               className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`}
               id="osdId"
             ></div>
