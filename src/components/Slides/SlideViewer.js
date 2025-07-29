@@ -59,23 +59,19 @@ class SlideViewer extends Component {
         this.viewer = null;
       }
 
-      // Clear viewer and navigator DOM
-      if (this.viewerContainerRef.current) {
-        console.log('[SlideViewer] Clearing viewer container DOM');
-        this.viewerContainerRef.current.innerHTML = '';
-      }
-      if (this.navigatorRef.current) {
-        console.log('[SlideViewer] Clearing navigator DOM');
-        this.navigatorRef.current.innerHTML = '';
-      }
+      // We no longer manually clear innerHTML because React will unmount/remount
+      // due to the key={slideId} on the viewer container.
+      // Clearing manually can race with React's render and cause null refs.
 
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
       await this.renderOverlayLabels();
 
-      console.log('[SlideViewer] Scheduling new viewer initialization');
+      console.log('[SlideViewer] Scheduling new viewer initialization after DOM remount');
+
+      // Wait for React to finish remounting the new container before initializing
       setTimeout(() => {
         this.initSeaDragon();
-      }, 0);
+      }, 50); // small delay ensures refs are attached
     }
   }
 
