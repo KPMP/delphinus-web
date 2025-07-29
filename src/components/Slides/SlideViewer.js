@@ -195,7 +195,6 @@ class SlideViewer extends Component {
               className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`}
               id="osdId"
             ></div>
-            ></div>
 
             <ul className="osd-toolbar">
               <li>
