@@ -42,24 +42,19 @@ class SlideViewer extends Component {
 		this.setState({loaded: true})
 	}
 
-	async componentDidUpdate(prevProps, prevState) {
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-		  console.log(this.viewer)
-			if (this.viewer){
-			  this.viewer.destroy()
+	async componentDidUpdate(prevProps) {
+    if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
+      if (this.viewer) {
+        this.viewer.destroy();
         this.viewer = null;
-			}
-			if (!document.getElementById('osdId')) {
-        const wrapper = document.getElementById('osd-div');
-        const osdDiv = document.createElement('div');
-        osdDiv.id = 'osdId';
-        wrapper.appendChild(osdDiv);
       }
-			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
-			await this.renderOverlayLabels();
-			this.initSeaDragon();
-		}
-	}
+
+      noSlidesFound(this.props.selectedParticipant, this.props.handleError);
+      await this.renderOverlayLabels();
+
+      this.initSeaDragon();
+    }
+  }
 
 	async renderOverlayLabels() {
 		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
