@@ -65,6 +65,10 @@ class SlideViewer extends Component {
         console.log('[SlideViewer] Clearing navigator DOM');
         this.navigatorRef.current.innerHTML = '';
       }
+      if (this.viewerContainerRef.current){
+        console.log("[SlideViewer] Clearing viewerContainer DOM")
+        this.viewerContainerRef.current.innerHTML = '';
+      }
 
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
       await this.renderOverlayLabels();
@@ -186,9 +190,11 @@ class SlideViewer extends Component {
 
           <div className="osd-div">
             <div
+              key={this.props.selectedParticipant.selectedSlide.id}  // force remount on slide change
               ref={this.viewerContainerRef}
               className={`openseadragon ${this.state.showGrid ? 'showGridlines' : 'hideGridlines'}`}
               id="osdId"
+            ></div>
             ></div>
 
             <ul className="osd-toolbar">
