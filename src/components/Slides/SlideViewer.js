@@ -117,18 +117,28 @@ class SlideViewer extends Component {
       container.offsetWidth, container.offsetHeight);
 
     OpenSeadragon.setString("Tooltips.Home", "Reset pan & zoom");
-
     this.viewer = OpenSeadragon({
-      element: container,
-      visibilityRatio: 0.5,
-      constrainDuringPan: false,
-      showNavigator: true,
-      navigatorElement: navigatorContainer,
-      navigatorAutoFade: false,
-      tileSources: 'deepZoomImages/' + slideId + '.dzi',
-      overlays: this.state.gridOverlay
-    });
+			element: container,
+			visibilityRatio: 0.5,
+			constrainDuringPan: false,
+			defaultZoomLevel: 1,
+			minZoomLevel: 0.5,
+			maxZoomLevel: 120,
+			zoomInButton: 'zoom-in',
+			zoomOutButton: 'zoom-out',
+			homeButton: 'reset',
+			fullPageButton: 'full-page',
+			nextButton: 'next',
+			previousButton: 'previous',
+			showNavigator: true,
+			navigatorAutoFade: false,
+			navigatorId: 'osd-navigator',
+			tileSources: 'deepZoomImages/' + slideId + '.dzi',
+			navigatorElement: navigatorContainer,
+			overlays: this.state.gridOverlay
+		});
 
+    console.log(this.viewer)
     this.viewer.addHandler('open', () => {
       console.log('[SlideViewer] Viewer opened for slideId:', slideId);
       // Force fit to viewport on new load
