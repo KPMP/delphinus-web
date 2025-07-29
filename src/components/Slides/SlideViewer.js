@@ -59,23 +59,22 @@ class SlideViewer extends Component {
         this.viewer = null;
       }
 
-      // Clear container to remove stale OSD markup
+      // Clear container
       if (this.viewerContainerRef.current) {
-        console.log('[SlideViewer] Clearing container innerHTML');
+        console.log('[SlideViewer] Clearing viewer container innerHTML');
         this.viewerContainerRef.current.innerHTML = '';
       } else {
         console.warn('[SlideViewer] viewerContainerRef is null!');
       }
 
-      // Handle slide overlay and labels
       noSlidesFound(this.props.selectedParticipant, this.props.handleError);
       await this.renderOverlayLabels();
 
-      // Defer re-init so DOM changes settle
-      console.log('[SlideViewer] Scheduling new viewer initialization');
-      requestAnimationFrame(() => {
+      // Defer init with setTimeout to ensure both refs are mounted
+      console.log('[SlideViewer] Scheduling new viewer initialization (setTimeout)');
+      setTimeout(() => {
         this.initSeaDragon();
-      });
+      }, 0);
     }
   }
 
@@ -104,9 +103,17 @@ class SlideViewer extends Component {
     console.log('[SlideViewer] initSeaDragon called');
     const slideId = this.props.selectedParticipant.selectedSlide.id;
     const container = this.viewerContainerRef.current;
+    const navigatorContainer = this.navigatorRef.current;
 
     if (!container) {
-      console.error('[SlideViewer] initSeaDragon - container ref is null, cannot initialize');
+      console.error('[SlideViewer] initSeaDragon - viewer container ref is null');
+      return;
+    }
+
+    if (!navigatorContainer) {
+      console.error('[SlideViewer] initSeaDragon - navigator ref is null; retrying in 50ms');
+      // Retry shortly if navigator not yet mounted
+      setTimeout(() => this.initSeaDragon(), 50);
       return;
     }
 
@@ -129,12 +136,11 @@ class SlideViewer extends Component {
       previousButton: 'previous',
       showNavigator: true,
       navigatorAutoFade: false,
-      navigatorId: 'osd-navigator',
+      navigatorElement: navigatorContainer, // pass ref directly
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
     });
 
-    // Log viewer created
     this.viewer.addHandler('open', () => {
       console.log('[SlideViewer] OpenSeadragon viewer opened successfully for slideId:', slideId);
     });
