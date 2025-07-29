@@ -127,28 +127,29 @@ class SlideViewer extends Component {
       fullPageButton: 'full-page',
       nextButton: 'next',
       previousButton: 'previous',
-      showNavigator: false, // disable built-in navigator
+      showNavigator: true,
+      navigatorElement: this.navigatorRef.current,
       tileSources: 'deepZoomImages/' + slideId + '.dzi',
       overlays: this.state.gridOverlay
     });
 
     // Attach manual navigator after viewer is ready
-    this.viewer.addHandler('open', () => {
-      console.log('[SlideViewer] Viewer open - creating manual navigator');
+    // this.viewer.addHandler('open', () => {
+    //   console.log('[SlideViewer] Viewer open - creating manual navigator');
 
-      const navElem = this.navigatorRef.current;
-      if (!navElem) {
-        console.error('[SlideViewer] Navigator ref still null during open; retrying in 50ms');
-        setTimeout(() => this.initSeaDragon(), 50);
-        return;
-      }
+    //   const navElem = this.navigatorRef.current;
+    //   if (!navElem) {
+    //     console.error('[SlideViewer] Navigator ref still null during open; retrying in 50ms');
+    //     setTimeout(() => this.initSeaDragon(), 50);
+    //     return;
+    //   }
 
-      new OpenSeadragon.Navigator({
-        viewer: this.viewer,
-        element: navElem,
-        autoFade: false,
-      });
-    });
+    //   new OpenSeadragon.Navigator({
+    //     viewer: this.viewer,
+    //     element: navElem,
+    //     autoFade: false,
+    //   });
+    // });
 
     this.viewer.addHandler('tile-load-failed', (event) => {
       console.error('[SlideViewer] Tile failed to load:', event);
