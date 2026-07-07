@@ -31,7 +31,7 @@ export const setParticipants = (participants) => {
 	}
 }
 
-export const getParticipantSlides = (participantId, props) => {
+export const getParticipantSlides = async (participantId, props) => {
 	return (dispatch) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
 		axios.get('/api/v1/slides/' + participantId, config)
