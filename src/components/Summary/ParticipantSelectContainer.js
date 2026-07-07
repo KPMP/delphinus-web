@@ -8,9 +8,9 @@ const mapStateToProps = (state, props) =>
         participants: state.participants
     });
 
-const mapDispatchToProps = (dispatch, props) =>
+const mapDispatchToProps = async (dispatch, props) =>
     ({
-        setSelectedParticipant(participant) {
+        async setSelectedParticipant(participant) {
             dispatch(await getParticipantSlides(participant, props));
         },
         getAllParticipants() {
