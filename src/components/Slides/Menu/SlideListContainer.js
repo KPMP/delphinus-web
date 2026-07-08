@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import SlideList from './SlideList';
 import { setSelectedSlide } from '../../../actions/Participants/participantActions';
-import { setSelectedAccordion } from '../../../actions/Participants/participantActions';
+import { setSelectedAccordion , setSelectedMetadata} from '../../../actions/Participants/participantActions';
 
 const mapStateToProps = (state, props) =>
 ({
@@ -16,7 +16,10 @@ const mapDispatchToProps = (dispatch, props) =>
     },
     setSelectedAccordion(accordion){
       dispatch(setSelectedAccordion(accordion))
-  }
+  },
+    setSelectedMetadata(metadata){
+        dispatch(setSelectedMetadata(metadata))
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SlideList);

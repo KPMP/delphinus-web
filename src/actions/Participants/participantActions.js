@@ -18,6 +18,13 @@ export const setSelectedSlide = (slide) => {
 	}
 }
 
+export const setSelectedMetadata = (metadata) => {
+    return {
+        type: actionNames.SET_SELECTED_METADATA,
+        payload: metadata
+    }
+}
+
 export const setSelectedAccordion = (accordion) => {
   return {
     type: actionNames.SET_SELECTED_ACCORDION,
@@ -73,4 +80,18 @@ export const getAllParticipants = () => {
 				dispatch(sendMessageToBackend(err));
 			});
 	}
+}
+
+export const getParticipantSlidesMetadata = (participantId, slideName) => {
+    return (dispatch) => {
+       var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
+       axios.get('/api/v1/metadata/' + participantId + '/' + slideName, config)
+       .then(result => {
+            dispatch(setSelectedMetadata(result.data));
+
+       }).catch(err => {
+           console.log("We were unable to get the metadata for " + participantId + "/" + slideName);
+           dispatch(sendMessageToBackend(err));
+       })
+    }
 }
