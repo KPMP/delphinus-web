@@ -11,7 +11,8 @@ class ParticipantListDropDown extends Component {
     render() {
         const Option = Select.Option;
     	let { participants } = this.props;
-        console.log("Participants in dropdown: ", participants);
+        console.log("this.props", this.props);
+        console.log("participants", participants);
         let options = participants.map((participant) => {
                 return <Option value={participant.kpmpId}>{participant.label}</Option>
             }
