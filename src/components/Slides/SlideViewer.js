@@ -52,14 +52,18 @@ class SlideViewer extends Component {
 	}
 
 	async renderOverlayLabels() {
-		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
-			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
+		const selectedSlide = this.props.selectedParticipant?.selectedSlide;
+		const metadata = selectedSlide?.metadata || {};
+		const overlayLabel = Array.isArray(metadata.overlayLabel) ? metadata.overlayLabel : [];
+		const gridOverlay = Array.isArray(metadata.overlay) ? metadata.overlay : [];
+
+		if (selectedSlide?.slideType === "(LM) Light Microscopy" &&
+			!(selectedSlide?.removed === true)) {
 			await this.setState({
-				overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
-				gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
+				overlayLabel,
+				gridOverlay,
 				renderLabels: false,
-				}
-			)
+			})
 			await this.setState({renderLabels: true});
 		}
 		else {
