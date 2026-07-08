@@ -65,6 +65,7 @@ export const getAllParticipants = () => {
 		axios.get('/api/v1/slides', config)
 			.then(result => {
 				let participants = result.data;
+                console.log(participants);
 				dispatch(setParticipants(participants));
 			})
 			.catch(err => {
