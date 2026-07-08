@@ -31,7 +31,7 @@ class ParticipantSelect extends Component {
     };
 
     componentDidMount() {
-        this.props.getAllParticipants();
+        console.log(this.props.getAllParticipants());
     }
 
     render() {
