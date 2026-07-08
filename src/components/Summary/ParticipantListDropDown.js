@@ -10,11 +10,10 @@ class ParticipantListDropDown extends Component {
 
     render() {
         const Option = Select.Option;
-    	let { participants } = this.props;
-        console.log("this.props", this.props);
-        console.log("participants", participants);
-        let options = participants.map((participant) => {
-                return <Option value={participant.kpmpId}>{participant.label}</Option>
+    	let { participants = [] } = this.props;
+        const safeParticipants = Array.isArray(participants) ? participants : [];
+        let options = safeParticipants.map((participant) => {
+                return <Option key={participant.kpmpId || participant.label} value={participant.kpmpId}>{participant.label}</Option>
             }
         );
         return (

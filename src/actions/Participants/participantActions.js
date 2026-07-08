@@ -1,6 +1,7 @@
 import actionNames from '../actionNames';
 import axios from 'axios';
 import participantSelectSorter from '../../components/Summary/participantSelectSorter';
+import { normalizeParticipants } from '../../components/Summary/participantListHelpers';
 import { sendMessageToBackend } from '../Error/errorActions';
 
 export const setSelectedParticipant = (participant) => {
@@ -64,8 +65,7 @@ export const getAllParticipants = () => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
 		axios.get('/api/v1/slides', config)
 			.then(result => {
-                console.log("result:", result)
-				let participants = result.data;
+                const participants = normalizeParticipants(result.data);
 				dispatch(setParticipants(participants));
 			})
 			.catch(err => {
