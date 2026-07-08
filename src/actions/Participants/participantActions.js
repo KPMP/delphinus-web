@@ -60,7 +60,7 @@ export const getParticipantSlides = (participantId, props) => {
 }
 
 export const getAllParticipants = async () => {
-	return (dispatch) => {
+	return async (dispatch) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
 		await axios.get('/api/v1/slides', config)
 			.then(result => {
