@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import ParticipantSelect from './ParticipantSelect';
-import { getParticipantSlides, getAllParticipants } from '../../actions/Participants/participantActions';
+import {
+    getParticipantSlides as getParticipantSlidesAction,
+    getAllParticipants as getAllParticipantsAction
+} from '../../actions/Participants/participantActions';
 import { withRouter } from 'react-router';
 
 const mapStateToProps = (state, props) =>
@@ -11,10 +14,10 @@ const mapStateToProps = (state, props) =>
 const mapDispatchToProps = (dispatch, props) =>
     ({
         setSelectedParticipant(participant) {
-            dispatch(getParticipantSlides(participant, props));
+            dispatch(getParticipantSlidesAction(participant, props));
         },
         getAllParticipants() {
-            dispatch(getAllParticipants());
+            dispatch(getAllParticipantsAction());
         }
     });
 

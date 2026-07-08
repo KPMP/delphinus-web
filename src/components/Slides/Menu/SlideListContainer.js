@@ -1,7 +1,11 @@
 import { connect } from 'react-redux';
 import SlideList from './SlideList';
-import { setSelectedSlide, getParticipantSlidesMetadata } from '../../../actions/Participants/participantActions';
-import { setSelectedAccordion , setSelectedMetadata} from '../../../actions/Participants/participantActions';
+import {
+    setSelectedSlide as setSelectedSlideAction,
+    getParticipantSlidesMetadata as getParticipantSlidesMetadataAction,
+    setSelectedAccordion as setSelectedAccordionAction,
+    setSelectedMetadata as setSelectedMetadataAction
+} from '../../../actions/Participants/participantActions';
 
 const mapStateToProps = (state, props) =>
 ({
@@ -12,16 +16,16 @@ const mapStateToProps = (state, props) =>
 const mapDispatchToProps = (dispatch, props) =>
 ({
     setSelectedSlide(slide) {
-        dispatch(setSelectedSlide(slide))
+        dispatch(setSelectedSlideAction(slide))
     },
     setSelectedAccordion(accordion){
-      dispatch(setSelectedAccordion(accordion))
+      dispatch(setSelectedAccordionAction(accordion))
   },
     setSelectedMetadata(metadata){
-        dispatch(setSelectedMetadata(metadata))
+        dispatch(setSelectedMetadataAction(metadata))
     },
     getParticipantSlidesMetadata(participantId, slideName, slide) {
-        dispatch(getParticipantSlidesMetadata(participantId, slideName, slide))
+        dispatch(getParticipantSlidesMetadataAction(participantId, slideName, slide))
     }
 });
 
