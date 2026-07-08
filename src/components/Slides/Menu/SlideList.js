@@ -149,15 +149,15 @@ handlePreviousSlide() {
 	}
 
   handleSelectSlide(slide, accordion, slideIndex, accordionIndex) {
-		this.props.setSelectedSlide(slide);
-    this.props.setSelectedMetadata({ overlay: [], overlayLabel: [] });
+    const slideWithEmptyMetadata = { ...slide, metadata: { overlay: [], overlayLabel: [] } };
+		this.props.setSelectedSlide(slideWithEmptyMetadata);
     this.props.toggleMenu(true);
     this.setState({currentSlideTypeIndex: accordionIndex, slidePosition: slideIndex})
     this.props.setSelectedAccordion(accordion)
     this.handleShowGridCheckbox(accordion);
 
     if (this.props.selectedParticipant?.id && slide?.slideName) {
-      this.props.getParticipantSlidesMetadata(this.props.selectedParticipant.id, slide.slideName);
+      this.props.getParticipantSlidesMetadata(this.props.selectedParticipant.id, slide.slideName, slideWithEmptyMetadata);
     }
 	}
 

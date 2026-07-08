@@ -20,8 +20,8 @@ const mapDispatchToProps = (dispatch, props) =>
     setSelectedMetadata(metadata){
         dispatch(setSelectedMetadata(metadata))
     },
-    getParticipantSlidesMetadata(participantId, slideName) {
-        dispatch(getParticipantSlidesMetadata(participantId, slideName))
+    getParticipantSlidesMetadata(participantId, slideName, slide) {
+        dispatch(getParticipantSlidesMetadata(participantId, slideName, slide))
     }
 });
 

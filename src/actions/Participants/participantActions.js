@@ -82,12 +82,17 @@ export const getAllParticipants = () => {
 	}
 }
 
-export const getParticipantSlidesMetadata = (participantId, slideName) => {
+export const getParticipantSlidesMetadata = (participantId, slideName, slide) => {
     return (dispatch) => {
        var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
        axios.get('/api/v1/metadata/' + participantId + '/' + slideName, config)
        .then(result => {
-            dispatch(setSelectedMetadata(result.data));
+            const metadata = result.data || { overlay: [], overlayLabel: [] };
+            if (slide) {
+                dispatch(setSelectedSlide({ ...slide, metadata }));
+            } else {
+                dispatch(setSelectedMetadata(metadata));
+            }
 
        }).catch(err => {
            console.log("We were unable to get the metadata for " + participantId + "/" + slideName);
