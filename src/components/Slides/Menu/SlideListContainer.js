@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import SlideList from './SlideList';
-import { setSelectedSlide } from '../../../actions/Participants/participantActions';
+import { setSelectedSlide, getParticipantSlidesMetadata } from '../../../actions/Participants/participantActions';
 import { setSelectedAccordion , setSelectedMetadata} from '../../../actions/Participants/participantActions';
 
 const mapStateToProps = (state, props) =>
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch, props) =>
   },
     setSelectedMetadata(metadata){
         dispatch(setSelectedMetadata(metadata))
+    },
+    getParticipantSlidesMetadata(participantId, slideName) {
+        dispatch(getParticipantSlidesMetadata(participantId, slideName))
     }
 });
 

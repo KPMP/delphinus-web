@@ -31,7 +31,8 @@ class SlideList extends Component {
       currentSlideTypeIndex: 0, 
       slidePosition: 0,
       slideIndex: 0,
-      showCheckbox: true
+      showCheckbox: true,
+      metadata: []
 		};
     this.handleShowGridProperties = this.handleShowGridProperties.bind(this)
 		this.handleDownload = this.handleDownload.bind(this);
@@ -149,10 +150,15 @@ handlePreviousSlide() {
 
   handleSelectSlide(slide, accordion, slideIndex, accordionIndex) {
 		this.props.setSelectedSlide(slide);
-		this.props.toggleMenu(true);
+    this.props.setSelectedMetadata({ overlay: [], overlayLabel: [] });
+    this.props.toggleMenu(true);
     this.setState({currentSlideTypeIndex: accordionIndex, slidePosition: slideIndex})
     this.props.setSelectedAccordion(accordion)
     this.handleShowGridCheckbox(accordion);
+
+    if (this.props.selectedParticipant?.id && slide?.slideName) {
+      this.props.getParticipantSlidesMetadata(this.props.selectedParticipant.id, slide.slideName);
+    }
 	}
 
   handleSelectAccordion(accordion) {
