@@ -64,8 +64,8 @@ export const getAllParticipants = () => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
 		axios.get('/api/v1/slides', config)
 			.then(result => {
+                console.log(result)
 				let participants = result.data;
-                console.log(participants);
 				dispatch(setParticipants(participants));
 			})
 			.catch(err => {
