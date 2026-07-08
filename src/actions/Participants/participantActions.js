@@ -59,12 +59,12 @@ export const getParticipantSlides = (participantId, props) => {
 	}
 }
 
-export const getAllParticipants = () => {
+export const getAllParticipants = async () => {
 	return (dispatch) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}}
-		axios.get('/api/v1/slides', config)
+		await axios.get('/api/v1/slides', config)
 			.then(result => {
-                console.log(result)
+                console.log("result:", result)
 				let participants = result.data;
 				dispatch(setParticipants(participants));
 			})
