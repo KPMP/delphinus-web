@@ -31,6 +31,13 @@ export const setParticipants = (participants) => {
 	}
 }
 
+export const setSelectedMetadata = (metadata) => {
+    return {
+        type: actionNames.SET_SELECTED_METADATA,
+        payload: metadata
+    }
+}
+
 export const getParticipantSlides = (participantId, props) => {
 	return (dispatch) => {
 		var config = { headers: {'Content-Type': 'application/json', 'Cache-control': 'no-cache'}};
@@ -80,7 +87,7 @@ export const getSlideMetadata = (participantId, slideName) => {
         axios.get('api/v1/metadata/' + participantId + "/" + slideName)
             .then(result => {
                 console.log(result.data)
-                dispatch(result.data)
+                dispatch(setSelectedMetadata(result.data))
             }).catch(error => {
                 console.log("There was an error getting the metadata for slide " + slideName + " and participant ID" + participantId);
                 dispatch(sendMessageToBackend(error))
