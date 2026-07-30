@@ -82,15 +82,17 @@ export const getAllParticipants = () => {
 }
 
 export const getSlideMetadata = (participantId, slideName) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         var config = {headers: {'Content-Type': "application/json", 'Cache-control': 'no-cache'}}
-        axios.get('api/v1/metadata/' + participantId + "/" + slideName)
-            .then(result => {
-                console.log(result.data)
-                dispatch(setSelectedMetadata(result.data))
-            }).catch(error => {
-                console.log("There was an error getting the metadata for slide " + slideName + " and participant ID" + participantId);
-                dispatch(sendMessageToBackend(error))
-            })
+        try {
+            const result = await axios.get('api/v1/metadata/' + participantId + "/" + slideName, config);
+            const metadata = result.data;
+            dispatch(setSelectedMetadata(metadata));
+            return metadata;
+        } catch (error) {
+            console.log("There was an error getting the metadata for slide " + slideName + " and participant ID" + participantId);
+            dispatch(sendMessageToBackend(error));
+            return null;
+        }
     }
 }
