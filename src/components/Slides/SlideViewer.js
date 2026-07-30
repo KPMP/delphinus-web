@@ -55,8 +55,11 @@ class SlideViewer extends Component {
 	}
 
 	async renderOverlayLabels() {
-		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
-			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
+		const shouldRenderOverlays = this.state.showGrid &&
+			this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
+			!(this.props.selectedParticipant.selectedSlide?.removed === true);
+
+		if (shouldRenderOverlays) {
 			const metadata = await this.props.getSelectedMetadata(
 				this.props.selectedParticipant.id,
 				this.props.selectedParticipant.selectedSlide.slideName
@@ -67,8 +70,7 @@ class SlideViewer extends Component {
 				renderLabels: false,
 			})
 			await this.setState({renderLabels: true});
-		}
-		else {
+		} else {
 			await this.setState({
 				overlayLabel: [],
 				gridOverlay: null,
@@ -103,19 +105,33 @@ class SlideViewer extends Component {
 	}
 
 	handleShowGridToggle() {
-		if (this.state.showGrid) {
-			this.setState({ showGrid: false, showGridLabel: false })
-		} else {
-			this.setState({ showGrid: true })
-		}
+		const nextShowGrid = !this.state.showGrid;
+		this.setState({ showGrid: nextShowGrid, showGridLabel: false }, async () => {
+			if (nextShowGrid) {
+				await this.renderOverlayLabels();
+			} else {
+				await this.setState({
+					overlayLabel: [],
+					gridOverlay: null,
+					renderLabels: false,
+				});
+			}
+		});
 	}
 
 	handleShowLabelToggle() {
-		if (this.state.showGridLabel) {
-			this.setState({ showGridLabel: false })
-		} else {
-			this.setState({ showGrid: true, showGridLabel: true })
-		}
+		const nextShowGridLabel = !this.state.showGridLabel;
+		this.setState({ showGridLabel: nextShowGridLabel, showGrid: nextShowGridLabel }, async () => {
+			if (nextShowGridLabel) {
+				await this.renderOverlayLabels();
+			} else {
+				await this.setState({
+					overlayLabel: [],
+					gridOverlay: null,
+					renderLabels: false,
+				});
+			}
+		});
 	}
 
 	handleCancelGridPropertiesClick(showGridLabel) {
@@ -125,7 +141,7 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-				{(this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
+				{(this.state.showGrid && this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />
 				}
 				<div id="slide-viewer" className="container-fluid">
