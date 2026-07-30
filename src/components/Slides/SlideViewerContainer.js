@@ -14,8 +14,8 @@ const mapDispatchToProps = (dispatch, props) =>
     handleError(error) {
         dispatch(sendMessageToBackend(error));
     },
-    getSelectedMetadata(participantId, slideName){
-        return dispatch(getSlideMetadata(participantId, slideName));
+    getSelectedMetadata(participantId, slideName, options){
+        return dispatch(getSlideMetadata(participantId, slideName, options));
     }
 });
 
