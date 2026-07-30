@@ -83,13 +83,7 @@ export const getAllParticipants = () => {
 
 export const getSlideMetadata = (participantId, slideName, options = {}) => {
     return async (dispatch) => {
-        const { signal } = options;
-        var config = { headers: {'Content-Type': "application/json", 'Cache-control': 'no-cache'} };
-
-        if (signal) {
-            config.signal = signal;
-        }
-
+        var config = { headers: {'Content-Type': "application/json", 'Cache-control': 'no-cache'} }
         try {
             const result = await axios.get(`/api/v1/metadata/${participantId}/${slideName}`, config);
             const metadata = result.data;
