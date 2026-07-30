@@ -34,9 +34,15 @@ class SlideViewer extends Component {
 		this.metadataAbortController = null;
 	}
 
+	setStateAsync(stateUpdate) {
+		return new Promise((resolve) => {
+			this.setState(stateUpdate, resolve);
+		});
+	}
+
 	async componentDidMount() {
 		if (noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			this.setState({ loaded: true });
+			await this.setStateAsync({ loaded: true });
 			return;
 		}
 
@@ -45,7 +51,7 @@ class SlideViewer extends Component {
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
-		this.setState({ loaded: true });
+		await this.setStateAsync({ loaded: true });
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -92,7 +98,7 @@ class SlideViewer extends Component {
 
 		if (!shouldRenderOverlays) {
 			this.cancelPendingMetadataRequest();
-			await this.setState({
+			await this.setStateAsync({
 				overlayLabel: [],
 				gridOverlay: null,
 				renderLabels: false,
@@ -119,12 +125,12 @@ class SlideViewer extends Component {
 		}
 
 		this.metadataAbortController = null;
-		await this.setState({
+		await this.setStateAsync({
 			overlayLabel: metadata?.overlayLabel || [],
 			gridOverlay: metadata?.overlay || null,
 			renderLabels: false,
 		});
-		await this.setState({ renderLabels: true });
+		await this.setStateAsync({ renderLabels: true });
 	}
 
 	initSeaDragon() {
@@ -159,7 +165,7 @@ class SlideViewer extends Component {
 				await this.renderOverlayLabels();
 			} else {
 				this.cancelPendingMetadataRequest();
-				await this.setState({
+				await this.setStateAsync({
 					overlayLabel: [],
 					gridOverlay: null,
 					renderLabels: false,
@@ -175,7 +181,7 @@ class SlideViewer extends Component {
 				await this.renderOverlayLabels();
 			} else {
 				this.cancelPendingMetadataRequest();
-				await this.setState({
+				await this.setStateAsync({
 					overlayLabel: [],
 					gridOverlay: null,
 					renderLabels: false,
@@ -185,7 +191,7 @@ class SlideViewer extends Component {
 	}
 
 	handleCancelGridPropertiesClick(showGridLabel) {
-		this.setState({ showGridLabel })
+		this.setStateAsync({ showGridLabel })
 	}
 
 	render() {
