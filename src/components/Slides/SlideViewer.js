@@ -29,23 +29,15 @@ class SlideViewer extends Component {
 			gridOverlay: null,
       loaded: false,
 		}
-
-		this.activeMetadataRequestKey = null;
-		this.metadataAbortController = null;
 	}
 
 	async componentDidMount() {
-		if (noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			this.setState({ loaded: true });
-			return;
-		}
-
-		await this.props.selectedParticipant.selectedSlide.slideType;
-		if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-			await this.renderOverlayLabels();
-			this.initSeaDragon();
-		}
-		this.setState({ loaded: true });
+		await this.props.selectedParticipant.selectedSlide.slideType
+			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
+				await this.renderOverlayLabels();
+				this.initSeaDragon();
+			}
+		this.setState({loaded: true})
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
@@ -58,9 +50,7 @@ class SlideViewer extends Component {
 				this.viewer.destroy();
 				this.viewer.navigator?.destroy();
 			}
-			if (noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
-				return;
-			}
+			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
@@ -72,59 +62,27 @@ class SlideViewer extends Component {
 			!(this.props.selectedParticipant?.selectedSlide?.removed === true);
 	}
 
-	getMetadataRequestKey(participantId, slideName) {
-		return `${participantId}/${slideName}`;
-	}
-
-	isCurrentMetadataRequest(requestKey, participantId, slideName) {
-		return this.activeMetadataRequestKey === this.getMetadataRequestKey(participantId, slideName) && requestKey === this.getMetadataRequestKey(participantId, slideName);
-	}
-
-	cancelPendingMetadataRequest() {
-		if (this.metadataAbortController) {
-			this.metadataAbortController.abort();
-		}
-		this.metadataAbortController = null;
-	}
-
 	async renderOverlayLabels() {
 		const shouldRenderOverlays = this.shouldLoadOverlayMetadata();
 
-		if (!shouldRenderOverlays) {
-			this.cancelPendingMetadataRequest();
+		if (shouldRenderOverlays) {
+			const metadata = await this.props.getSelectedMetadata(
+				this.props.selectedParticipant.id,
+				this.props.selectedParticipant.selectedSlide.slideName
+			);
+			await this.setState({
+				overlayLabel: metadata?.overlayLabel || [],
+				gridOverlay: metadata?.overlay || null,
+				renderLabels: false,
+			})
+			await this.setState({renderLabels: true});
+		} else {
 			await this.setState({
 				overlayLabel: [],
 				gridOverlay: null,
 				renderLabels: false,
-			});
-			return;
+			})
 		}
-
-		const participantId = this.props.selectedParticipant.id;
-		const slideName = this.props.selectedParticipant.selectedSlide.slideName;
-		const requestKey = this.getMetadataRequestKey(participantId, slideName);
-		this.cancelPendingMetadataRequest();
-		this.metadataAbortController = new AbortController();
-		this.activeMetadataRequestKey = requestKey;
-
-		const metadata = await this.props.getSelectedMetadata(
-			participantId,
-			slideName,
-			{ signal: this.metadataAbortController.signal }
-		);
-
-		if (!this.isCurrentMetadataRequest(requestKey, participantId, slideName)) {
-			this.metadataAbortController = null;
-			return;
-		}
-
-		this.metadataAbortController = null;
-		await this.setState({
-			overlayLabel: metadata?.overlayLabel || [],
-			gridOverlay: metadata?.overlay || null,
-			renderLabels: false,
-		});
-		await this.setState({ renderLabels: true });
 	}
 
 	initSeaDragon() {
@@ -158,7 +116,6 @@ class SlideViewer extends Component {
 			if (nextShowGrid) {
 				await this.renderOverlayLabels();
 			} else {
-				this.cancelPendingMetadataRequest();
 				await this.setState({
 					overlayLabel: [],
 					gridOverlay: null,
@@ -174,7 +131,6 @@ class SlideViewer extends Component {
 			if (nextShowGridLabel) {
 				await this.renderOverlayLabels();
 			} else {
-				this.cancelPendingMetadataRequest();
 				await this.setState({
 					overlayLabel: [],
 					gridOverlay: null,
