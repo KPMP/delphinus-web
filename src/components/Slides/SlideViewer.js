@@ -45,19 +45,29 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-			this.viewer.destroy();
-			this.viewer.navigator.destroy();
+		const slideChanged = prevProps.selectedParticipant?.id !== this.props.selectedParticipant?.id ||
+			prevProps.selectedParticipant?.selectedSlide?.id !== this.props.selectedParticipant?.selectedSlide?.id;
+		const showGridChanged = prevState.showGrid !== this.state.showGrid;
+
+		if (slideChanged || showGridChanged) {
+			if (this.viewer) {
+				this.viewer.destroy();
+				this.viewer.navigator?.destroy();
+			}
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 	}
 
+	shouldLoadOverlayMetadata() {
+		return this.state.showGrid &&
+			this.props.selectedParticipant?.selectedSlide?.slideType === "(LM) Light Microscopy" &&
+			!(this.props.selectedParticipant?.selectedSlide?.removed === true);
+	}
+
 	async renderOverlayLabels() {
-		const shouldRenderOverlays = this.state.showGrid &&
-			this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
-			!(this.props.selectedParticipant.selectedSlide?.removed === true);
+		const shouldRenderOverlays = this.shouldLoadOverlayMetadata();
 
 		if (shouldRenderOverlays) {
 			const metadata = await this.props.getSelectedMetadata(
