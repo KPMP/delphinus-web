@@ -44,11 +44,24 @@ describe('getSlideMetadata', () => {
 		const result = await getSlideMetadata('participant-1', 'slide-1')(dispatch);
 
 		expect(axios.get).toHaveBeenCalledWith(
-			'api/v1/metadata/participant-1/slide-1',
+			'/api/v1/metadata/participant-1/slide-1',
 			expect.objectContaining({ headers: expect.any(Object) })
 		);
 		expect(dispatch).toHaveBeenCalledWith({ type: actionNames.SET_SELECTED_METADATA, payload: metadata });
 		expect(result).toEqual(metadata);
+	});
+
+	it('should ignore canceled out-of-order requests', async () => {
+		const dispatch = jest.fn();
+		const cancelError = new Error('Canceled');
+		cancelError.__CANCEL__ = true;
+		axios.isCancel = jest.fn(() => true);
+		axios.get.mockRejectedValue(cancelError);
+
+		const result = await getSlideMetadata('participant-1', 'slide-1', { signal: {} })(dispatch);
+
+		expect(result).toBeNull();
+		expect(dispatch).not.toHaveBeenCalledWith({ type: actionNames.SET_SELECTED_METADATA, payload: expect.anything() });
 	});
 });
 
