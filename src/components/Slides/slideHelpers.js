@@ -19,9 +19,12 @@ export const downloadSlide = (downloadFileName) => {
 }
 
 export const noSlidesFound = (selected, handleError) => {
-    if (selected === null || selected === undefined || Object.keys(selected.slides).length === 0) {
+    if (selected === null || selected === undefined || !selected.slides || Object.keys(selected.slides).length === 0) {
         handleError({ error: 'No participant selected. No slides to show.', stackTrace: '' })
+        return true;
     }
+
+    return false;
 }
 
 const getSlideIndex = (slideArray, selectedSlide) => {

@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import actionNames from './actions/actionNames';
 import loadedState from './initialState';
-import { selectedParticipant, participants } from './components/Summary/participantSelectReducer';
+import { selectedParticipant, participants, selectedMetadata } from './components/Summary/participantSelectReducer';
 
 const appReducer = combineReducers({
     selectedParticipant,
-    participants
+    participants, selectedMetadata
 });
 
 const rootReducer = (state, action) => {

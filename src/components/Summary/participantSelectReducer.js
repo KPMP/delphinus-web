@@ -21,3 +21,12 @@ export const participants = (state = [], action) => {
             return state;
     }
 };
+
+export const selectedMetadata = (state = {}, action) => {
+    switch (action.type){
+        case actionNames.SET_SELECTED_METADATA:
+            return action.payload;
+        default:
+            return state;
+    }
+}

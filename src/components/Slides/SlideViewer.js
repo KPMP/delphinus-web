@@ -33,7 +33,6 @@ class SlideViewer extends Component {
 
 	async componentDidMount() {
 		await this.props.selectedParticipant.selectedSlide.slideType
-		
 			if (!noSlidesFound(this.props.selectedParticipant, this.props.handleError)) {
 				await this.renderOverlayLabels();
 				this.initSeaDragon();
@@ -42,27 +41,42 @@ class SlideViewer extends Component {
 	}
 
 	async componentDidUpdate(prevProps, prevState) {
-		if (prevProps.selectedParticipant !== this.props.selectedParticipant) {
-			this.viewer.destroy();
-			this.viewer.navigator.destroy();
+		const slideChanged = prevProps.selectedParticipant?.id !== this.props.selectedParticipant?.id ||
+			prevProps.selectedParticipant?.selectedSlide?.id !== this.props.selectedParticipant?.selectedSlide?.id;
+		const showGridChanged = prevState.showGrid !== this.state.showGrid;
+
+		if (slideChanged || showGridChanged) {
+			if (this.viewer) {
+				this.viewer.destroy();
+				this.viewer.navigator?.destroy();
+			}
 			noSlidesFound(this.props.selectedParticipant, this.props.handleError);
 			await this.renderOverlayLabels();
 			this.initSeaDragon();
 		}
 	}
 
+	shouldLoadOverlayMetadata() {
+		return this.state.showGrid &&
+			this.props.selectedParticipant?.selectedSlide?.slideType === "(LM) Light Microscopy" &&
+			!(this.props.selectedParticipant?.selectedSlide?.removed === true);
+	}
+
 	async renderOverlayLabels() {
-		if(this.props.selectedParticipant.selectedSlide.slideType === "(LM) Light Microscopy" &&
-			!(this.props.selectedParticipant.selectedSlide?.removed === true)){
+		const shouldRenderOverlays = this.shouldLoadOverlayMetadata();
+
+		if (shouldRenderOverlays) {
+			const metadata = await this.props.getSelectedMetadata(
+				this.props.selectedParticipant.id,
+				this.props.selectedParticipant.selectedSlide.slideName
+			);
 			await this.setState({
-				overlayLabel: this.props.selectedParticipant.selectedSlide.metadata.overlayLabel,
-				gridOverlay: this.props.selectedParticipant.selectedSlide.metadata.overlay,
+				overlayLabel: metadata?.overlayLabel || [],
+				gridOverlay: metadata?.overlay || null,
 				renderLabels: false,
-				}
-			)
+			})
 			await this.setState({renderLabels: true});
-		}
-		else {
+		} else {
 			await this.setState({
 				overlayLabel: [],
 				gridOverlay: null,
@@ -97,19 +111,33 @@ class SlideViewer extends Component {
 	}
 
 	handleShowGridToggle() {
-		if (this.state.showGrid) {
-			this.setState({ showGrid: false, showGridLabel: false })
-		} else {
-			this.setState({ showGrid: true })
-		}
+		const nextShowGrid = !this.state.showGrid;
+		this.setState({ showGrid: nextShowGrid, showGridLabel: false }, async () => {
+			if (nextShowGrid) {
+				await this.renderOverlayLabels();
+			} else {
+				await this.setState({
+					overlayLabel: [],
+					gridOverlay: null,
+					renderLabels: false,
+				});
+			}
+		});
 	}
 
 	handleShowLabelToggle() {
-		if (this.state.showGridLabel) {
-			this.setState({ showGridLabel: false })
-		} else {
-			this.setState({ showGrid: true, showGridLabel: true })
-		}
+		const nextShowGridLabel = !this.state.showGridLabel;
+		this.setState({ showGridLabel: nextShowGridLabel, showGrid: nextShowGridLabel }, async () => {
+			if (nextShowGridLabel) {
+				await this.renderOverlayLabels();
+			} else {
+				await this.setState({
+					overlayLabel: [],
+					gridOverlay: null,
+					renderLabels: false,
+				});
+			}
+		});
 	}
 
 	handleCancelGridPropertiesClick(showGridLabel) {
@@ -119,7 +147,7 @@ class SlideViewer extends Component {
 	render() {
 		return (
 			<div>
-				{(this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
+				{(this.state.showGrid && this.state.overlayLabel.length >= 1 && this.state.renderLabels) &&
 					<DivOverlays showGridLabel={this.state.showGridLabel} overlayLabels={this.state.overlayLabel} />
 				}
 				<div id="slide-viewer" className="container-fluid">
